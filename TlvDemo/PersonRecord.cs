@@ -27,17 +27,13 @@ namespace TlvDemo
 
     public class PersonRecord : ITlvContract
     {
-        public PersonRecord()
-        {
-        }
-
-        int ITlvContract.ContractId => 1;
-
         public string Name { get; set; }
 
         public int Age { get; set; }
 
         public AddressRecord Address { get; set; }
+
+        int ITlvContract.ContractId => 1;
 
         void ITlvContract.Parse( ITlvParseContext context )
         {
