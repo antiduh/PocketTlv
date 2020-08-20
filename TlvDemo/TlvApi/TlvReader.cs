@@ -149,6 +149,10 @@ namespace TlvDemo.TlvApi
             {
                 result = new StringTag();
             }
+            else if( wireType == WireType.ContractId )
+            {
+                result = new ContractIdTag();
+            }
             else
             {
                 throw new InvalidOperationException( "Unknown wire type." );

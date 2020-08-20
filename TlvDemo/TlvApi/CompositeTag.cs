@@ -54,11 +54,6 @@ namespace TlvDemo.TlvApi
         void ITag.WriteValue( byte[] buffer, int position )
         {
             // A composite tag's value is handled directly by TlvWriter.
-
-            foreach( ITag child in this.Children )
-            {
-                position += TlvWriter.WriteInternal( child, ref buffer, position );
-            }
         }
     }
 }

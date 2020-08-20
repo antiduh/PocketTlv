@@ -60,7 +60,7 @@ namespace TlvDemo
 
         void Parse( ITlvParseContext parseContext );
 
-        void Save( ITlvSaveContext saveContract );
+        void Save( ITlvSaveContext saveContext );
     }
 
 
@@ -142,7 +142,7 @@ namespace TlvDemo
             // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
             // serialized contract. 
 
-            foundContractId = (IntTag)contractTag.Children.Last();
+            foundContractId = (ContractIdTag)contractTag.Children.Last();
         }
     }
 
@@ -184,7 +184,7 @@ namespace TlvDemo
             //   remove it when we go to parse.
             // - We value stuff at the /end/ for performance; it's easy to remove from the end of lists.
 
-            subSaveContext.Save( 0x0C0FFEE, new IntTag( subContract.ContractId ) );
+            subSaveContext.Save( 0x0C0FFEE, new ContractIdTag( subContract.ContractId ) );
 
             // Save the composite tag representing the contract to our parent.
             Save( fieldId, subcontractTag );
@@ -209,9 +209,14 @@ namespace TlvDemo
             // Empty on purpose.
         }
 
-        void ITlvContract.Save( ITlvSaveContext saveContract )
+        void ITlvContract.Save( ITlvSaveContext saveContext )
         {
-            // Empty on purpose.
+            ITag child;
+            for( int i = 0; i < this.Tag.Children.Count - 1; i++ )
+            {
+                child = this.Tag.Children[i];
+                saveContext.Save( child.FieldId, child );
+            }
         }
     }
 

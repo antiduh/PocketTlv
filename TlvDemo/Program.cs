@@ -32,22 +32,33 @@ namespace TlvDemo
             var messageCopy = RoundTrip( messageRecord );
 
 
+            PersonRecord personCopy;
+
             // Method 1:
-            PersonRecord personCopy1 = messageCopy.Message.Resolve<PersonRecord>();
-            ProcessPersonRecord( personCopy1 );
+
+            personCopy = messageCopy.Message.Resolve<PersonRecord>();
+            ProcessPersonRecord( personCopy );
 
             // Method 2:
             if( messageCopy.Message.ContractId == PersonRecord.ContractId )
             {
-                PersonRecord personCopy2 = messageCopy.Message.Resolve<PersonRecord>();
-                ProcessPersonRecord( personCopy2 );
+                personCopy = messageCopy.Message.Resolve<PersonRecord>();
+                ProcessPersonRecord( personCopy );
             }
 
             // Method 3:
-            if( messageCopy.Message.TryResolve<PersonRecord>( out PersonRecord personCopy3 ) )
+            if( messageCopy.Message.TryResolve<PersonRecord>( out personCopy ) )
             {
-                ProcessPersonRecord( personCopy3 );
+                ProcessPersonRecord( personCopy );
             }
+
+            // --- Incomplete constructions can be relayed in their incomplete form ---
+            messageCopy = RoundTrip( messageRecord );
+            var messageCopy2 = RoundTrip( messageCopy );
+
+            personCopy = messageCopy2.Message.Resolve<PersonRecord>();
+            ProcessPersonRecord( personCopy );
+
         }
 
         private static void ProcessPersonRecord( PersonRecord record )

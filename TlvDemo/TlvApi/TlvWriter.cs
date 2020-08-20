@@ -52,7 +52,7 @@ namespace TlvDemo.TlvApi
             int valueLength = tag.ComputeLength();
             
             //  requiredSize = type size, length field size, value field size
-            int requiredSpace = typeFieldSize + lenFieldSize + valueLength;
+            int requiredSpace = TlvConsts.HeaderSize + valueLength;
 
             EnsureSize( ref buffer, requiredSpace + position );
 
@@ -66,7 +66,21 @@ namespace TlvDemo.TlvApi
             written += TlvConsts.LengthSize;
 
             // -- Value --
-            tag.WriteValue( buffer, position + written );
+
+            if( tag is CompositeTag compositeTag )
+            {
+                int subPosition = position + written;
+
+                foreach( ITag child in compositeTag.Children )
+                {
+                    subPosition += WriteInternal( child, ref buffer, subPosition );
+                }
+            }
+            else
+            {
+                tag.WriteValue( buffer, position + written );
+            }
+            
             written += valueLength;
 
             return written;
