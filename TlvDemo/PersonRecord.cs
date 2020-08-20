@@ -166,13 +166,10 @@ namespace TlvDemo
         public T ParseSubContract<T>( int fieldId ) where T : ITlvContract, new()
         {
             var contractTag = ParseChild<CompositeTag>( fieldId );
+            var subContext = new TlvParseContext( contractTag );
 
             T result = new T();
-
-            CompositeTag selfBackup = this.source;
-            this.source = contractTag;
-            result.Parse( this );
-            this.source = selfBackup;
+            result.Parse( subContext );
 
             return result;
         }
