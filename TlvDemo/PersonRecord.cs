@@ -10,15 +10,15 @@ namespace TlvDemo
 
         public ITlvContract Message { get; set; }
 
-        public int ContractId => 3;
+        int ITlvContract.ContractId => 3;
 
-        public void Parse( ITlvParseContext parseContext )
+        void ITlvContract.Parse( ITlvParseContext parseContext )
         {
             this.Name = parseContext.ParseChild<StringTag>( 1 );
             this.Message = parseContext.ParseUnknown( 2 );
         }
 
-        public void Save( ITlvSaveContext saveContract )
+        void ITlvContract.Save( ITlvSaveContext saveContract )
         {
             saveContract.Save( 1, new StringTag( this.Name ) );
             saveContract.Save( 2, this.Message );
