@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using TlvDemo.Messages;
@@ -13,10 +14,37 @@ namespace TlvDemo
     {
         private static void Main( string[] args )
         {
-            TagTest();
+            LoadStorePersonRecord();
         }
 
-        private static void TagTest()
+
+        private static void LoadStorePersonRecord()
+        {
+            PersonRecord record = new PersonRecord()
+            {
+                Address = new AddressRecord() { LotNumber = 50, StreetName = "50 Hampden Rd" },
+                Name = "Kevin thompson"
+            };
+
+
+            var stream = new MemoryStream();
+
+            TlvWriter writer = new TlvWriter( stream );
+
+            writer.Write( record );
+
+            byte[] buffer = stream.GetBuffer();
+
+
+            stream.Position = 0L;
+
+            TlvReader reader = new TlvReader( stream );
+
+            var record2 = reader.Read<PersonRecord>();
+        }
+
+#if false
+        private static void LoadStoreTest()
         {
             var top = new CompositeTag( 1,
                 new StringTag( 2, "Hello" ),
@@ -48,6 +76,8 @@ namespace TlvDemo
 
             rebuiltTop = reader.Read();
         }
+
+#endif
 
         private static void ConstructTest()
         {

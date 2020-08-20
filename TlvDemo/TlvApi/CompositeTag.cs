@@ -10,25 +10,25 @@ namespace TlvDemo.TlvApi
             this.Children = new List<ITag>();
         }
 
-        public CompositeTag( int fieldId )
-            : this()
-        {
-            this.FieldId = fieldId;
-        }
-
-        public CompositeTag( int fieldId, params ITag[] children )
-            : this( fieldId )
+        public CompositeTag( params ITag[] children )
         {
             this.Children.AddRange( children );
         }
 
-        public int FieldId { get; private set; }
-
-        public WireType WireType => WireType.Composite;
-
         public List<ITag> Children { get; private set; }
 
-        public int ComputeLength()
+        public override string ToString()
+        {
+            return $"CompositeTag - {this.Children.Count} children";
+        }
+
+        // --- ITag implementation ---
+
+        int ITag.FieldId { get; set; }
+
+        WireType ITag.WireType => WireType.Composite;
+
+        int ITag.ComputeLength()
         {
             int length = 0;
 
@@ -46,12 +46,12 @@ namespace TlvDemo.TlvApi
             return length;
         }
 
-        public void ReadValue( byte[] buffer, int position, int length )
+        void ITag.ReadValue( byte[] buffer, int position, int length )
         {
             // A composite tag's value is handled directly by TlvReader.
         }
 
-        public void WriteValue( byte[] buffer, int position )
+        void ITag.WriteValue( byte[] buffer, int position )
         {
             // A composite tag's value is handled directly by TlvWriter.
 
@@ -59,11 +59,6 @@ namespace TlvDemo.TlvApi
             {
                 position += TlvWriter.WriteInternal( child, ref buffer, position );
             }
-        }
-
-        public override string ToString()
-        {
-            return $"CompositeTag - {this.Children.Count} children";
         }
     }
 }

@@ -32,6 +32,19 @@ namespace TlvDemo.TlvApi
             this.stream.Write( this.buffer, 0, position );
         }
 
+        public void Write( ITlvContract contract )
+        {
+            CompositeTag contractTag = new CompositeTag();
+
+            ( (ITag)contractTag ).FieldId = contract.ContractId;
+
+            TlvSaveContext saveContext = new TlvSaveContext( contractTag );
+
+            contract.Save( saveContext );
+
+            Write( contractTag );
+        }
+
         internal static int WriteInternal( ITag tag, ref byte[] buffer, int position )
         {
             int written = 0;

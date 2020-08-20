@@ -5,31 +5,38 @@ namespace TlvDemo.TlvApi
     public class IntTag : ITag
     {
         public IntTag()
-        { }
-
-        public IntTag( int fieldId )
         {
-            this.FieldId = fieldId;
         }
 
-        public IntTag( int fieldId, int value )
-            : this( fieldId )
+        public IntTag( int value )
         {
             this.Value = value;
         }
 
-        public int FieldId { get; private set; }
-
-        public WireType WireType => WireType.Int;
-
         public int Value { get; set; }
 
-        public int ComputeLength()
+        public override string ToString()
+        {
+            return "IntTag - " + Value;
+        }
+
+        public static implicit operator int( IntTag tag )
+        {
+            return tag.Value;
+        }
+
+        // --- ITag implementation ---
+
+        int ITag.FieldId { get; set; }
+
+        WireType ITag.WireType => WireType.Int;
+
+        int ITag.ComputeLength()
         {
             return 4;
         }
 
-        public void ReadValue( byte[] buffer, int position, int length )
+        void ITag.ReadValue( byte[] buffer, int position, int length )
         {
             if( length != 4 )
             {
@@ -39,14 +46,9 @@ namespace TlvDemo.TlvApi
             this.Value = DataConverter.ReadIntLE( buffer, position );
         }
 
-        public void WriteValue( byte[] buffer, int position )
+        void ITag.WriteValue( byte[] buffer, int position )
         {
             DataConverter.WriteIntLE( this.Value, buffer, position );
-        }
-
-        public override string ToString()
-        {
-            return "IntTag - " + Value;
         }
     }
 }

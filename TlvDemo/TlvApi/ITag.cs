@@ -8,7 +8,7 @@ namespace TlvDemo.TlvApi
 {
     public interface ITag
     {
-        int FieldId { get; }
+        int FieldId { get; set; }
 
         WireType WireType { get; }
 

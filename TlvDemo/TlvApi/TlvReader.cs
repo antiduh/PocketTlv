@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace TlvDemo.TlvApi
 {
@@ -21,9 +20,32 @@ namespace TlvDemo.TlvApi
             this.reader = new StreamConverter( this.stream );
         }
 
-        public ITag Read()
+        public ITag ReadTag()
         {
             return Read( out _ );
+        }
+
+        public T ReadTag<T>() where T : ITag
+        {
+            return (T)Read( out _ );
+        }
+
+        public T Read<T>() where T : ITlvContract, new()
+        {
+            T contract = new T();
+
+            CompositeTag contractTag = ReadTag<CompositeTag>();
+
+            if( contract.ContractId != ( (ITag)contractTag ).FieldId )
+            {
+                throw new InvalidOperationException( "Read unexpected tag." );
+            }
+
+            TlvParseContext parseContext = new TlvParseContext( contractTag );
+
+            contract.Parse( parseContext );
+
+            return contract;
         }
 
         private ITag Read( out int amountRead )
@@ -83,6 +105,7 @@ namespace TlvDemo.TlvApi
             {
                 EnsureSize( ref this.buffer, length );
                 this.reader.ReadHarder( this.buffer, 0, length );
+                
                 tag.ReadValue( this.buffer, 0, length );
 
                 amountRead += length;
@@ -112,21 +135,28 @@ namespace TlvDemo.TlvApi
         private ITag ConstructTag( int wireTypeId, int fieldId )
         {
             WireType wireType = (WireType)wireTypeId;
+            ITag result;
 
             if( wireType == WireType.Composite )
             {
-                return new CompositeTag( fieldId );
+                result = new CompositeTag();
             }
             else if( wireType == WireType.Int )
             {
-                return new IntTag( fieldId );
+                result = new IntTag();
             }
             else if( wireType == WireType.String )
             {
-                return new StringTag( fieldId );
+                result = new StringTag();
+            }
+            else
+            {
+                throw new InvalidOperationException( "Unknown wire type." );
             }
 
-            throw new InvalidOperationException( "Unknown wire type or field ID." );
+            result.FieldId = fieldId;
+
+            return result;
         }
     }
 }
