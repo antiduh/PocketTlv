@@ -41,7 +41,7 @@ namespace TlvDemo.TlvApi
                 throw new InvalidOperationException( "Read unexpected tag." );
             }
 
-            TlvParseContext parseContext = new TlvParseContext( contractTag );
+            TlvParseContext parseContext = new TlvParseContext( contractTag, false );
 
             contract.Parse( parseContext );
 

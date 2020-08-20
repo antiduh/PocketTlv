@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using TlvDemo.Messages;
 using TlvDemo.TlvApi;
 
@@ -17,29 +12,47 @@ namespace TlvDemo
             LoadStorePersonRecord();
         }
 
-
         private static void LoadStorePersonRecord()
         {
-            PersonRecord personRecord = new PersonRecord()
+            // --- Contracts can be statically composed ---
+            PersonRecord personRecordOrig = new PersonRecord()
             {
                 Name = "Kevin Thompson",
                 Age = 37,
                 Address = new AddressRecord() { LotNumber = 50, StreetName = "50 Hampden Rd" },
             };
 
-            var personCopy = RoundTrip( personRecord );
-
+            // --- Contracts can by dynamically composed ---
             MessageRecord messageRecord = new MessageRecord()
             {
                 Name = "VorenEcho",
-                Message = personRecord
+                Message = personRecordOrig
             };
 
             var messageCopy = RoundTrip( messageRecord );
 
 
-            PersonRecord personCopy2 = messageCopy.Message.Resolve<PersonRecord>();
-            
+            // Method 1:
+            PersonRecord personCopy1 = messageCopy.Message.Resolve<PersonRecord>();
+            ProcessPersonRecord( personCopy1 );
+
+            // Method 2:
+            if( messageCopy.Message.ContractId == PersonRecord.ContractId )
+            {
+                PersonRecord personCopy2 = messageCopy.Message.Resolve<PersonRecord>();
+                ProcessPersonRecord( personCopy2 );
+            }
+
+            // Method 3:
+            if( messageCopy.Message.TryResolve<PersonRecord>( out PersonRecord personCopy3 ) )
+            {
+                ProcessPersonRecord( personCopy3 );
+            }
+        }
+
+        private static void ProcessPersonRecord( PersonRecord record )
+        {
+            Console.WriteLine( record.Name );
         }
 
         private static T RoundTrip<T>( T record ) where T : ITlvContract, new()
@@ -47,19 +60,12 @@ namespace TlvDemo
             var stream = new MemoryStream();
 
             TlvWriter writer = new TlvWriter( stream );
-
             writer.Write( record );
-
-            byte[] buffer = stream.GetBuffer();
-
 
             stream.Position = 0L;
 
             TlvReader reader = new TlvReader( stream );
-
-            var record2 = reader.Read<T>();
-
-            return record2;
+            return reader.Read<T>();
         }
 
 #if false

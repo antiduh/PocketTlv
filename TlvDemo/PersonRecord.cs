@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using TlvDemo.TlvApi;
 
 namespace TlvDemo
@@ -15,7 +17,7 @@ namespace TlvDemo
         void ITlvContract.Parse( ITlvParseContext parseContext )
         {
             this.Name = parseContext.ParseChild<StringTag>( 1 );
-            this.Message = parseContext.ParseUnknown( 2 );
+            this.Message = parseContext.ParseSubContract( 2 );
         }
 
         void ITlvContract.Save( ITlvSaveContext saveContract )
@@ -27,13 +29,15 @@ namespace TlvDemo
 
     public class PersonRecord : ITlvContract
     {
+        public const int ContractId = 1;
+
         public string Name { get; set; }
 
         public int Age { get; set; }
 
         public AddressRecord Address { get; set; }
 
-        int ITlvContract.ContractId => 1;
+        int ITlvContract.ContractId => PersonRecord.ContractId;
 
         void ITlvContract.Parse( ITlvParseContext context )
         {
@@ -50,22 +54,6 @@ namespace TlvDemo
         }
     }
 
-    public interface ITlvParseContext
-    {
-        T ParseChild<T>( int fieldId ) where T : ITag;
-
-        T ParseSubContract<T>( int fieldId ) where T : ITlvContract, new();
-
-        ITlvContract ParseUnknown( int fieldId );
-    }
-
-    public interface ITlvSaveContext
-    {
-        void Save( int fieldId, ITag tag );
-
-        void Save( int fieldId, ITlvContract subContract );
-    }
-
     public interface ITlvContract
     {
         int ContractId { get; }
@@ -75,84 +63,42 @@ namespace TlvDemo
         void Save( ITlvSaveContext saveContract );
     }
 
-    public static class ContractBinder
+
+    public interface ITlvParseContext
     {
-        public static T Bind<T>( ITlvContract unknown ) where T : ITlvContract, new()
-        {
-            if( unknown is T known )
-            {
-                return known;
-            }
-            else if( unknown is UnknownContract internalUnknown )
-            {
-                TlvParseContext parser = new TlvParseContext( internalUnknown.Tag );
+        T ParseChild<T>( int fieldId ) where T : ITag;
 
-                T bound = new T();
+        T ParseSubContract<T>( int fieldId ) where T : ITlvContract, new();
 
-                bound.Parse( parser );
-
-                return bound;
-            }
-            else
-            {
-                throw new InvalidOperationException();
-            }
-        }
+        ITlvContract ParseSubContract( int fieldId );
     }
-
-
-    public class UnknownContract : ITlvContract
-    {
-        public UnknownContract( CompositeTag tag )
-        {
-            Tag = tag;
-        }
-
-        public CompositeTag Tag { get; private set; }
-
-        int ITlvContract.ContractId => -1;
-
-        void ITlvContract.Parse( ITlvParseContext parseContext )
-        {
-            
-        }
-
-        void ITlvContract.Save( ITlvSaveContext saveContract )
-        {
-
-        }
-    }
-
-    public static class UnknownExtensions
-    {
-        public static T Resolve<T>( this ITlvContract unknown ) where T : ITlvContract, new()
-        {
-            return ContractBinder.Bind<T>( unknown );
-        }
-    }
-
 
     public class TlvParseContext : ITlvParseContext
     {
         private CompositeTag source;
+        private readonly bool skipLast;
 
-        public TlvParseContext( CompositeTag source )
+        public TlvParseContext( CompositeTag source, bool hideLast )
         {
             this.source = source;
-        }
-
-        public ITlvContract ParseUnknown( int fieldId )
-        {
-            return new UnknownContract( ParseChild<CompositeTag>( fieldId ) );
+            this.skipLast = hideLast;
         }
 
         public T ParseChild<T>( int fieldId ) where T : ITag
         {
-            foreach( ITag child in source.Children )
+            var children = source.Children;
+            int length = children.Count;
+
+            if( skipLast )
             {
-                if( child.FieldId == fieldId )
+                length--;
+            }
+
+            for( int i = 0; i < length; i++ )
+            {
+                if( children[i].FieldId == fieldId )
                 {
-                    return (T)child;
+                    return (T)children[i];
                 }
             }
 
@@ -161,14 +107,50 @@ namespace TlvDemo
 
         public T ParseSubContract<T>( int fieldId ) where T : ITlvContract, new()
         {
-            var contractTag = ParseChild<CompositeTag>( fieldId );
-            var subContext = new TlvParseContext( contractTag );
+            CompositeTag contractTag;
+            int foundContractId;
+            
+            GetContractSubTag( fieldId, out contractTag, out foundContractId );
 
             T result = new T();
+
+            if( result.ContractId != foundContractId )
+            {
+                throw new InvalidOperationException( "Type mismatch found: contract IDs don't match." );
+            }
+
+            var subContext = new TlvParseContext( contractTag, true );
             result.Parse( subContext );
 
             return result;
         }
+
+        ITlvContract ITlvParseContext.ParseSubContract( int fieldId )
+        {
+            CompositeTag contractTag;
+            int foundContractId;
+
+            GetContractSubTag( fieldId, out contractTag, out foundContractId );
+
+            return new UnknownContract( contractTag, foundContractId );
+        }
+
+        private void GetContractSubTag( int fieldId, out CompositeTag contractTag, out int foundContractId )
+        {
+            contractTag = ParseChild<CompositeTag>( fieldId );
+
+            // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
+            // serialized contract. 
+
+            foundContractId = (IntTag)contractTag.Children.Last();
+        }
+    }
+
+    public interface ITlvSaveContext
+    {
+        void Save( int fieldId, ITag tag );
+
+        void Save( int fieldId, ITlvContract subContract );
     }
 
     public class TlvSaveContext : ITlvSaveContext
@@ -191,20 +173,91 @@ namespace TlvDemo
             CompositeTag subcontractTag = new CompositeTag();
 
             var subSaveContext = new TlvSaveContext( subcontractTag );
+
+            // Tell the contract to serialize itself.
             subContract.Save( subSaveContext );
 
+            // When saving sub-contracts, we do "value-stuffing":
+            // - It's handy to have the contract ID when parsing, for error checking.
+            // - It's necessary to have the contract ID when doing deferred parsing.
+            // - So we "value-stuff": we put in our own tag in after the contract's tags, and then
+            //   remove it when we go to parse.
+            // - We value stuff at the /end/ for performance; it's easy to remove from the end of lists.
+
+            subSaveContext.Save( 0x0C0FFEE, new IntTag( subContract.ContractId ) );
+
+            // Save the composite tag representing the contract to our parent.
             Save( fieldId, subcontractTag );
         }
 
-        public void SaveUnknown( int fieldId, ITlvContract unknown )
-        {
-            // parent 
-            //   - CompositeTag (representing unknown)
-            //      - IntTag: ContractId
-            //      - CompositeTag: Contract.
+    }
 
-            throw new NotImplementedException();
+    public class UnknownContract : ITlvContract
+    {
+        public UnknownContract( CompositeTag tag, int contractId )
+        {
+            this.Tag = tag;
+            this.ContractId = contractId;
         }
 
+        public CompositeTag Tag { get; private set; }
+
+        public int ContractId { get; private set; }
+
+        void ITlvContract.Parse( ITlvParseContext parseContext )
+        {
+            // Empty on purpose.
+        }
+
+        void ITlvContract.Save( ITlvSaveContext saveContract )
+        {
+            // Empty on purpose.
+        }
+    }
+
+    public static class UnknownExtensions
+    {
+        public static T Resolve<T>( this ITlvContract unknown ) where T : ITlvContract, new()
+        {
+            if( TryResolve<T>( unknown, out T contract ) )
+            {
+                return contract;
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        public static bool TryResolve<T>( this ITlvContract unknown, out T contract ) where T : ITlvContract, new()
+        {
+            if( unknown is T known )
+            {
+                contract = known;
+                return true;
+            }
+            else if( unknown is UnknownContract internalUnknown )
+            {
+                TlvParseContext parser = new TlvParseContext( internalUnknown.Tag, true );
+
+                T bound = new T();
+
+                if( bound.ContractId != internalUnknown.ContractId )
+                {
+                    contract = default;
+                    return false;
+                }
+
+                bound.Parse( parser );
+
+                contract = bound;
+                return true;
+            }
+            else
+            {
+                contract = default;
+                return false;
+            }
+        }
     }
 }
