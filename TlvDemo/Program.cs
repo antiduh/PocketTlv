@@ -20,13 +20,30 @@ namespace TlvDemo
 
         private static void LoadStorePersonRecord()
         {
-            PersonRecord record = new PersonRecord()
+            PersonRecord personRecord = new PersonRecord()
             {
+                Name = "Kevin Thompson",
+                Age = 37,
                 Address = new AddressRecord() { LotNumber = 50, StreetName = "50 Hampden Rd" },
-                Name = "Kevin thompson"
             };
 
+            var personCopy = RoundTrip( personRecord );
 
+            MessageRecord messageRecord = new MessageRecord()
+            {
+                Name = "VorenEcho",
+                Message = personRecord
+            };
+
+            var messageCopy = RoundTrip( messageRecord );
+
+
+            PersonRecord personCopy2 = messageCopy.Message.Resolve<PersonRecord>();
+            
+        }
+
+        private static T RoundTrip<T>( T record ) where T : ITlvContract, new()
+        {
             var stream = new MemoryStream();
 
             TlvWriter writer = new TlvWriter( stream );
@@ -40,7 +57,9 @@ namespace TlvDemo
 
             TlvReader reader = new TlvReader( stream );
 
-            var record2 = reader.Read<PersonRecord>();
+            var record2 = reader.Read<T>();
+
+            return record2;
         }
 
 #if false

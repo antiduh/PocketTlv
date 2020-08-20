@@ -4,6 +4,27 @@ using TlvDemo.TlvApi;
 
 namespace TlvDemo
 {
+    public class MessageRecord : ITlvContract
+    {
+        public string Name { get; set; }
+
+        public ITlvContract Message { get; set; }
+
+        public int ContractId => 3;
+
+        public void Parse( ITlvParseContext parseContext )
+        {
+            this.Name = parseContext.ParseChild<StringTag>( 1 );
+            this.Message = parseContext.ParseUnknown( 2 );
+        }
+
+        public void Save( ITlvSaveContext saveContract )
+        {
+            saveContract.Save( 1, new StringTag( this.Name ) );
+            saveContract.Save( 2, this.Message );
+        }
+    }
+
     public class PersonRecord : ITlvContract
     {
         public PersonRecord()
@@ -38,6 +59,8 @@ namespace TlvDemo
         T ParseChild<T>( int fieldId ) where T : ITag;
 
         T ParseSubContract<T>( int fieldId ) where T : ITlvContract, new();
+
+        ITlvContract ParseUnknown( int fieldId );
     }
 
     public interface ITlvSaveContext
@@ -56,6 +79,63 @@ namespace TlvDemo
         void Save( ITlvSaveContext saveContract );
     }
 
+    public static class ContractBinder
+    {
+        public static T Bind<T>( ITlvContract unknown ) where T : ITlvContract, new()
+        {
+            if( unknown is T known )
+            {
+                return known;
+            }
+            else if( unknown is UnknownContract internalUnknown )
+            {
+                TlvParseContext parser = new TlvParseContext( internalUnknown.Tag );
+
+                T bound = new T();
+
+                bound.Parse( parser );
+
+                return bound;
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+    }
+
+
+    public class UnknownContract : ITlvContract
+    {
+        public UnknownContract( CompositeTag tag )
+        {
+            Tag = tag;
+        }
+
+        public CompositeTag Tag { get; private set; }
+
+        int ITlvContract.ContractId => -1;
+
+        void ITlvContract.Parse( ITlvParseContext parseContext )
+        {
+            
+        }
+
+        void ITlvContract.Save( ITlvSaveContext saveContract )
+        {
+
+        }
+    }
+
+    public static class UnknownExtensions
+    {
+        public static T Resolve<T>( this ITlvContract unknown ) where T : ITlvContract, new()
+        {
+            return ContractBinder.Bind<T>( unknown );
+        }
+    }
+
+
     public class TlvParseContext : ITlvParseContext
     {
         private CompositeTag source;
@@ -63,6 +143,11 @@ namespace TlvDemo
         public TlvParseContext( CompositeTag source )
         {
             this.source = source;
+        }
+
+        public ITlvContract ParseUnknown( int fieldId )
+        {
+            return new UnknownContract( ParseChild<CompositeTag>( fieldId ) );
         }
 
         public T ParseChild<T>( int fieldId ) where T : ITag
@@ -117,5 +202,16 @@ namespace TlvDemo
 
             Save( fieldId, subcontractTag );
         }
+
+        public void SaveUnknown( int fieldId, ITlvContract unknown )
+        {
+            // parent 
+            //   - CompositeTag (representing unknown)
+            //      - IntTag: ContractId
+            //      - CompositeTag: Contract.
+
+            throw new NotImplementedException();
+        }
+
     }
 }
