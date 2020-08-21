@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using TlvDemo.TlvApi;
 
@@ -8,7 +9,51 @@ namespace TlvDemo
     {
         private static void Main( string[] args )
         {
-            LoadStorePersonRecord();
+            PrimitivesTest();
+            BasicStaticContractTest();
+        }
+
+        /// <summary>
+        /// Demonstrates how to directly write out TLV tags by hand.
+        /// </summary>
+        private static void PrimitivesTest()
+        {
+            // This leaves the fieldIds all set to zero. If you were to parse this, you'd need to
+            // assume the order and structure below never changes. You can init the fieldIds if you
+            // want, i just don't bother.
+            var top = new CompositeTag(
+                new StringTag( "Hello world" ),
+                new IntTag( 42 ),
+                new CompositeTag(
+                    new StringTag( "Kevin Thompson" ),
+                    new IntTag( 37 ),
+                    new StringTag( "50 Hampden Rd" )
+                )
+            );
+
+            var stream = new MemoryStream();
+            var writer = new TlvWriter( stream );
+            writer.Write( top );
+
+            var copy = RoundTrip( top );
+
+            Debug.Assert( copy.Equals( top ) );
+        }
+
+        /// <summary>
+        /// Demonstrates how to write out a simple contract that has statically resolved members.
+        /// </summary>
+        private static void BasicStaticContractTest()
+        {
+            var record = new AddressRecord()
+            {
+                LotNumber = 50,
+                StreetName = "Hampden Rd",
+            };
+
+            var copy = RoundTrip( record );
+
+            Debug.Assert( copy.Equals( record ) );
         }
 
         private static void LoadStorePersonRecord()
@@ -29,7 +74,6 @@ namespace TlvDemo
             };
 
             var messageCopy = RoundTrip( messageRecord );
-
 
             PersonRecord personCopy;
 
@@ -57,7 +101,6 @@ namespace TlvDemo
 
             personCopy = messageCopy2.Message.Resolve<PersonRecord>();
             ProcessPersonRecord( personCopy );
-
         }
 
         private static void ProcessPersonRecord( PersonRecord record )
@@ -65,13 +108,30 @@ namespace TlvDemo
             Console.WriteLine( record.Name );
         }
 
-        private static T RoundTrip<T>( T record ) where T : ITlvContract, new()
+        private static ITag RoundTrip( ITag tag )
         {
             var stream = new MemoryStream();
 
             TlvWriter writer = new TlvWriter( stream );
-            writer.Write( record );
+            writer.Write( tag );
 
+            // This so i can look at the byte stream in the debugger. Demo only.
+            byte[] buffer = stream.GetBuffer();
+
+            stream.Position = 0L;
+
+            TlvReader reader = new TlvReader( stream );
+            return reader.ReadTag();
+        }
+
+        private static T RoundTrip<T>( T contract ) where T : ITlvContract, new()
+        {
+            var stream = new MemoryStream();
+
+            TlvWriter writer = new TlvWriter( stream );
+            writer.Write( contract );
+
+            // This so i can look at the byte stream in the debugger. Demo only.
             byte[] buffer = stream.GetBuffer();
 
             stream.Position = 0L;
