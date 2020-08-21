@@ -30,7 +30,7 @@ namespace TlvDemo.TlvApi
         {
             CompositeTag contractTag = new CompositeTag();
 
-            ( (ITag)contractTag ).FieldId = contract.ContractId;
+            contractTag.FieldId = contract.ContractId;
 
             TlvSaveContext saveContext = new TlvSaveContext( contractTag );
 
