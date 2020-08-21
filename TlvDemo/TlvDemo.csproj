@@ -41,9 +41,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassLib\HashHelper.cs" />
     <Compile Include="Messages\AddressRecord.cs" />
-    <Compile Include="TlvApi\StreamConverter.cs" />
-    <Compile Include="TlvApi\DataConverter.cs" />
+    <Compile Include="ClassLib\StreamConverter.cs" />
+    <Compile Include="ClassLib\DataConverter.cs" />
     <Compile Include="TlvApi\ITlvContract.cs" />
     <Compile Include="TlvApi\TlvParseContext.cs" />
     <Compile Include="TlvApi\ITlvSaveContext.cs" />
