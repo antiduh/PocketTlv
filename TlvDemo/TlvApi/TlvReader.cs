@@ -137,25 +137,25 @@ namespace TlvDemo.TlvApi
             WireType wireType = (WireType)wireTypeId;
             ITag result;
 
-            if( wireType == WireType.Composite )
+            switch( wireType )
             {
-                result = new CompositeTag();
-            }
-            else if( wireType == WireType.Int )
-            {
-                result = new IntTag();
-            }
-            else if( wireType == WireType.String )
-            {
-                result = new StringTag();
-            }
-            else if( wireType == WireType.ContractId )
-            {
-                result = new ContractIdTag();
-            }
-            else
-            {
-                throw new InvalidOperationException( "Unknown wire type." );
+                case WireType.Composite:
+                    result = new CompositeTag();
+                    break;
+                case WireType.Int:
+                    result = new IntTag();
+                    break;
+                case WireType.String:
+                    result = new StringTag();
+                    break;
+                case WireType.ContractId:
+                    result = new ContractIdTag();
+                    break;
+                case WireType.Double:
+                    result = new DoubleTag();
+                    break;
+                default:
+                    throw new InvalidOperationException( "Unknown wire type." );
             }
 
             result.FieldId = fieldId;
