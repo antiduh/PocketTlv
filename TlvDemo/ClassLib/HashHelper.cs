@@ -17,6 +17,21 @@ namespace TlvDemo.ClassLib
         private const int PrimeOne = unchecked((int)2166136261);
         private const int PrimeTwo = unchecked((int)16777619);
 
+        public static int GetHashCode<T>( IList<T> list )
+        {
+            unchecked
+            {
+                int hash = PrimeOne;
+
+                foreach( var element in list )
+                {
+                    hash = hash * PrimeTwo + list.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
         /// <summary>
         /// Computes the hashcode of the given arguments.
         /// </summary>
