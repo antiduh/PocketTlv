@@ -12,7 +12,7 @@ namespace TlvDemo.TlvApi
         {
             this.stream = stream;
 
-            this.buffer = new byte[64];
+            this.buffer = new byte[1024];
         }
 
         public void Write( ITag tag )
