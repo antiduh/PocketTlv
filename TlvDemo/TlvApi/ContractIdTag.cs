@@ -21,17 +21,17 @@ namespace TlvDemo.TlvApi
 
         public int ComputeLength()
         {
-            return 4;
+            return 2;
         }
 
         public void ReadValue( byte[] buffer, int position, int length )
         {
-            this.ContractId = DataConverter.ReadIntLE( buffer, position );
+            this.ContractId = DataConverter.ReadShortLE( buffer, position );
         }
 
         public void WriteValue( byte[] buffer, int position )
         {
-            DataConverter.WriteIntLE( this.ContractId, buffer, position );
+            DataConverter.WriteShortLE( (short)this.ContractId, buffer, position );
         }
 
         public static implicit operator int( ContractIdTag tag )
