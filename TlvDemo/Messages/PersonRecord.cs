@@ -1,4 +1,5 @@
 ﻿using System;
+using TlvDemo.ClassLib;
 using TlvDemo.TlvApi;
 
 namespace TlvDemo
@@ -27,6 +28,35 @@ namespace TlvDemo
             context.Save( 1, new StringTag( this.Name ) );
             context.Save( 2, new IntTag( this.Age ) );
             context.Save( 3, this.Address );
+        }
+
+        public override bool Equals( object other )
+        {
+            return Equals( other as PersonRecord );
+        }
+
+        public bool Equals( PersonRecord other )
+        {
+            if( ReferenceEquals( other, null ) )
+            {
+                return false;
+            }
+            else if( ReferenceEquals( other, this ) )
+            {
+                return true;
+            }
+            else
+            {
+                return 
+                    this.Name == other.Name && 
+                    this.Age == other.Age && 
+                    this.Address.Equals( other.Address );
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return HashHelper.GetHashCode( this.Name, this.Age, this.Address );
         }
     }
 }
