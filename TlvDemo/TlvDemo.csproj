@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassLib\HashHelper.cs" />
-    <Compile Include="Messages\AddressRecord.cs" />
+    <Compile Include="DemoMessages\AddressRecord.cs" />
     <Compile Include="ClassLib\StreamConverter.cs" />
     <Compile Include="ClassLib\DataConverter.cs" />
     <Compile Include="TlvApi\ITlvContract.cs" />
@@ -50,8 +50,8 @@
     <Compile Include="TlvApi\TlvParseContext.cs" />
     <Compile Include="TlvApi\ITlvSaveContext.cs" />
     <Compile Include="TlvApi\UnknownContract.cs" />
-    <Compile Include="Messages\MessageRecord.cs" />
-    <Compile Include="Messages\PersonRecord.cs" />
+    <Compile Include="DemoMessages\MessageRecord.cs" />
+    <Compile Include="DemoMessages\PersonRecord.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TlvApi\Primitives\CompositeTag.cs" />
