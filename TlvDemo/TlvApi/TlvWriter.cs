@@ -5,10 +5,6 @@ namespace TlvDemo.TlvApi
 {
     public class TlvWriter
     {
-        private const int typeFieldSize = 2;
-
-        private const int lenFieldSize = 4;
-
         private readonly Stream stream;
         private byte[] buffer;
 
