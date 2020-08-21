@@ -13,30 +13,34 @@ namespace TlvDemo.TlvApi
             this.ContractId = contractId;
         }
 
-        public int FieldId { get; set; }
-
-        public WireType WireType => WireType.ContractId;
-
         public int ContractId { get; set; }
 
-        public int ComputeLength()
-        {
-            return 2;
-        }
-
-        public void ReadValue( byte[] buffer, int position, int length )
-        {
-            this.ContractId = DataConverter.ReadShortLE( buffer, position );
-        }
-
-        public void WriteValue( byte[] buffer, int position )
-        {
-            DataConverter.WriteShortLE( (short)this.ContractId, buffer, position );
-        }
 
         public static implicit operator int( ContractIdTag tag )
         {
             return tag.ContractId;
         }
+
+        // --- ITag implementation ---
+
+        int ITag.FieldId { get; set; }
+
+        WireType ITag.WireType => WireType.ContractId;
+
+        int ITag.ComputeLength()
+        {
+            return 2;
+        }
+
+        void ITag.ReadValue( byte[] buffer, int position, int length )
+        {
+            this.ContractId = DataConverter.ReadShortLE( buffer, position );
+        }
+
+        void ITag.WriteValue( byte[] buffer, int position )
+        {
+            DataConverter.WriteShortLE( (short)this.ContractId, buffer, position );
+        }
+
     }
 }
