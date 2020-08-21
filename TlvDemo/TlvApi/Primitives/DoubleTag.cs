@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TlvDemo.TlvApi.Primitives
+namespace TlvDemo.TlvApi
 {
     public class DoubleTag : ITag
     {
@@ -18,6 +18,32 @@ namespace TlvDemo.TlvApi.Primitives
         }
 
         public double Value { get; set; }
+
+        public override bool Equals( object other )
+        {
+            return Equals( other as DoubleTag );
+        }
+
+        public bool Equals( DoubleTag other )
+        {
+            if( ReferenceEquals( other, null ) )
+            {
+                return false;
+            }
+            else if( ReferenceEquals( other, this ) )
+            {
+                return true;
+            }
+            else
+            {
+                return this.Value == other.Value;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
 
         // --- ITag implementation ---
 
