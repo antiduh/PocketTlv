@@ -12,6 +12,8 @@ namespace TlvDemo
             PrimitivesTest();
             SimpleContractTest();
             StaticContractCompositionTest();
+            AnonymousContractCompositionTest();
+            AnonymousContractRetransmitTest();
         }
 
         /// <summary>
@@ -70,6 +72,89 @@ namespace TlvDemo
 
             var copy = RoundTrip( record );
             Debug.Assert( copy.Equals( record ) );
+        }
+
+        /// <summary>
+        /// Demonstrates that contracts can store other contracts anonymously.
+        /// </summary>
+        private static void AnonymousContractCompositionTest()
+        {
+            var personRecord = new PersonRecord()
+            {
+                Name = "Kevin Thompson",
+                Age = 37,
+                Address = new AddressRecord() { LotNumber = 50, StreetName = "50 Hampden Rd" },
+            };
+
+
+            // MessageRecord can transmit arbitrary contracts as its Message property.
+            var personMsgBusRequest = new MessageRecord()
+            {
+                Name = "PersonRequest",
+                Message = personRecord
+            };
+
+            // Note that upon deserialization, the Message field is filled with a place holder.
+            var copy = RoundTrip( personMsgBusRequest );
+            Debug.Assert( copy.Message is UnknownContract );
+
+            PersonRecord personRecordCopy;
+
+            // Method 1
+            personRecordCopy = copy.Message.Resolve<PersonRecord>();
+            Debug.Assert( personRecordCopy.Equals( personRecord ) );
+
+            // Method 2:
+            if( copy.Message.ContractId == PersonRecord.ContractId )
+            {
+                personRecordCopy = copy.Message.Resolve<PersonRecord>();
+                Debug.Assert( personRecordCopy.Equals( personRecord ) );
+            }
+            else
+            {
+                Debug.Assert( false);
+            }
+
+            // Method 3:
+            if( copy.Message.TryResolve<PersonRecord>( out personRecordCopy ) )
+            {
+                Debug.Assert( personRecordCopy.Equals( personRecord ) );
+            }
+            else
+            {
+                Debug.Assert( false );
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates that contracts can store other contracts anonymously.
+        /// </summary>
+        private static void AnonymousContractRetransmitTest()
+        {
+            var personRecord = new PersonRecord()
+            {
+                Name = "Kevin Thompson",
+                Age = 37,
+                Address = new AddressRecord() { LotNumber = 50, StreetName = "50 Hampden Rd" },
+            };
+
+
+            // MessageRecord can transmit arbitrary contracts as its Message property.
+            var personMsgBusRequest = new MessageRecord()
+            {
+                Name = "PersonRequest",
+                Message = personRecord
+            };
+
+            // Note that upon deserialization, the Message field is filled with a place holder.
+            var copy = RoundTrip( personMsgBusRequest );
+            Debug.Assert( copy.Message is UnknownContract );
+
+            // This demonstrates we can reserialize a live instance that's holding placeholders.
+            var secondCopy = RoundTrip( copy );
+
+            var personRecordCopy = secondCopy.Message.Resolve<PersonRecord>();
+            Debug.Assert( personRecordCopy.Equals( personRecord ) );
         }
 
         private static void LoadStorePersonRecord()
