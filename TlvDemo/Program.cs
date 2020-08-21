@@ -73,6 +73,8 @@ namespace TlvDemo
             TlvWriter writer = new TlvWriter( stream );
             writer.Write( record );
 
+            byte[] buffer = stream.GetBuffer();
+
             stream.Position = 0L;
 
             TlvReader reader = new TlvReader( stream );
