@@ -15,7 +15,6 @@ namespace TlvDemo.TlvApi
 
         public int ContractId { get; set; }
 
-
         public static implicit operator int( ContractIdTag tag )
         {
             return tag.ContractId;
@@ -41,6 +40,5 @@ namespace TlvDemo.TlvApi
         {
             DataConverter.WriteShortLE( (short)this.ContractId, buffer, position );
         }
-
     }
 }
