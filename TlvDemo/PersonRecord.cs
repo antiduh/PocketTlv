@@ -174,8 +174,9 @@ namespace TlvDemo
             // - It's necessary to have the contract ID when doing deferred parsing.
             // - So we "value-stuff": we put in our own tag in before the contract's tags, and then
             //   hide the value from the real type when they read from the CompositeTag.
+            // - The actual value of the fieldId we pass down doesn't matter. It never gets used.
             
-            subSaveContext.Save( 0x0C0FFEE, new ContractIdTag( subContract.ContractId ) );
+            subSaveContext.Save( 0xABC, new ContractIdTag( subContract.ContractId ) );
 
             // Tell the contract to serialize itself.
             subContract.Save( subSaveContext );
