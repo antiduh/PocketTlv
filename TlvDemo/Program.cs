@@ -10,7 +10,8 @@ namespace TlvDemo
         private static void Main( string[] args )
         {
             PrimitivesTest();
-            BasicStaticContractTest();
+            SimpleContractTest();
+            StaticContractCompositionTest();
         }
 
         /// <summary>
@@ -36,14 +37,13 @@ namespace TlvDemo
             writer.Write( top );
 
             var copy = RoundTrip( top );
-
             Debug.Assert( copy.Equals( top ) );
         }
 
         /// <summary>
         /// Demonstrates how to write out a simple contract that has statically resolved members.
         /// </summary>
-        private static void BasicStaticContractTest()
+        private static void SimpleContractTest()
         {
             var record = new AddressRecord()
             {
@@ -52,7 +52,23 @@ namespace TlvDemo
             };
 
             var copy = RoundTrip( record );
+            Debug.Assert( copy.Equals( record ) );
+        }
 
+        /// <summary>
+        /// Demonstrates that contracts can themselves contain contracts. In this demo, PersonRecord
+        /// has a concrete property typed on AddressRecord.
+        /// </summary>
+        private static void StaticContractCompositionTest()
+        {
+            var record = new PersonRecord()
+            {
+                Name = "Kevin Thompson",
+                Age = 37,
+                Address = new AddressRecord() { LotNumber = 50, StreetName = "50 Hampden Rd" },
+            };
+
+            var copy = RoundTrip( record );
             Debug.Assert( copy.Equals( record ) );
         }
 
