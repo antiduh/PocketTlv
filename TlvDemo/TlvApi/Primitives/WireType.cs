@@ -8,5 +8,6 @@ namespace TlvDemo.TlvApi
         ContractId = 2,
         Int = 3,
         String = 4,
+        Double = 5,
     }
 }

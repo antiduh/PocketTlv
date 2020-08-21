@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace TlvDemo.TlvApi
 {
@@ -395,6 +396,21 @@ namespace TlvDemo.TlvApi
             return new decimal( decimalBits );
         }
 
+        public static void WriteDouble( double value, byte[] buffer, int start )
+        {
+            var toy = new DoubleToy() { DoubleValue = value };
+
+            WriteLongLE( toy.LongValue, buffer, start );
+        }
+
+        public static double ReadDouble( byte[] buffer, int start )
+        {
+            CheckReadSize( buffer, start, 8 );
+            var toy = new DoubleToy() { LongValue = ReadLongLE( buffer, start ) };
+
+            return toy.DoubleValue;
+        }
+
         private static void CheckWriteSize( byte[] data, int start, int neededSize )
         {
             if( data.Length - start < neededSize )
@@ -409,6 +425,16 @@ namespace TlvDemo.TlvApi
             {
                 throw new ArgumentException( "The provided array is not large enough to contain the value to read." );
             }
+        }
+
+        [StructLayout( LayoutKind.Explicit )]
+        private struct DoubleToy
+        {
+            [FieldOffset(0)]
+            public double DoubleValue;
+
+            [FieldOffset(0)]
+            public long LongValue;
         }
     }
 }
