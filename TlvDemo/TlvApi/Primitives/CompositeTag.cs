@@ -11,6 +11,7 @@ namespace TlvDemo.TlvApi
         }
 
         public CompositeTag( params ITag[] children )
+            : this()
         {
             this.Children.AddRange( children );
         }
@@ -24,7 +25,7 @@ namespace TlvDemo.TlvApi
 
         // --- ITag implementation ---
 
-        int ITag.FieldId { get; set; }
+        public int FieldId { get; set; }
 
         WireType ITag.WireType => WireType.Composite;
 
