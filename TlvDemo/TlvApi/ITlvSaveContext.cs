@@ -32,7 +32,8 @@ namespace TlvDemo.TlvApi
 
             // When saving sub-contracts, we do "value-stuffing":
             // - It's handy to have the contract ID when parsing, for error checking.
-            // - It's necessary to have the contract ID when doing deferred parsing.
+            // - It's necessary to have the contract ID when doing deferred parsing for
+            //   UnknownContract resolution after the fact.
             // - So we "value-stuff": we put in our own tag in before the contract's tags, and then
             //   hide the value from the real type when they read from the CompositeTag.
             // - The actual value of the fieldId we pass down doesn't matter. It never gets used.
