@@ -76,12 +76,12 @@ namespace TlvDemo
     public class TlvParseContext : ITlvParseContext
     {
         private CompositeTag source;
-        private readonly bool skipLast;
+        private readonly bool hideFirst;
 
-        public TlvParseContext( CompositeTag source, bool hideLast )
+        public TlvParseContext( CompositeTag source, bool hideFirst )
         {
             this.source = source;
-            this.skipLast = hideLast;
+            this.hideFirst = hideFirst;
         }
 
         public T ParseChild<T>( int fieldId ) where T : ITag
@@ -89,12 +89,7 @@ namespace TlvDemo
             var children = source.Children;
             int length = children.Count;
 
-            if( skipLast )
-            {
-                length--;
-            }
-
-            for( int i = 0; i < length; i++ )
+            for( int i = hideFirst ? 1: 0; i < length; i++ )
             {
                 if( children[i].FieldId == fieldId )
                 {
@@ -142,7 +137,7 @@ namespace TlvDemo
             // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
             // serialized contract. 
 
-            foundContractId = (ContractIdTag)contractTag.Children.Last();
+            foundContractId = (ContractIdTag)contractTag.Children.First();
         }
     }
 
@@ -174,17 +169,16 @@ namespace TlvDemo
 
             var subSaveContext = new TlvSaveContext( subcontractTag );
 
-            // Tell the contract to serialize itself.
-            subContract.Save( subSaveContext );
-
             // When saving sub-contracts, we do "value-stuffing":
             // - It's handy to have the contract ID when parsing, for error checking.
             // - It's necessary to have the contract ID when doing deferred parsing.
-            // - So we "value-stuff": we put in our own tag in after the contract's tags, and then
-            //   remove it when we go to parse.
-            // - We value stuff at the /end/ for performance; it's easy to remove from the end of lists.
-
+            // - So we "value-stuff": we put in our own tag in before the contract's tags, and then
+            //   hide the value from the real type when they read from the CompositeTag.
+            
             subSaveContext.Save( 0x0C0FFEE, new ContractIdTag( subContract.ContractId ) );
+
+            // Tell the contract to serialize itself.
+            subContract.Save( subSaveContext );
 
             // Save the composite tag representing the contract to our parent.
             Save( fieldId, subcontractTag );
@@ -212,7 +206,7 @@ namespace TlvDemo
         void ITlvContract.Save( ITlvSaveContext saveContext )
         {
             ITag child;
-            for( int i = 0; i < this.Tag.Children.Count - 1; i++ )
+            for( int i = 1; i < this.Tag.Children.Count; i++ )
             {
                 child = this.Tag.Children[i];
                 saveContext.Save( child.FieldId, child );
