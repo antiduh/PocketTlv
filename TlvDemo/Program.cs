@@ -30,7 +30,8 @@ namespace TlvDemo
                 new CompositeTag(
                     new StringTag( "Kevin Thompson" ),
                     new IntTag( 37 ),
-                    new StringTag( "50 Hampden Rd" )
+                    new StringTag( "50 Hampden Rd" ),
+                    new DoubleTag( 1.6180339 )
                 )
             );
 
