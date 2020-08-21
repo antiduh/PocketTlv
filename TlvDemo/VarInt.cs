@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace TlvDemo
 {
@@ -43,7 +42,7 @@ namespace TlvDemo
             while( current != 0 )
             {
                 // Read off the lowest 7 bits from current into place.
-                place = (byte)(current & 0b0111_1111);
+                place = (byte)( current & 0b0111_1111 );
                 current >>= 7;
 
                 // If current no longer has value, then this is the last byte.
@@ -74,7 +73,7 @@ namespace TlvDemo
 
             // Search the buffer from the starting position, with a maximum search of the length of
             // the buffer. If we find a stop-byte in that time, save how many total bytes we found.
-            // If we don't, we'll stop without ever initializing the 
+            // If we don't, we'll stop without ever initializing the
 
             int maxSearchLength = Math.Min( Math.Min( buffer.Length, MaxWireLength ), maxReadLen );
 
@@ -112,7 +111,7 @@ namespace TlvDemo
             }
 
             this.rawValue = result;
-            
+
             return numRead;
         }
 
@@ -135,7 +134,7 @@ namespace TlvDemo
         {
             return new VarInt( value );
         }
-        
+
         public static implicit operator long( VarInt value )
         {
             return (long)value.rawValue;

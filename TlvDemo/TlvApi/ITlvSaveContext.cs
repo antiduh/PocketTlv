@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using TlvDemo.TlvApi;
 
 namespace TlvDemo.TlvApi
 {
@@ -40,7 +36,7 @@ namespace TlvDemo.TlvApi
             // - So we "value-stuff": we put in our own tag in before the contract's tags, and then
             //   hide the value from the real type when they read from the CompositeTag.
             // - The actual value of the fieldId we pass down doesn't matter. It never gets used.
-            
+
             subSaveContext.Save( 0xABC, new ContractIdTag( subContract.ContractId ) );
 
             // Tell the contract to serialize itself.
@@ -49,6 +45,5 @@ namespace TlvDemo.TlvApi
             // Save the composite tag representing the contract to our parent.
             Save( fieldId, subcontractTag );
         }
-
     }
 }

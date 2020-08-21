@@ -105,7 +105,7 @@ namespace TlvDemo.TlvApi
             {
                 EnsureSize( ref this.buffer, length );
                 this.reader.ReadHarder( this.buffer, 0, length );
-                
+
                 tag.ReadValue( this.buffer, 0, length );
 
                 amountRead += length;

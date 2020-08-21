@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TlvDemo.TlvApi
 {
@@ -17,7 +12,6 @@ namespace TlvDemo.TlvApi
         private readonly Stream stream;
         private byte[] buffer;
 
-
         public TlvWriter( Stream stream )
         {
             this.stream = stream;
@@ -28,7 +22,7 @@ namespace TlvDemo.TlvApi
         public void Write( ITag tag )
         {
             int position = WriteInternal( tag, ref this.buffer, 0 );
-            
+
             this.stream.Write( this.buffer, 0, position );
         }
 
@@ -50,7 +44,7 @@ namespace TlvDemo.TlvApi
             int written = 0;
 
             int valueLength = tag.ComputeLength();
-            
+
             //  requiredSize = type size, length field size, value field size
             int requiredSpace = TlvConsts.HeaderSize + valueLength;
 
@@ -80,7 +74,7 @@ namespace TlvDemo.TlvApi
             {
                 tag.WriteValue( buffer, position + written );
             }
-            
+
             written += valueLength;
 
             return written;
@@ -91,7 +85,7 @@ namespace TlvDemo.TlvApi
             // Type fields are 16 bits. The lower 4 bits store the wire type. The rest store the
             // field id.
 
-            return (short)((int)tag.WireType | tag.FieldId << 4);
+            return (short)( (int)tag.WireType | tag.FieldId << 4 );
         }
 
         private static void EnsureSize( ref byte[] buffer, int size )

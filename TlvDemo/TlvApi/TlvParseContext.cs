@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using TlvDemo.TlvApi;
 
 namespace TlvDemo.TlvApi
 {
@@ -31,7 +29,7 @@ namespace TlvDemo.TlvApi
             var children = source.Children;
             int length = children.Count;
 
-            for( int i = hideFirst ? 1: 0; i < length; i++ )
+            for( int i = hideFirst ? 1 : 0; i < length; i++ )
             {
                 if( children[i].FieldId == fieldId )
                 {
@@ -46,7 +44,7 @@ namespace TlvDemo.TlvApi
         {
             CompositeTag contractTag;
             int foundContractId;
-            
+
             GetContractSubTag( fieldId, out contractTag, out foundContractId );
 
             T result = new T();
@@ -77,10 +75,9 @@ namespace TlvDemo.TlvApi
             contractTag = ParseChild<CompositeTag>( fieldId );
 
             // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
-            // serialized contract. 
+            // serialized contract.
 
             foundContractId = (ContractIdTag)contractTag.Children.First();
         }
     }
-
 }

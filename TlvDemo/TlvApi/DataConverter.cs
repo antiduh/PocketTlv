@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace TlvDemo.TlvApi
 {
@@ -24,7 +23,6 @@ namespace TlvDemo.TlvApi
             data[start + 0] = (byte)( value >> 0 );
             data[start + 1] = (byte)( value >> 8 );
         }
-
 
         /// <summary>
         /// Reads a 16-bit signed integer from a byte array storing the value in
@@ -108,7 +106,6 @@ namespace TlvDemo.TlvApi
 
             return value;
         }
-
 
         /// <summary>
         /// Returns the value of the given 32-bit signed integer as a byte array stored in
