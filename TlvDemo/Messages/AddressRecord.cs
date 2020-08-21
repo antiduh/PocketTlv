@@ -10,23 +10,9 @@ namespace TlvDemo
         public AddressRecord()
         { }
 
-        int ITlvContract.ContractId => 2;
-
         public int LotNumber { get; set; }
 
         public string StreetName { get; set; }
-
-        void ITlvContract.Parse( ITlvParseContext context )
-        {
-            this.LotNumber = context.ParseChild<IntTag>( 0 );
-            this.StreetName = context.ParseChild<StringTag>( 1 );
-        }
-
-        void ITlvContract.Save( ITlvSaveContext context )
-        {
-            context.Save( 0, new IntTag( this.LotNumber ) );
-            context.Save( 1, new StringTag( this.StreetName ) );
-        }
 
         public override bool Equals( object other )
         {
@@ -54,6 +40,22 @@ namespace TlvDemo
         public override int GetHashCode()
         {
             return HashHelper.GetHashCode( this.LotNumber, this.StreetName );
+        }
+
+        // --- ITlvContract implementation ---
+        
+        int ITlvContract.ContractId => 2;
+
+        void ITlvContract.Parse( ITlvParseContext context )
+        {
+            this.LotNumber = context.ParseChild<IntTag>( 0 );
+            this.StreetName = context.ParseChild<StringTag>( 1 );
+        }
+
+        void ITlvContract.Save( ITlvSaveContext context )
+        {
+            context.Save( 0, new IntTag( this.LotNumber ) );
+            context.Save( 1, new StringTag( this.StreetName ) );
         }
     }
 }

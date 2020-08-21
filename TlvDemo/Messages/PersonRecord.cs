@@ -14,22 +14,6 @@ namespace TlvDemo
 
         public AddressRecord Address { get; set; }
 
-        int ITlvContract.ContractId => PersonRecord.ContractId;
-
-        void ITlvContract.Parse( ITlvParseContext context )
-        {
-            this.Name = context.ParseChild<StringTag>( 1 );
-            this.Age = context.ParseChild<IntTag>( 2 );
-            this.Address = context.ParseSubContract<AddressRecord>( 3 );
-        }
-
-        void ITlvContract.Save( ITlvSaveContext context )
-        {
-            context.Save( 1, new StringTag( this.Name ) );
-            context.Save( 2, new IntTag( this.Age ) );
-            context.Save( 3, this.Address );
-        }
-
         public override bool Equals( object other )
         {
             return Equals( other as PersonRecord );
@@ -57,6 +41,24 @@ namespace TlvDemo
         public override int GetHashCode()
         {
             return HashHelper.GetHashCode( this.Name, this.Age, this.Address );
+        }
+
+        // --- ITlvContract implementation ---
+
+        int ITlvContract.ContractId => PersonRecord.ContractId;
+
+        void ITlvContract.Parse( ITlvParseContext context )
+        {
+            this.Name = context.ParseChild<StringTag>( 1 );
+            this.Age = context.ParseChild<IntTag>( 2 );
+            this.Address = context.ParseSubContract<AddressRecord>( 3 );
+        }
+
+        void ITlvContract.Save( ITlvSaveContext context )
+        {
+            context.Save( 1, new StringTag( this.Name ) );
+            context.Save( 2, new IntTag( this.Age ) );
+            context.Save( 3, this.Address );
         }
     }
 }

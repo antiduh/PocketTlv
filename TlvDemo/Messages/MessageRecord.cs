@@ -9,6 +9,8 @@ namespace TlvDemo
 
         public ITlvContract Message { get; set; }
 
+        // --- ITlvContract implementation ---
+
         int ITlvContract.ContractId => 3;
 
         void ITlvContract.Parse( ITlvParseContext parseContext )
