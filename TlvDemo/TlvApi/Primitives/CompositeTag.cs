@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using TlvDemo.ClassLib;
 
 namespace TlvDemo.TlvApi
 {
@@ -21,6 +23,47 @@ namespace TlvDemo.TlvApi
         public override string ToString()
         {
             return $"CompositeTag - {this.Children.Count} children";
+        }
+
+        public override bool Equals( object other )
+        {
+            return Equals( other as CompositeTag );
+        }
+
+        public bool Equals( CompositeTag other )
+        {
+            if( ReferenceEquals( other, null ) )
+            {
+                return false;
+            }
+            else if( ReferenceEquals( other, this ) )
+            {
+                return true;
+            }
+            else
+            {
+                if( this.Children.Count != other.Children.Count )
+                {
+                    return false;
+                }
+                else
+                {
+                    for( int i = 0; i < this.Children.Count; i++ )
+                    {
+                        if( this.Children[i].Equals( other.Children[i] ) == false )
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return HashHelper.GetHashCode( this.Children );
         }
 
         // --- ITag implementation ---

@@ -21,6 +21,32 @@ namespace TlvDemo.TlvApi
             return "StringTag - " + this.Value;
         }
 
+        public override bool Equals( object other )
+        {
+            return Equals( other as StringTag );
+        }
+
+        public bool Equals( StringTag other )
+        {
+            if( ReferenceEquals( other, null ) )
+            {
+                return false;
+            }
+            else if( ReferenceEquals( other, this ) )
+            {
+                return true;
+            }
+            else
+            {
+                return this.Value == other.Value;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
+
         public static implicit operator string( StringTag tag )
         {
             return tag.Value;
@@ -28,7 +54,7 @@ namespace TlvDemo.TlvApi
 
         // --- ITag implementation ---
 
-        int ITag.FieldId { get; set; }
+        public int FieldId { get; set; }
 
         WireType ITag.WireType => WireType.String;
 

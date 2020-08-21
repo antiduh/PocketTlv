@@ -15,6 +15,32 @@ namespace TlvDemo.TlvApi
 
         public int ContractId { get; set; }
 
+        public override bool Equals( object other )
+        {
+            return Equals( other as ContractIdTag );
+        }
+
+        public bool Equals( ContractIdTag other )
+        {
+            if( ReferenceEquals( other, null ) )
+            {
+                return false;
+            }
+            else if( ReferenceEquals( other, this ) )
+            {
+                return true;
+            }
+            else
+            {
+                return this.ContractId == other.ContractId;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ContractId.GetHashCode();
+        }
+
         public static implicit operator int( ContractIdTag tag )
         {
             return tag.ContractId;
@@ -22,7 +48,7 @@ namespace TlvDemo.TlvApi
 
         // --- ITag implementation ---
 
-        int ITag.FieldId { get; set; }
+        public int FieldId { get; set; }
 
         WireType ITag.WireType => WireType.ContractId;
 
