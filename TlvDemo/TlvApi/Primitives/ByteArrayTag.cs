@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace TlvDemo.TlvApi
 {
@@ -52,6 +53,11 @@ namespace TlvDemo.TlvApi
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public static implicit operator byte[]( ByteArrayTag tag )
+        {
+            return tag.Array;
         }
 
         // --- ITag implementation ---
