@@ -31,7 +31,8 @@ namespace TlvDemo
                     new StringTag( "Kevin Thompson" ),
                     new IntTag( 37 ),
                     new StringTag( "50 Hampden Rd" ),
-                    new DoubleTag( 1.6180339 )
+                    new DoubleTag( 1.6180339 ),
+                    new ByteArrayTag( new byte[] { 1, 2, 3 } )
                 )
             );
 

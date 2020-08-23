@@ -154,6 +154,9 @@ namespace TlvDemo.TlvApi
                 case WireType.Double:
                     result = new DoubleTag();
                     break;
+                case WireType.ByteArray:
+                    result = new ByteArrayTag();
+                    break;
                 default:
                     throw new InvalidOperationException( "Unknown wire type." );
             }

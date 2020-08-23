@@ -46,6 +46,7 @@
     <Compile Include="ClassLib\StreamConverter.cs" />
     <Compile Include="ClassLib\DataConverter.cs" />
     <Compile Include="TlvApi\ITlvContract.cs" />
+    <Compile Include="TlvApi\Primitives\ByteArrayTag.cs" />
     <Compile Include="TlvApi\Primitives\DoubleTag.cs" />
     <Compile Include="TlvApi\TlvParseContext.cs" />
     <Compile Include="TlvApi\ITlvSaveContext.cs" />

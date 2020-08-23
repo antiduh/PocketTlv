@@ -9,5 +9,6 @@ namespace TlvDemo.TlvApi
         Int = 3,
         String = 4,
         Double = 5,
+        ByteArray = 6,
     }
 }
