@@ -19,6 +19,39 @@ namespace TlvDemo.TlvApi.Primitives
 
         public long Value { get; set; }
 
+        public static implicit operator long( VarIntTag tag )
+        {
+            return tag.Value;
+        }
+
+        public override bool Equals( object other )
+        {
+            return Equals( other as VarIntTag );
+        }
+
+        public bool Equals( VarIntTag other )
+        {
+            if( ReferenceEquals( other, null ) )
+            {
+                return false;
+            }
+            else if( ReferenceEquals( other, this ) )
+            {
+                return true;
+            }
+            else
+            {
+                return this.Value == other.Value;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
+
+        // --- ITag implementation ---
+
         public int FieldId { get; set; }
 
         WireType ITag.WireType => WireType.VarInt;
