@@ -10,5 +10,7 @@ namespace TlvDemo.TlvApi
         String = 4,
         Double = 5,
         ByteArray = 6,
+        Long = 7,
+        Short = 8,
     }
 }

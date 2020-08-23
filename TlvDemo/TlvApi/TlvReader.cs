@@ -145,6 +145,12 @@ namespace TlvDemo.TlvApi
                 case WireType.Int:
                     result = new IntTag();
                     break;
+                case WireType.Short:
+                    result = new ShortTag();
+                    break;
+                case WireType.Long:
+                    result = new LongTag();
+                    break;
                 case WireType.String:
                     result = new StringTag();
                     break;
