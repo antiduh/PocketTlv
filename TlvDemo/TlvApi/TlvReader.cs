@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using TlvDemo.TlvApi.Primitives;
 
 namespace TlvDemo.TlvApi
 {
@@ -162,6 +163,9 @@ namespace TlvDemo.TlvApi
                     break;
                 case WireType.ByteArray:
                     result = new ByteArrayTag();
+                    break;
+                case WireType.VarInt:
+                    result = new VarIntTag();
                     break;
                 default:
                     throw new InvalidOperationException( "Unknown wire type." );

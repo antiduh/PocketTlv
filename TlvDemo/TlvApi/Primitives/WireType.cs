@@ -12,5 +12,6 @@ namespace TlvDemo.TlvApi
         ByteArray = 6,
         Long = 7,
         Short = 8,
+        VarInt = 9,
     }
 }

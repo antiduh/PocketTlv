@@ -50,6 +50,7 @@
     <Compile Include="TlvApi\Primitives\DoubleTag.cs" />
     <Compile Include="TlvApi\Primitives\ShortTag.cs" />
     <Compile Include="TlvApi\Primitives\LongTag.cs" />
+    <Compile Include="TlvApi\Primitives\VarIntTag.cs" />
     <Compile Include="TlvApi\TlvParseContext.cs" />
     <Compile Include="TlvApi\ITlvSaveContext.cs" />
     <Compile Include="TlvApi\UnknownContract.cs" />
