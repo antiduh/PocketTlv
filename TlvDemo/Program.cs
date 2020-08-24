@@ -14,6 +14,7 @@ namespace TlvDemo
             StaticContractCompositionTest();
             AnonymousContractCompositionTest();
             AnonymousContractRetransmitTest();
+            ReadDirectAnonymousContractTest();
         }
 
         /// <summary>
@@ -159,6 +160,29 @@ namespace TlvDemo
             Debug.Assert( personRecordCopy.Equals( personRecord ) );
         }
 
+        private static void ReadDirectAnonymousContractTest()
+        {
+            var record = new AddressRecord()
+            {
+                LotNumber = 50,
+                StreetName = "Hampden Rd",
+            };
+
+            var stream = new MemoryStream();
+            var writer = new TlvWriter( stream );
+            var reader = new TlvReader( stream );
+
+            reader.RegisterContract<AddressRecord>();
+
+            writer.Write( record );
+
+            stream.Position = 0L;
+
+            ITlvContract anonymousContract = reader.ReadContract();
+
+            Debug.Assert( anonymousContract is AddressRecord );
+        }
+
         private static ITag RoundTrip( ITag tag )
         {
             var stream = new MemoryStream();
@@ -188,7 +212,7 @@ namespace TlvDemo
             stream.Position = 0L;
 
             TlvReader reader = new TlvReader( stream );
-            return reader.Read<T>();
+            return reader.ReadContract<T>();
         }
     }
 }

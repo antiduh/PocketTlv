@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using TlvDemo.TlvApi.Primitives;
 
 namespace TlvDemo.TlvApi
@@ -10,11 +12,15 @@ namespace TlvDemo.TlvApi
 
         private readonly StreamConverter reader;
 
+        private readonly ContractRegistry contractReg;
+
         private byte[] buffer;
 
         public TlvReader( Stream stream )
         {
             this.stream = stream;
+
+            this.contractReg = new ContractRegistry();
 
             this.buffer = new byte[1024];
 
@@ -31,7 +37,7 @@ namespace TlvDemo.TlvApi
             return (T)Read( out _ );
         }
 
-        public T Read<T>() where T : ITlvContract, new()
+        public T ReadContract<T>() where T : ITlvContract, new()
         {
             T contract = new T();
 
@@ -47,6 +53,32 @@ namespace TlvDemo.TlvApi
             contract.Parse( parseContext );
 
             return contract;
+        }
+
+        public ITlvContract ReadContract()
+        {
+            var contractTag = ReadTag<CompositeTag>();
+
+            int contractId = contractTag.FieldId;
+
+            if( this.contractReg.Contains( contractId ) == false )
+            {
+                string msg = $"Cannot deserialize contract with ID {contractId} - no contract has been registered for that ID.";
+                throw new KeyNotFoundException( msg );
+            }
+
+            ITlvContract contract = this.contractReg.Get( contractId );
+
+            TlvParseContext parseContext = new TlvParseContext( contractTag, false );
+
+            contract.Parse( parseContext );
+
+            return contract;
+        }
+
+        public void RegisterContract<T>() where T : ITlvContract, new()
+        {
+            this.contractReg.Register<T>();
         }
 
         private ITag Read( out int amountRead )

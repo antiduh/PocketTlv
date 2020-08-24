@@ -45,6 +45,7 @@
     <Compile Include="DemoMessages\AddressRecord.cs" />
     <Compile Include="ClassLib\StreamConverter.cs" />
     <Compile Include="ClassLib\DataConverter.cs" />
+    <Compile Include="TlvApi\ContractRegistry.cs" />
     <Compile Include="TlvApi\ITlvContract.cs" />
     <Compile Include="TlvApi\Primitives\ByteArrayTag.cs" />
     <Compile Include="TlvApi\Primitives\DoubleTag.cs" />
@@ -71,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
