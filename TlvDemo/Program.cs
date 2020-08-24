@@ -86,7 +86,6 @@ namespace TlvDemo
                 Address = new AddressRecord() { LotNumber = 50, StreetName = "50 Hampden Rd" },
             };
 
-
             // MessageRecord can transmit arbitrary contracts as its Message property.
             var personMsgBusRequest = new MessageRecord()
             {
@@ -112,7 +111,7 @@ namespace TlvDemo
             }
             else
             {
-                Debug.Assert( false);
+                Debug.Assert( false );
             }
 
             // Method 3:
@@ -137,7 +136,6 @@ namespace TlvDemo
                 Age = 37,
                 Address = new AddressRecord() { LotNumber = 50, StreetName = "50 Hampden Rd" },
             };
-
 
             // MessageRecord can transmit arbitrary contracts as its Message property.
             var personMsgBusRequest = new MessageRecord()

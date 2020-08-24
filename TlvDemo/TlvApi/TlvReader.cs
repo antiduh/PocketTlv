@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using TlvDemo.TlvApi.Primitives;
 
 namespace TlvDemo.TlvApi
@@ -175,30 +174,39 @@ namespace TlvDemo.TlvApi
                 case WireType.Composite:
                     result = new CompositeTag();
                     break;
+
                 case WireType.Int:
                     result = new IntTag();
                     break;
+
                 case WireType.Short:
                     result = new ShortTag();
                     break;
+
                 case WireType.Long:
                     result = new LongTag();
                     break;
+
                 case WireType.String:
                     result = new StringTag();
                     break;
+
                 case WireType.ContractId:
                     result = new ContractIdTag();
                     break;
+
                 case WireType.Double:
                     result = new DoubleTag();
                     break;
+
                 case WireType.ByteArray:
                     result = new ByteArrayTag();
                     break;
+
                 case WireType.VarInt:
                     result = new VarIntTag();
                     break;
+
                 default:
                     throw new InvalidOperationException( "Unknown wire type." );
             }

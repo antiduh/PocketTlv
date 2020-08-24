@@ -31,9 +31,9 @@ namespace TlvDemo
             }
             else
             {
-                return 
-                    this.Name == other.Name && 
-                    this.Age == other.Age && 
+                return
+                    this.Name == other.Name &&
+                    this.Age == other.Age &&
                     this.Address.Equals( other.Address );
             }
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace TlvDemo.TlvApi
 {
@@ -19,7 +18,6 @@ namespace TlvDemo.TlvApi
             this.FieldId = fieldId;
             this.Array = array;
         }
-
 
         public byte[] Array { get; set; }
 

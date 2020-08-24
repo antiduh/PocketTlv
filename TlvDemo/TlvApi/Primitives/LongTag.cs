@@ -65,14 +65,14 @@ namespace TlvDemo.TlvApi
 
         int ITag.ComputeLength()
         {
-            return sizeof(long);
+            return sizeof( long );
         }
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            if( length != sizeof(long) )
+            if( length != sizeof( long ) )
             {
-                throw new InvalidOperationException( $"{nameof( length )} must be {sizeof(long)}." );
+                throw new InvalidOperationException( $"{nameof( length )} must be {sizeof( long )}." );
             }
 
             this.Value = DataConverter.ReadLongLE( buffer, position );

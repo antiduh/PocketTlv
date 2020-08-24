@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
 using TlvDemo.ClassLib;
 using TlvDemo.TlvApi;
 
@@ -43,7 +42,7 @@ namespace TlvDemo
         }
 
         // --- ITlvContract implementation ---
-        
+
         int ITlvContract.ContractId => 2;
 
         void ITlvContract.Parse( ITlvParseContext context )

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TlvDemo.TlvApi
 {
@@ -22,7 +18,7 @@ namespace TlvDemo.TlvApi
             this.FieldId = fieldId;
             this.Value = value;
         }
-        
+
         public double Value { get; set; }
 
         public override bool Equals( object other )

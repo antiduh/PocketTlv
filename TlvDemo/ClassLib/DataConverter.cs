@@ -430,10 +430,10 @@ namespace TlvDemo.TlvApi
         [StructLayout( LayoutKind.Explicit )]
         private struct DoubleToy
         {
-            [FieldOffset(0)]
+            [FieldOffset( 0 )]
             public double DoubleValue;
 
-            [FieldOffset(0)]
+            [FieldOffset( 0 )]
             public long LongValue;
         }
     }

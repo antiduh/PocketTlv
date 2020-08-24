@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TlvDemo.TlvApi.Primitives
 {
@@ -65,7 +61,7 @@ namespace TlvDemo.TlvApi.Primitives
         public int ComputeLength()
         {
             int numBytes = 0;
-            
+
             for( long copy = this.Value; copy > 0; copy >>= 8 )
             {
                 numBytes++;

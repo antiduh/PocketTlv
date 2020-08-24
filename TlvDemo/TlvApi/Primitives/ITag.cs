@@ -8,11 +8,11 @@ namespace TlvDemo.TlvApi
     public interface ITag
     {
         // The wire format of a TLV in this library is as follows:
-        
+
         // +-------------------+-------------------+------------------+-------------------------+
         // | FieldId (12 bits) | WireType (4 bits) | Length (32 bits) |  Value (`Length` bytes) |
         // +-------------------+-------------------+------------------+-------------------------+
-        
+
         // Effectively the FieldId and the WireType are packed into a 2-byte Type field.
         //
         // The fieldID is used by callers to assign ID labels on tags, so that they can be
