@@ -13,6 +13,12 @@ namespace TlvDemo.TlvApi
             this.Value = value;
         }
 
+        public LongTag( int fieldId, long value )
+        {
+            this.FieldId = fieldId;
+            this.Value = value;
+        }
+
         public long Value { get; set; }
 
         public override string ToString()

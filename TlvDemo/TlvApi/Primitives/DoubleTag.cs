@@ -14,9 +14,15 @@ namespace TlvDemo.TlvApi
 
         public DoubleTag( double value )
         {
-            Value = value;
+            this.Value = value;
         }
 
+        public DoubleTag( int fieldId, double value )
+        {
+            this.FieldId = fieldId;
+            this.Value = value;
+        }
+        
         public double Value { get; set; }
 
         public override bool Equals( object other )

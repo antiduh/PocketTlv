@@ -13,6 +13,12 @@ namespace TlvDemo.TlvApi
             this.ContractId = contractId;
         }
 
+        public ContractIdTag( int fieldId, int contractId )
+        {
+            this.FieldId = fieldId;
+            this.ContractId = contractId;
+        }
+
         public int ContractId { get; set; }
 
         public override bool Equals( object other )

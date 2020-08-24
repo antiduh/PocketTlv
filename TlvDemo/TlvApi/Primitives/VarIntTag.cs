@@ -14,7 +14,13 @@ namespace TlvDemo.TlvApi.Primitives
 
         public VarIntTag( long value )
         {
-            Value = value;
+            this.Value = value;
+        }
+
+        public VarIntTag( int fieldId, long value )
+        {
+            this.FieldId = fieldId;
+            this.Value = value;
         }
 
         public long Value { get; set; }

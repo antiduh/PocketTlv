@@ -11,8 +11,15 @@ namespace TlvDemo.TlvApi
 
         public ByteArrayTag( byte[] array )
         {
-            Array = array;
+            this.Array = array;
         }
+
+        public ByteArrayTag( int fieldId, byte[] array )
+        {
+            this.FieldId = fieldId;
+            this.Array = array;
+        }
+
 
         public byte[] Array { get; set; }
 

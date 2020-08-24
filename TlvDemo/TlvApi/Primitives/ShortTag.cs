@@ -13,6 +13,12 @@ namespace TlvDemo.TlvApi
             this.Value = value;
         }
 
+        public ShortTag( int fieldId, short value )
+        {
+            this.FieldId = fieldId;
+            this.Value = value;
+        }
+
         public short Value { get; set; }
 
         public override string ToString()

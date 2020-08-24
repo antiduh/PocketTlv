@@ -18,6 +18,13 @@ namespace TlvDemo.TlvApi
             this.Children.AddRange( children );
         }
 
+        public CompositeTag( int fieldId, params ITag[] children )
+            : this()
+        {
+            this.FieldId = fieldId;
+            this.Children.AddRange( children );
+        }
+
         public List<ITag> Children { get; private set; }
 
         public override string ToString()

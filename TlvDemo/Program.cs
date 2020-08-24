@@ -22,18 +22,15 @@ namespace TlvDemo
         /// </summary>
         private static void PrimitivesTest()
         {
-            // This leaves the fieldIds all set to zero. If you were to parse this, you'd need to
-            // assume the order and structure below never changes. You can init the fieldIds if you
-            // want, i just don't bother.
-            var top = new CompositeTag(
-                new StringTag( "Hello world" ),
-                new IntTag( 42 ),
-                new CompositeTag(
-                    new StringTag( "Kevin Thompson" ),
-                    new IntTag( 37 ),
-                    new StringTag( "50 Hampden Rd" ),
-                    new DoubleTag( 1.6180339 ),
-                    new ByteArrayTag( new byte[] { 1, 2, 3 } )
+            var top = new CompositeTag( 4242,
+                new StringTag( 1, "Hello world" ),
+                new IntTag( 2, 42 ),
+                new CompositeTag( 3,
+                    new StringTag( 1, "Kevin Thompson" ),
+                    new IntTag( 2, 37 ),
+                    new StringTag( 3, "50 Hampden Rd" ),
+                    new DoubleTag( 4, 1.6180339 ),
+                    new ByteArrayTag( 5, new byte[] { 1, 2, 3 } )
                 )
             );
 

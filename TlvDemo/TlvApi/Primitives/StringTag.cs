@@ -14,6 +14,12 @@ namespace TlvDemo.TlvApi
             this.Value = value;
         }
 
+        public StringTag( int fieldId, string value )
+        {
+            this.FieldId = fieldId;
+            this.Value = value;
+        }
+
         public string Value { get; set; }
 
         public override string ToString()
