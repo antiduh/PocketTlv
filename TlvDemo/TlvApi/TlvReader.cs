@@ -136,7 +136,10 @@ namespace TlvDemo.TlvApi
             else
             {
                 EnsureSize( ref this.buffer, length );
-                this.reader.ReadHarder( this.buffer, 0, length );
+                if( this.reader.ReadHarder( this.buffer, 0, length ) == false )
+                {
+                    return null;
+                }
 
                 tag.ReadValue( this.buffer, 0, length );
 
