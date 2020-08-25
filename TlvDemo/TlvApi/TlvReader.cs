@@ -208,7 +208,7 @@ namespace TlvDemo.TlvApi
                     break;
 
                 default:
-                    throw new InvalidOperationException( "Unknown wire type." );
+                    throw new UnknownWireTypeException( $"Unknown wire type '{wireTypeId}'.", wireTypeId );
             }
 
             result.FieldId = fieldId;

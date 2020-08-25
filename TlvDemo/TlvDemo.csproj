@@ -68,6 +68,7 @@
     <Compile Include="TlvApi\TlvReader.cs" />
     <Compile Include="TlvApi\TlvWriter.cs" />
     <Compile Include="TlvApi\Primitives\WireType.cs" />
+    <Compile Include="TlvApi\UnknownWireTypeException.cs" />
     <Compile Include="VarInt.cs" />
   </ItemGroup>
   <ItemGroup>
