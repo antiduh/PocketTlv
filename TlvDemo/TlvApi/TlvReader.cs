@@ -28,12 +28,12 @@ namespace TlvDemo.TlvApi
 
         public ITag ReadTag()
         {
-            return Read( out _ );
+            return ReadInternal( out _ );
         }
 
         public T ReadTag<T>() where T : ITag
         {
-            return (T)Read( out _ );
+            return (T)ReadInternal( out _ );
         }
 
         public T ReadContract<T>() where T : ITlvContract, new()
@@ -80,7 +80,7 @@ namespace TlvDemo.TlvApi
             this.contractReg.Register<T>();
         }
 
-        private ITag Read( out int amountRead )
+        private ITag ReadInternal( out int amountRead )
         {
             amountRead = 0;
 
@@ -118,7 +118,7 @@ namespace TlvDemo.TlvApi
                     ITag childTag;
                     int childReadAmount;
 
-                    childTag = Read( out childReadAmount );
+                    childTag = ReadInternal( out childReadAmount );
 
                     if( childTag == null )
                     {
