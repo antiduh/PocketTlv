@@ -13,5 +13,6 @@ namespace TlvDemo.TlvApi
         Long = 7,
         Short = 8,
         VarInt = 9,
+        Bool = 10,
     }
 }

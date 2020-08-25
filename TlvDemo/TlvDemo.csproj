@@ -47,6 +47,7 @@
     <Compile Include="ClassLib\DataConverter.cs" />
     <Compile Include="TlvApi\ContractRegistry.cs" />
     <Compile Include="TlvApi\ITlvContract.cs" />
+    <Compile Include="TlvApi\Primitives\BoolTag.cs" />
     <Compile Include="TlvApi\Primitives\ByteArrayTag.cs" />
     <Compile Include="TlvApi\Primitives\DoubleTag.cs" />
     <Compile Include="TlvApi\Primitives\ShortTag.cs" />
