@@ -47,7 +47,7 @@ namespace TlvDemo.TlvApi
             EnsureSize( ref buffer, requiredSpace + position );
 
             // -- Type --
-            short type = PackTypeField( tag );
+            short type = TypePacking.Pack( tag.WireType, tag.FieldId );
             DataConverter.WriteShortLE( type, buffer, position + written );
             written += TlvConsts.TypeSize;
 
@@ -74,14 +74,6 @@ namespace TlvDemo.TlvApi
             written += valueLength;
 
             return written;
-        }
-
-        private static short PackTypeField( ITag tag )
-        {
-            // Type fields are 16 bits. The lower 4 bits store the wire type. The rest store the
-            // field id.
-
-            return (short)( (int)tag.WireType | tag.FieldId << 4 );
         }
 
         private static void EnsureSize( ref byte[] buffer, int size )

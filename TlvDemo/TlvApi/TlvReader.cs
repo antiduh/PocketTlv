@@ -106,7 +106,7 @@ namespace TlvDemo.TlvApi
             int wireType;
             int fieldId;
 
-            UnpackType( packedType, out wireType, out fieldId );
+            TypePacking.Unpack( packedType, out wireType, out fieldId );
 
             ITag tag;
             tag = ConstructTag( wireType, fieldId );
@@ -152,16 +152,6 @@ namespace TlvDemo.TlvApi
             {
                 Array.Resize( ref buffer, size );
             }
-        }
-
-        private static void UnpackType( short packedType, out int wireType, out int fieldId )
-        {
-            // Type fields are 16 bits. The lower 4 bits store the wire type. The rest store the
-            // field id.
-
-            wireType = packedType & 0b1111;
-
-            fieldId = packedType >> 4;
         }
 
         private ITag ConstructTag( int wireTypeId, int fieldId )
