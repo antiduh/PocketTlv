@@ -56,7 +56,7 @@
     <Compile Include="TlvApi\TlvParseContext.cs" />
     <Compile Include="TlvApi\ITlvSaveContext.cs" />
     <Compile Include="TlvApi\TypePacking.cs" />
-    <Compile Include="TlvApi\UnknownContract.cs" />
+    <Compile Include="TlvApi\UnresolvedContract.cs" />
     <Compile Include="DemoMessages\MessageRecord.cs" />
     <Compile Include="DemoMessages\PersonRecord.cs" />
     <Compile Include="Program.cs" />

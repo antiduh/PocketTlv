@@ -2,9 +2,9 @@
 
 namespace TlvDemo.TlvApi
 {
-    public class UnknownContract : ITlvContract
+    public class UnresolvedContract : ITlvContract
     {
-        public UnknownContract( CompositeTag tag, int contractId )
+        public UnresolvedContract( CompositeTag tag, int contractId )
         {
             this.Tag = tag;
             this.ContractId = contractId;
@@ -51,7 +51,7 @@ namespace TlvDemo.TlvApi
                 contract = known;
                 return true;
             }
-            else if( unknown is UnknownContract internalUnknown )
+            else if( unknown is UnresolvedContract internalUnknown )
             {
                 TlvParseContext parser = new TlvParseContext( internalUnknown.Tag, true );
 

@@ -95,7 +95,7 @@ namespace TlvDemo
 
             // Note that upon deserialization, the Message field is filled with a place holder.
             var copy = RoundTrip( personMsgBusRequest );
-            Debug.Assert( copy.Message is UnknownContract );
+            Debug.Assert( copy.Message is UnresolvedContract );
 
             PersonRecord personRecordCopy;
 
@@ -146,7 +146,7 @@ namespace TlvDemo
 
             // Note that upon deserialization, the Message field is filled with a place holder.
             var copy = RoundTrip( personMsgBusRequest );
-            Debug.Assert( copy.Message is UnknownContract );
+            Debug.Assert( copy.Message is UnresolvedContract );
 
             // This demonstrates we can reserialize a live instance that's holding placeholders.
             var secondCopy = RoundTrip( copy );

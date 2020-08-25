@@ -67,7 +67,7 @@ namespace TlvDemo.TlvApi
 
             GetContractSubTag( fieldId, out contractTag, out foundContractId );
 
-            return new UnknownContract( contractTag, foundContractId );
+            return new UnresolvedContract( contractTag, foundContractId );
         }
 
         private void GetContractSubTag( int fieldId, out CompositeTag contractTag, out int foundContractId )
