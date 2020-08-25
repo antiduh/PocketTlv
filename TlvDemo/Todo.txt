@@ -1,15 +1,5 @@
-﻿- Read arbitrary contracts.
-	ITlvContract contract = reader.Read();
-	if( contract is AddressContract ) ..
-
-- TlvStream
-
-- TlvDispatch
-   dispatch.RegisterHandler<AddressRecord>( myHandler )
-   dispatch.RegisterDefault( someHandler )
+﻿- TlvStream
 
 Support reading children positionally
-
-Suport constructing tags with fieldId directly in them.
 
 Make fieldId = 0 a reserved value (contract ID value stuffing).
