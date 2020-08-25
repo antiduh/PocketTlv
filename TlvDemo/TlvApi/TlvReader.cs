@@ -209,6 +209,7 @@ namespace TlvDemo.TlvApi
 
                 case WireType.Bool:
                     result = new BoolTag();
+                    break;
 
                 default:
                     throw new UnknownWireTypeException( $"Unknown wire type '{wireTypeId}'.", wireTypeId );
