@@ -20,16 +20,11 @@ namespace TlvDemo.TlvApi
 
         public void Save( int fieldId, ITag tag )
         {
-            tag.FieldId = fieldId;
-            this.contractTag.Children.Add( tag );
+            this.contractTag.AddChild( fieldId, tag );
         }
 
         public void Save( int fieldId, ITlvContract subContract )
         {
-            CompositeTag subcontractTag = new CompositeTag();
-
-            var subSaveContext = new TlvSaveContext( subcontractTag );
-
             // When saving sub-contracts, we do "value-stuffing":
             // - It's handy to have the contract ID when parsing, for error checking.
             // - It's necessary to have the contract ID when doing deferred parsing for
@@ -38,13 +33,22 @@ namespace TlvDemo.TlvApi
             //   hide the value from the real type when they read from the CompositeTag.
             // - The actual value of the fieldId we pass down doesn't matter. It never gets used.
 
-            subSaveContext.Save( 0xABC, new ContractIdTag( subContract.ContractId ) );
+            // A tag to represent the subcontract.
+            var subcontractTag = new CompositeTag();
 
-            // Tell the contract to serialize itself.
-            subContract.Save( subSaveContext );
+            // Value-stuff the contract ID.
+            subcontractTag.AddChild( 0xABC, new ContractIdTag( subContract.ContractId ) );
 
-            // Save the composite tag representing the contract to our parent.
-            Save( fieldId, subcontractTag );
+            // Tell the contract to serialize itself through us by swapping which CompositeTag we're
+            // pointing to (effectively doing recursion via the call stack).
+            CompositeTag backup = this.contractTag;
+
+            this.contractTag = subcontractTag;
+            subContract.Save( this );
+            this.contractTag = backup;
+
+            // Save the composite tag representing the subcontract to our parent.
+            this.contractTag.AddChild( fieldId, subcontractTag );
         }
     }
 }
