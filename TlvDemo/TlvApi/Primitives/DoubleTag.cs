@@ -60,12 +60,12 @@ namespace TlvDemo.TlvApi
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            this.Value = DataConverter.ReadDouble( buffer, position );
+            this.Value = DataConverter.ReadDoubleLE( buffer, position );
         }
 
         void ITag.WriteValue( byte[] buffer, int position )
         {
-            DataConverter.WriteDouble( this.Value, buffer, position );
+            DataConverter.WriteDoubleLE( this.Value, buffer, position );
         }
     }
 }

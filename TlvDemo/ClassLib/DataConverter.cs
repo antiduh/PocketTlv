@@ -396,14 +396,17 @@ namespace TlvDemo.TlvApi
             return new decimal( decimalBits );
         }
 
-        public static void WriteDouble( double value, byte[] buffer, int start )
+        public static void WriteDoubleLE( double value, byte[] buffer, int start )
         {
+            // It's important to state that doing this gives us a double's bytes in the native word order.
+            // By calling WriteLongLE, we guarantee we write the native-word-ordered bytes in the
+            // little endian format.
             var toy = new DoubleToy() { DoubleValue = value };
 
             WriteLongLE( toy.LongValue, buffer, start );
         }
 
-        public static double ReadDouble( byte[] buffer, int start )
+        public static double ReadDoubleLE( byte[] buffer, int start )
         {
             CheckReadSize( buffer, start, 8 );
             var toy = new DoubleToy() { LongValue = ReadLongLE( buffer, start ) };
