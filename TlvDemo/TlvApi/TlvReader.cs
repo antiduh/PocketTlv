@@ -7,8 +7,6 @@ namespace TlvDemo.TlvApi
 {
     public class TlvReader
     {
-        private readonly Stream stream;
-
         private readonly StreamConverter reader;
 
         private readonly ContractRegistry contractReg;
@@ -32,13 +30,11 @@ namespace TlvDemo.TlvApi
                 throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
             }
 
-            this.stream = stream;
-
             this.contractReg = new ContractRegistry();
 
             this.buffer = new byte[bufferSize];
 
-            this.reader = new StreamConverter( this.stream );
+            this.reader = new StreamConverter( stream );
         }
 
         public ITag ReadTag()
