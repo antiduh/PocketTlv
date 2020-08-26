@@ -204,6 +204,10 @@ namespace TlvDemo.TlvApi
                     result = new BoolTag();
                     break;
 
+                case WireType.Decimal:
+                    result = new DecimalTag();
+                    break;
+
                 default:
                     throw new UnknownWireTypeException( $"Unknown wire type '{wireTypeId}'.", wireTypeId );
             }

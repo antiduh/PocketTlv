@@ -49,6 +49,7 @@
     <Compile Include="TlvApi\ITlvContract.cs" />
     <Compile Include="TlvApi\Primitives\BoolTag.cs" />
     <Compile Include="TlvApi\Primitives\ByteArrayTag.cs" />
+    <Compile Include="TlvApi\Primitives\DecimalTag.cs" />
     <Compile Include="TlvApi\Primitives\DoubleTag.cs" />
     <Compile Include="TlvApi\Primitives\ShortTag.cs" />
     <Compile Include="TlvApi\Primitives\LongTag.cs" />

@@ -14,5 +14,6 @@ namespace TlvDemo.TlvApi
         VarInt = 8,
         Double = 9,
         ByteArray = 10,
+        Decimal = 11,
     }
 }
