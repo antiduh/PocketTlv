@@ -47,6 +47,11 @@ namespace TlvDemo.TlvApi
             return this.Value.GetHashCode();
         }
 
+        public static implicit operator double( DoubleTag tag )
+        {
+            return tag.Value;
+        }
+
         // --- ITag implementation ---
 
         public int FieldId { get; set; }
