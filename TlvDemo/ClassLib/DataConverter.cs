@@ -91,24 +91,6 @@ namespace TlvDemo.TlvApi
         }
 
         /// <summary>
-        /// Reads a 32-bit signed integer from a byte array storing the value in little-endian
-        /// format. 4 bytes are read from the array.
-        /// </summary>
-        /// <param name="data">The array to read from.</param>
-        /// <param name="start">The first index in the array to read from.</param>
-        public static int ReadIntLE( Stream stream )
-        {
-            int value;
-
-            value = (byte)stream.ReadByte();
-            value |= (byte)stream.ReadByte() << 8;
-            value |= (byte)stream.ReadByte() << 16;
-            value |= (byte)stream.ReadByte() << 24;
-
-            return value;
-        }
-
-        /// <summary>
         /// Returns the value of the given 32-bit signed integer as a byte array stored in
         /// little-endian format. 4 bytes are returned.
         /// </summary>
