@@ -49,8 +49,8 @@ namespace TlvDemo
 
         void ITlvContract.Parse( ITlvParseContext context )
         {
-            this.Name = context.ParseChild<StringTag>( 1 );
-            this.Age = context.ParseChild<IntTag>( 2 );
+            this.Name = context.ParseTag<StringTag>( 1 );
+            this.Age = context.ParseTag<IntTag>( 2 );
             this.Address = context.ParseSubContract<AddressRecord>( 3 );
         }
 

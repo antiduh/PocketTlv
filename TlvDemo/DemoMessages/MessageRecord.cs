@@ -15,7 +15,7 @@ namespace TlvDemo
 
         void ITlvContract.Parse( ITlvParseContext parseContext )
         {
-            this.Name = parseContext.ParseChild<StringTag>( 1 );
+            this.Name = parseContext.ParseTag<StringTag>( 1 );
             this.Message = parseContext.ParseSubContract( 2 );
         }
 

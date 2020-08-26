@@ -6,7 +6,7 @@ namespace TlvDemo.TlvApi
 {
     public interface ITlvParseContext
     {
-        T ParseChild<T>( int fieldId ) where T : ITag;
+        T ParseTag<T>( int fieldId ) where T : ITag;
 
         T ParseSubContract<T>( int fieldId ) where T : ITlvContract, new();
 
@@ -24,7 +24,7 @@ namespace TlvDemo.TlvApi
             this.hideFirst = hideFirst;
         }
 
-        public T ParseChild<T>( int fieldId ) where T : ITag
+        public T ParseTag<T>( int fieldId ) where T : ITag
         {
             var children = source.Children;
             int length = children.Count;
@@ -72,7 +72,7 @@ namespace TlvDemo.TlvApi
 
         private void GetContractSubTag( int fieldId, out CompositeTag contractTag, out int foundContractId )
         {
-            contractTag = ParseChild<CompositeTag>( fieldId );
+            contractTag = ParseTag<CompositeTag>( fieldId );
 
             // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
             // serialized contract.

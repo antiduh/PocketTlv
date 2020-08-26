@@ -47,8 +47,8 @@ namespace TlvDemo
 
         void ITlvContract.Parse( ITlvParseContext context )
         {
-            this.LotNumber = context.ParseChild<IntTag>( 0 );
-            this.StreetName = context.ParseChild<StringTag>( 1 );
+            this.LotNumber = context.ParseTag<IntTag>( 0 );
+            this.StreetName = context.ParseTag<StringTag>( 1 );
         }
 
         void ITlvContract.Save( ITlvSaveContext context )
