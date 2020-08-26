@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TlvDemo.TlvApi.Primitives
 {
@@ -47,7 +43,6 @@ namespace TlvDemo.TlvApi.Primitives
                 return this.Value == other.Value;
             }
         }
-
 
         public override int GetHashCode()
         {

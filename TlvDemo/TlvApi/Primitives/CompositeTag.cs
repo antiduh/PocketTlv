@@ -25,7 +25,7 @@ namespace TlvDemo.TlvApi
         }
 
         public List<ITag> Children { get; private set; }
-        
+
         public void AddChild( ITag child )
         {
             this.Children.Add( child );

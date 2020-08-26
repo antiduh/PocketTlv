@@ -8,7 +8,7 @@ namespace TlvDemo.TlvApi
         ContractId = 2,
         Bool = 3,
         String = 4,
-        Short = 5, 
+        Short = 5,
         Int = 6,
         Long = 7,
         VarInt = 8,

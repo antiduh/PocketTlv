@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TlvDemo.TlvApi.Primitives
 {
@@ -23,7 +18,7 @@ namespace TlvDemo.TlvApi.Primitives
             this.FieldId = fieldId;
             this.Value = value;
         }
-        
+
         public decimal Value { get; set; }
 
         public override bool Equals( object other )
@@ -60,7 +55,7 @@ namespace TlvDemo.TlvApi.Primitives
         // --- ITag implementation ---
 
         public int FieldId { get; set; }
-        
+
         WireType ITag.WireType => WireType.Decimal;
 
         int ITag.ComputeLength()
