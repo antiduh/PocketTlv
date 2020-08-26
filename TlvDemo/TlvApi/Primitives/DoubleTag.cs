@@ -65,6 +65,11 @@ namespace TlvDemo.TlvApi
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
+            if( length != 8 )
+            {
+                throw new ArgumentOutOfRangeException( nameof( length ), "must always be 8 bytes." );
+            }
+
             this.Value = DataConverter.ReadDoubleLE( buffer, position );
         }
 
