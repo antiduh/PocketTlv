@@ -3,7 +3,7 @@ using PocketTLV;
 using PocketTLV.ClassLib;
 using PocketTLV.Primitives;
 
-namespace TlvDemo
+namespace TlvDemo.DemoMessages
 {
     public class PersonRecord : ITlvContract
     {
@@ -46,7 +46,7 @@ namespace TlvDemo
 
         // --- ITlvContract implementation ---
 
-        int ITlvContract.ContractId => PersonRecord.ContractId;
+        int ITlvContract.ContractId => ContractId;
 
         void ITlvContract.Parse( ITlvParseContext context )
         {

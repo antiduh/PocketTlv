@@ -3,7 +3,7 @@ using PocketTLV;
 using PocketTLV.ClassLib;
 using PocketTLV.Primitives;
 
-namespace TlvDemo
+namespace TlvDemo.DemoMessages
 {
     public class AddressRecord : ITlvContract
     {

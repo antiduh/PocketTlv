@@ -2,7 +2,7 @@
 using PocketTLV;
 using PocketTLV.Primitives;
 
-namespace TlvDemo
+namespace TlvDemo.DemoMessages
 {
     public class MessageRecord : ITlvContract
     {

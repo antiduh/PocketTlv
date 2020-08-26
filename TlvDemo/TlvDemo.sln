@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TlvDemo", "TlvDemo.csproj", "{4CE889F7-A7A0-4075-812E-72FD670DCDE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketTLV.Demo", "PocketTLV.Demo.csproj", "{4CE889F7-A7A0-4075-812E-72FD670DCDE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketTLV", "PocketTLV\PocketTLV.csproj", "{81B9793C-696F-4DE6-A045-86077DACF543}"
 EndProject
