@@ -16,12 +16,27 @@ namespace TlvDemo.TlvApi
         private byte[] buffer;
 
         public TlvReader( Stream stream )
+            : this( stream, 1024 )
         {
+        }
+
+        public TlvReader( Stream stream, int bufferSize )
+        {
+            if( stream == null )
+            {
+                throw new ArgumentNullException( nameof( stream ) );
+            }
+
+            if( bufferSize <= 0 )
+            {
+                throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
+            }
+
             this.stream = stream;
 
             this.contractReg = new ContractRegistry();
 
-            this.buffer = new byte[1024];
+            this.buffer = new byte[bufferSize];
 
             this.reader = new StreamConverter( this.stream );
         }
