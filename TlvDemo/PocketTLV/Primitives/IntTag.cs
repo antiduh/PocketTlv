@@ -66,14 +66,14 @@ namespace PocketTLV.Primitives
 
         int ITag.ComputeLength()
         {
-            return sizeof( long );
+            return 4;
         }
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            if( length != sizeof( long ) )
+            if( length != 4 )
             {
-                throw new InvalidOperationException( $"{nameof( length )} must be {sizeof( int )}." );
+                throw new ArgumentOutOfRangeException( nameof( length ), "length must always be 4 bytes." );
             }
 
             this.Value = DataConverter.ReadIntLE( buffer, position );
