@@ -9,10 +9,24 @@ namespace TlvDemo.TlvApi
         private byte[] buffer;
 
         public TlvWriter( Stream stream )
+            : this( stream, 1024 )
         {
-            this.stream = stream;
+        }
 
-            this.buffer = new byte[1024];
+        public TlvWriter( Stream stream, int bufferSize )
+        {
+            if( stream == null )
+            {
+                throw new ArgumentNullException( nameof( stream ) );
+            }
+
+            if( bufferSize <= 0 )
+            {
+                throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
+            }
+
+            this.stream = stream;
+            this.buffer = new byte[bufferSize];
         }
 
         public void Write( ITag tag )
