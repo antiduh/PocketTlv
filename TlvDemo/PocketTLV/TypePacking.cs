@@ -1,6 +1,7 @@
 ﻿using System;
+using PocketTLV.Primitives;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV
 {
     /// <summary>
     /// Performs operations on packed and unpacked TLV type fields.

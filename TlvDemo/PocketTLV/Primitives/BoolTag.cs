@@ -1,32 +1,34 @@
 ﻿using System;
 
-namespace TlvDemo.TlvApi.Primitives
+namespace PocketTLV.Primitives
 {
-    public class DecimalTag : ITag
+    public class BoolTag : ITag
     {
-        public DecimalTag()
+        public BoolTag()
         {
         }
 
-        public DecimalTag( decimal value )
+        public BoolTag( bool value )
         {
             this.Value = value;
         }
 
-        public DecimalTag( int fieldId, decimal value )
+        public BoolTag( int fieldId, bool value )
         {
             this.FieldId = fieldId;
             this.Value = value;
         }
 
-        public decimal Value { get; set; }
+        public bool Value { get; private set; }
+
+        public int FieldId { get; set; }
 
         public override bool Equals( object other )
         {
-            return Equals( other as DecimalTag );
+            return Equals( other as BoolTag );
         }
 
-        public bool Equals( DecimalTag other )
+        public bool Equals( BoolTag other )
         {
             if( ReferenceEquals( other, null ) )
             {
@@ -47,35 +49,35 @@ namespace TlvDemo.TlvApi.Primitives
             return this.Value.GetHashCode();
         }
 
-        public static implicit operator decimal( DecimalTag tag )
+        public static implicit operator bool( BoolTag tag )
         {
             return tag.Value;
         }
 
         // --- ITag implementation ---
 
-        public int FieldId { get; set; }
-
-        WireType ITag.WireType => WireType.Decimal;
+        WireType ITag.WireType => WireType.Bool;
 
         int ITag.ComputeLength()
         {
-            return 16;
+            return 1;
         }
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            if( length != 16 )
-            {
-                throw new ArgumentOutOfRangeException( nameof( length ), $"Length must always be 16 bytes." );
-            }
-
-            this.Value = DataConverter.ReadDecimalLE( buffer, position );
+            this.Value = buffer[position] > 0;
         }
 
         void ITag.WriteValue( byte[] buffer, int position )
         {
-            DataConverter.WriteDecimalLE( this.Value, buffer, position );
+            if( this.Value )
+            {
+                buffer[position] = 1;
+            }
+            else
+            {
+                buffer[position] = 0;
+            }
         }
     }
 }

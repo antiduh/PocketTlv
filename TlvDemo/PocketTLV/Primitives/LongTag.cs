@@ -1,37 +1,38 @@
 ﻿using System;
+using PocketTLV.ClassLib;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV.Primitives
 {
-    public class IntTag : ITag
+    public class LongTag : ITag
     {
-        public IntTag()
+        public LongTag()
         {
         }
 
-        public IntTag( int value )
+        public LongTag( long value )
         {
             this.Value = value;
         }
 
-        public IntTag( int fieldId, int value )
+        public LongTag( int fieldId, long value )
         {
             this.FieldId = fieldId;
             this.Value = value;
         }
 
-        public int Value { get; set; }
+        public long Value { get; set; }
 
         public override string ToString()
         {
-            return "IntTag - " + Value;
+            return "LongTag - " + Value;
         }
 
         public override bool Equals( object other )
         {
-            return Equals( other as IntTag );
+            return Equals( other as LongTag );
         }
 
-        public bool Equals( IntTag other )
+        public bool Equals( LongTag other )
         {
             if( ReferenceEquals( other, null ) )
             {
@@ -52,7 +53,7 @@ namespace TlvDemo.TlvApi
             return this.Value.GetHashCode();
         }
 
-        public static implicit operator int( IntTag tag )
+        public static implicit operator long( LongTag tag )
         {
             return tag.Value;
         }
@@ -61,7 +62,7 @@ namespace TlvDemo.TlvApi
 
         public int FieldId { get; set; }
 
-        WireType ITag.WireType => WireType.Int;
+        WireType ITag.WireType => WireType.Long;
 
         int ITag.ComputeLength()
         {
@@ -72,15 +73,15 @@ namespace TlvDemo.TlvApi
         {
             if( length != sizeof( long ) )
             {
-                throw new InvalidOperationException( $"{nameof( length )} must be {sizeof( int )}." );
+                throw new InvalidOperationException( $"{nameof( length )} must be {sizeof( long )}." );
             }
 
-            this.Value = DataConverter.ReadIntLE( buffer, position );
+            this.Value = DataConverter.ReadLongLE( buffer, position );
         }
 
         void ITag.WriteValue( byte[] buffer, int position )
         {
-            DataConverter.WriteIntLE( this.Value, buffer, position );
+            DataConverter.WriteLongLE( this.Value, buffer, position );
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
+using PocketTLV.ClassLib;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV.Primitives
 {
     public class ContractIdTag : ITag
     {

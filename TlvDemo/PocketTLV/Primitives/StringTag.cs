@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV.Primitives
 {
     public class StringTag : ITag
     {

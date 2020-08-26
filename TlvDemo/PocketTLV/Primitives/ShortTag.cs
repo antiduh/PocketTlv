@@ -1,32 +1,38 @@
 ﻿using System;
+using PocketTLV.ClassLib;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV.Primitives
 {
-    public class DoubleTag : ITag
+    public class ShortTag : ITag
     {
-        public DoubleTag()
+        public ShortTag()
         {
         }
 
-        public DoubleTag( double value )
+        public ShortTag( short value )
         {
             this.Value = value;
         }
 
-        public DoubleTag( int fieldId, double value )
+        public ShortTag( int fieldId, short value )
         {
             this.FieldId = fieldId;
             this.Value = value;
         }
 
-        public double Value { get; set; }
+        public short Value { get; set; }
+
+        public override string ToString()
+        {
+            return "ShortTag - " + Value;
+        }
 
         public override bool Equals( object other )
         {
-            return Equals( other as DoubleTag );
+            return Equals( other as ShortTag );
         }
 
-        public bool Equals( DoubleTag other )
+        public bool Equals( ShortTag other )
         {
             if( ReferenceEquals( other, null ) )
             {
@@ -47,7 +53,7 @@ namespace TlvDemo.TlvApi
             return this.Value.GetHashCode();
         }
 
-        public static implicit operator double( DoubleTag tag )
+        public static implicit operator short( ShortTag tag )
         {
             return tag.Value;
         }
@@ -56,26 +62,26 @@ namespace TlvDemo.TlvApi
 
         public int FieldId { get; set; }
 
-        WireType ITag.WireType => WireType.Double;
+        WireType ITag.WireType => WireType.Short;
 
         int ITag.ComputeLength()
         {
-            return 8;
+            return 2;
         }
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            if( length != 8 )
+            if( length != 2 )
             {
-                throw new ArgumentOutOfRangeException( nameof( length ), "must always be 8 bytes." );
+                throw new InvalidOperationException( $"{nameof( length )} must be {sizeof( short )}." );
             }
 
-            this.Value = DataConverter.ReadDoubleLE( buffer, position );
+            this.Value = DataConverter.ReadShortLE( buffer, position );
         }
 
         void ITag.WriteValue( byte[] buffer, int position )
         {
-            DataConverter.WriteDoubleLE( this.Value, buffer, position );
+            DataConverter.WriteShortLE( this.Value, buffer, position );
         }
     }
 }

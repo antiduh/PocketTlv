@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV
 {
     /// <summary>
     /// Specifies the interface for complete messages composed of various TLV parts.

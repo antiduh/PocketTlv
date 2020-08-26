@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TlvDemo.ClassLib
+namespace PocketTLV.ClassLib
 {
     // Thanks StackOverflow!
     // http://stackoverflow.com/a/26493039/344638
@@ -12,7 +12,7 @@ namespace TlvDemo.ClassLib
     public static class HashHelper
     {
         private const int PrimeOne = unchecked((int)2166136261);
-        private const int PrimeTwo = unchecked((int)16777619);
+        private const int PrimeTwo = unchecked(16777619);
 
         public static int GetHashCode<T>( IList<T> list )
         {

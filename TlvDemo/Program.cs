@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using TlvDemo.TlvApi;
+using PocketTLV;
+using PocketTLV.Primitives;
 
 namespace TlvDemo
 {

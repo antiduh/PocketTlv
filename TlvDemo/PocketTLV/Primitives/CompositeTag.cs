@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TlvDemo.ClassLib;
+using PocketTLV.ClassLib;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV.Primitives
 {
     public class CompositeTag : ITag
     {

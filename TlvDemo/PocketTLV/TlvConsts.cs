@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV
 {
     public static class TlvConsts
     {

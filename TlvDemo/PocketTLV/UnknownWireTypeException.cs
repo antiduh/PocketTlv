@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV
 {
     public class UnknownWireTypeException : Exception
     {

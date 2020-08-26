@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PocketTLV.Primitives;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV
 {
     public interface ITlvParseContext
     {

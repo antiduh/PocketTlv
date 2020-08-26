@@ -1,6 +1,7 @@
 ﻿using System;
-using TlvDemo.ClassLib;
-using TlvDemo.TlvApi;
+using PocketTLV;
+using PocketTLV.ClassLib;
+using PocketTLV.Primitives;
 
 namespace TlvDemo
 {

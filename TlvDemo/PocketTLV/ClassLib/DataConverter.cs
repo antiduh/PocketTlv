@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV.ClassLib
 {
     /// <summary>
     /// Converts common data types from their native type to their big-endian and little-endian
@@ -180,7 +180,7 @@ namespace TlvDemo.TlvApi
             CheckReadSize( data, start, 8 );
             ulong value;
 
-            value = (ulong)data[start + 0];
+            value = data[start + 0];
             value |= (ulong)data[start + 1] << 8;
             value |= (ulong)data[start + 2] << 16;
             value |= (ulong)data[start + 3] << 24;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using PocketTLV.ClassLib;
+using PocketTLV.Primitives;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV
 {
     public class TlvWriter
     {

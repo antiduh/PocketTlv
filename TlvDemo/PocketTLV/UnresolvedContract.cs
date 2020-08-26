@@ -1,6 +1,7 @@
 ﻿using System;
+using PocketTLV.Primitives;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV
 {
     public class UnresolvedContract : ITlvContract
     {
@@ -34,7 +35,7 @@ namespace TlvDemo.TlvApi
     {
         public static T Resolve<T>( this ITlvContract unknown ) where T : ITlvContract, new()
         {
-            if( TryResolve<T>( unknown, out T contract ) )
+            if( unknown.TryResolve( out T contract ) )
             {
                 return contract;
             }

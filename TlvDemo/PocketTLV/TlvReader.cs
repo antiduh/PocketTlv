@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TlvDemo.TlvApi.Primitives;
+using PocketTLV.ClassLib;
+using PocketTLV.Primitives;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV
 {
     public class TlvReader
     {

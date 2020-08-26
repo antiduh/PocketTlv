@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TlvDemo.TlvApi.Primitives
+namespace PocketTLV.Primitives
 {
     public class VarIntTag : ITag
     {

@@ -1,37 +1,33 @@
 ﻿using System;
+using PocketTLV.ClassLib;
 
-namespace TlvDemo.TlvApi
+namespace PocketTLV.Primitives
 {
-    public class ShortTag : ITag
+    public class DecimalTag : ITag
     {
-        public ShortTag()
+        public DecimalTag()
         {
         }
 
-        public ShortTag( short value )
+        public DecimalTag( decimal value )
         {
             this.Value = value;
         }
 
-        public ShortTag( int fieldId, short value )
+        public DecimalTag( int fieldId, decimal value )
         {
             this.FieldId = fieldId;
             this.Value = value;
         }
 
-        public short Value { get; set; }
-
-        public override string ToString()
-        {
-            return "ShortTag - " + Value;
-        }
+        public decimal Value { get; set; }
 
         public override bool Equals( object other )
         {
-            return Equals( other as ShortTag );
+            return Equals( other as DecimalTag );
         }
 
-        public bool Equals( ShortTag other )
+        public bool Equals( DecimalTag other )
         {
             if( ReferenceEquals( other, null ) )
             {
@@ -52,7 +48,7 @@ namespace TlvDemo.TlvApi
             return this.Value.GetHashCode();
         }
 
-        public static implicit operator short( ShortTag tag )
+        public static implicit operator decimal( DecimalTag tag )
         {
             return tag.Value;
         }
@@ -61,26 +57,26 @@ namespace TlvDemo.TlvApi
 
         public int FieldId { get; set; }
 
-        WireType ITag.WireType => WireType.Short;
+        WireType ITag.WireType => WireType.Decimal;
 
         int ITag.ComputeLength()
         {
-            return 2;
+            return 16;
         }
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            if( length != 2 )
+            if( length != 16 )
             {
-                throw new InvalidOperationException( $"{nameof( length )} must be {sizeof( short )}." );
+                throw new ArgumentOutOfRangeException( nameof( length ), $"Length must always be 16 bytes." );
             }
 
-            this.Value = DataConverter.ReadShortLE( buffer, position );
+            this.Value = DataConverter.ReadDecimalLE( buffer, position );
         }
 
         void ITag.WriteValue( byte[] buffer, int position )
         {
-            DataConverter.WriteShortLE( this.Value, buffer, position );
+            DataConverter.WriteDecimalLE( this.Value, buffer, position );
         }
     }
 }

@@ -1,34 +1,33 @@
 ﻿using System;
+using PocketTLV.ClassLib;
 
-namespace TlvDemo.TlvApi.Primitives
+namespace PocketTLV.Primitives
 {
-    public class BoolTag : ITag
+    public class DoubleTag : ITag
     {
-        public BoolTag()
+        public DoubleTag()
         {
         }
 
-        public BoolTag( bool value )
+        public DoubleTag( double value )
         {
             this.Value = value;
         }
 
-        public BoolTag( int fieldId, bool value )
+        public DoubleTag( int fieldId, double value )
         {
             this.FieldId = fieldId;
             this.Value = value;
         }
 
-        public bool Value { get; private set; }
-
-        public int FieldId { get; set; }
+        public double Value { get; set; }
 
         public override bool Equals( object other )
         {
-            return Equals( other as BoolTag );
+            return Equals( other as DoubleTag );
         }
 
-        public bool Equals( BoolTag other )
+        public bool Equals( DoubleTag other )
         {
             if( ReferenceEquals( other, null ) )
             {
@@ -49,35 +48,35 @@ namespace TlvDemo.TlvApi.Primitives
             return this.Value.GetHashCode();
         }
 
-        public static implicit operator bool( BoolTag tag )
+        public static implicit operator double( DoubleTag tag )
         {
             return tag.Value;
         }
 
         // --- ITag implementation ---
 
-        WireType ITag.WireType => WireType.Bool;
+        public int FieldId { get; set; }
+
+        WireType ITag.WireType => WireType.Double;
 
         int ITag.ComputeLength()
         {
-            return 1;
+            return 8;
         }
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            this.Value = buffer[position] > 0;
+            if( length != 8 )
+            {
+                throw new ArgumentOutOfRangeException( nameof( length ), "must always be 8 bytes." );
+            }
+
+            this.Value = DataConverter.ReadDoubleLE( buffer, position );
         }
 
         void ITag.WriteValue( byte[] buffer, int position )
         {
-            if( this.Value )
-            {
-                buffer[position] = 1;
-            }
-            else
-            {
-                buffer[position] = 0;
-            }
+            DataConverter.WriteDoubleLE( this.Value, buffer, position );
         }
     }
 }
