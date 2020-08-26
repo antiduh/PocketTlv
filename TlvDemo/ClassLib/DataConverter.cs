@@ -61,12 +61,7 @@ namespace TlvDemo.TlvApi
         /// <param name="start">The first index in the array to write to.</param>
         public static void WriteIntLE( int value, byte[] data, int start )
         {
-            CheckWriteSize( data, start, 4 );
-
-            data[start + 0] = (byte)( value >> 0 );
-            data[start + 1] = (byte)( value >> 8 );
-            data[start + 2] = (byte)( value >> 16 );
-            data[start + 3] = (byte)( value >> 24 );
+            WriteUintLE( (uint)value, data, start );
         }
 
         /// <summary>
@@ -77,16 +72,7 @@ namespace TlvDemo.TlvApi
         /// <param name="start">The first index in the array to read from.</param>
         public static int ReadIntLE( byte[] data, int start )
         {
-            CheckReadSize( data, start, 4 );
-
-            int value;
-
-            value = data[start + 0];
-            value |= data[start + 1] << 8;
-            value |= data[start + 2] << 16;
-            value |= data[start + 3] << 24;
-
-            return value;
+            return (int)ReadUintLE( data, start );
         }
 
         /// <summary>
@@ -102,6 +88,37 @@ namespace TlvDemo.TlvApi
             WriteIntLE( value, data, 0 );
 
             return data;
+        }
+
+        /// <summary>
+        /// Writes a 32-bit unsigned integer to the given byte array in little-endian format. 4 bytes
+        /// are written to the array.
+        /// </summary>
+        /// <param name="value">The value to write to the byte array.</param>
+        /// <param name="data">The array to write to.</param>
+        /// <param name="start">The first index in the array to write to.</param>
+        public static void WriteUintLE( uint value, byte[] data, int start )
+        {
+            CheckWriteSize( data, start, 4 );
+
+            data[start + 0] = (byte)( value >> 0 );
+            data[start + 1] = (byte)( value >> 8 );
+            data[start + 2] = (byte)( value >> 16 );
+            data[start + 3] = (byte)( value >> 24 );
+        }
+
+        public static uint ReadUintLE( byte[] data, int start )
+        {
+            CheckReadSize( data, start, 4 );
+
+            uint value;
+
+            value = data[start + 0];
+            value |= (uint)data[start + 1] << 8;
+            value |= (uint)data[start + 2] << 16;
+            value |= (uint)data[start + 3] << 24;
+
+            return value;
         }
 
         /// <summary>
