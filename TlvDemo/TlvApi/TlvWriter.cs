@@ -24,11 +24,12 @@ namespace TlvDemo.TlvApi
 
         public void Write( ITlvContract contract )
         {
-            CompositeTag contractTag = new CompositeTag();
+            var contractTag = new CompositeTag()
+            {
+                FieldId = contract.ContractId
+            };
 
-            contractTag.FieldId = contract.ContractId;
-
-            TlvSaveContext saveContext = new TlvSaveContext( contractTag );
+            var saveContext = new TlvSaveContext( contractTag );
 
             contract.Save( saveContext );
 
