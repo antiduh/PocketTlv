@@ -47,8 +47,8 @@ namespace TlvDemo.TlvApi
             EnsureSize( ref buffer, requiredSpace + position );
 
             // -- Type --
-            short type = TypePacking.Pack( tag.WireType, tag.FieldId );
-            DataConverter.WriteShortLE( type, buffer, position + written );
+            ushort type = TypePacking.Pack( tag.WireType, tag.FieldId );
+            DataConverter.WriteUShortLE( type, buffer, position + written );
             written += TlvConsts.TypeSize;
 
             // -- Length --

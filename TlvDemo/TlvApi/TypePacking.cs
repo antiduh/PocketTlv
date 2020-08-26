@@ -10,15 +10,15 @@ namespace TlvDemo.TlvApi
     /// </remarks>
     public class TypePacking
     {
-        public static short Pack( WireType wireType, int fieldId )
+        public static ushort Pack( WireType wireType, int fieldId )
         {
             // Type fields are 16 bits. The lower 4 bits store the wire type. The rest store the
             // field id.
 
-            return (short)( (int)wireType | fieldId << 4 );
+            return (ushort)( (int)wireType | fieldId << 4 );
         }
 
-        public static void Unpack( short packedType, out int wireType, out int fieldId )
+        public static void Unpack( ushort packedType, out int wireType, out int fieldId )
         {
             // Type fields are 16 bits. The lower 4 bits store the wire type. The rest store the
             // field id.

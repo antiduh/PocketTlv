@@ -33,6 +33,18 @@ namespace TlvDemo.TlvApi
             return true;
         }
 
+        public bool ReadUShortLE( out ushort value )
+        {
+            if( ReadHarder( this.buffer, 0, 2 ) == false )
+            {
+                value = 0;
+                return false;
+            }
+
+            value = DataConverter.ReadUShortLE( this.buffer, 0 );
+            return true;
+        }
+
         public bool ReadIntLE( out int value )
         {
             if( ReadHarder( this.buffer, 0, 4 ) == false )

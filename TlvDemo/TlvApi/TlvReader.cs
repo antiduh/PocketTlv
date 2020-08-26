@@ -85,8 +85,8 @@ namespace TlvDemo.TlvApi
             amountRead = 0;
 
             // -- Type --
-            short packedType;
-            if( this.reader.ReadShortLE( out packedType ) == false )
+            ushort packedType;
+            if( this.reader.ReadUShortLE( out packedType ) == false )
             {
                 return null;
             }
