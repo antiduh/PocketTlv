@@ -60,7 +60,7 @@ namespace TlvDemo.TlvApi
             return result;
         }
 
-        ITlvContract ITlvParseContext.ParseSubContract( int fieldId )
+        public ITlvContract ParseSubContract( int fieldId )
         {
             CompositeTag contractTag;
             int foundContractId;
