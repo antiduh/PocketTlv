@@ -18,10 +18,7 @@ namespace TlvDemo.TlvApi
         /// <param name="start">The first index in the array to write to.</param>
         public static void WriteShortLE( short value, byte[] data, int start )
         {
-            CheckWriteSize( data, start, 2 );
-
-            data[start + 0] = (byte)( value >> 0 );
-            data[start + 1] = (byte)( value >> 8 );
+            WriteUShortLE( (ushort)value, data, start );
         }
 
         /// <summary>
@@ -32,12 +29,42 @@ namespace TlvDemo.TlvApi
         /// <param name="start">The first index in the array to read from.</param>
         public static short ReadShortLE( byte[] data, int start )
         {
-            CheckReadSize( data, start, 2 );
-
-            return (short)( data[start + 0] + ( data[start + 1] << 8 ) );
+            return (short)ReadUShortLE( data, start );
         }
 
         /// <summary>
+        /// Writes a 16-bit unsigned integer to the given byte array in little-endian format. 2 bytes
+        /// are written to the array.
+        /// </summary>
+        /// <param name="value">The value to write to the byte array.</param>
+        /// <param name="data">The array to write to.</param>
+        /// <param name="start">The first index in the array to write to.</param>
+        public static void WriteUShortLE( ushort value, byte[] data, int start )
+        {
+            CheckWriteSize( data, start, 2 );
+
+            data[start + 0] = (byte)( value >> 0 );
+            data[start + 1] = (byte)( value >> 8 );
+        }
+
+        /// <summary>
+        /// Reads a 16-bit unsigned integer from a byte array storing the value in little-endian
+        /// format. 2 bytes are read from the array.
+        /// </summary>
+        /// <param name="data">The array to read from.</param>
+        /// <param name="start">The first index in the array to read from.</param>
+        public static ushort ReadUShortLE( byte[] data, int start )
+        {
+            CheckReadSize( data, start, 2 );
+
+            ushort value;
+
+            value = data[start + 0];
+            value |= (ushort)( data[start + 1] << 8 );
+
+            return value;
+        }
+
         /// Writes a 32-bit signed integer to the given byte array in little-endian format. 4 bytes
         /// are written to the array.
         /// </summary>
@@ -46,7 +73,7 @@ namespace TlvDemo.TlvApi
         /// <param name="start">The first index in the array to write to.</param>
         public static void WriteIntLE( int value, byte[] data, int start )
         {
-            WriteUintLE( (uint)value, data, start );
+            WriteUIntLE( (uint)value, data, start );
         }
 
         /// <summary>
@@ -57,7 +84,7 @@ namespace TlvDemo.TlvApi
         /// <param name="start">The first index in the array to read from.</param>
         public static int ReadIntLE( byte[] data, int start )
         {
-            return (int)ReadUintLE( data, start );
+            return (int)ReadUIntLE( data, start );
         }
 
         /// <summary>
@@ -67,7 +94,7 @@ namespace TlvDemo.TlvApi
         /// <param name="value">The value to write to the byte array.</param>
         /// <param name="data">The array to write to.</param>
         /// <param name="start">The first index in the array to write to.</param>
-        public static void WriteUintLE( uint value, byte[] data, int start )
+        public static void WriteUIntLE( uint value, byte[] data, int start )
         {
             CheckWriteSize( data, start, 4 );
 
@@ -77,7 +104,13 @@ namespace TlvDemo.TlvApi
             data[start + 3] = (byte)( value >> 24 );
         }
 
-        public static uint ReadUintLE( byte[] data, int start )
+        /// <summary>
+        /// Reads a 32-bit unsigned integer from a byte array storing the value in little-endian
+        /// format. 4 bytes are read from the array.
+        /// </summary>
+        /// <param name="data">The array to read from.</param>
+        /// <param name="start">The first index in the array to read from.</param>
+        public static uint ReadUIntLE( byte[] data, int start )
         {
             CheckReadSize( data, start, 4 );
 
@@ -100,6 +133,29 @@ namespace TlvDemo.TlvApi
         /// <param name="start">The first index in the array to write to.</param>
         public static void WriteLongLE( long value, byte[] data, int start )
         {
+            WriteULongLE( (ulong)value, data, start );
+        }
+
+        /// <summary>
+        /// Reads a 64-bit signed integer from a byte array storing the value in little-endian
+        /// format. 8 bytes are read from the array.
+        /// </summary>
+        /// <param name="data">The array to read from.</param>
+        /// <param name="start">The first index in the array to read from.</param>
+        public static long ReadLongLE( byte[] data, int start )
+        {
+            return (long)ReadULongLE( data, start );
+        }
+
+        /// <summary>
+        /// Writes a 64-bit unsigned integer to the given byte array in little-endian format. 8 bytes
+        /// are written to the array.
+        /// </summary>
+        /// <param name="value">The value to write to the byte array.</param>
+        /// <param name="data">The array to write to.</param>
+        /// <param name="start">The first index in the array to write to.</param>
+        public static void WriteULongLE( ulong value, byte[] data, int start )
+        {
             CheckWriteSize( data, start, 8 );
 
             data[start + 0] = (byte)( value >> 0 );
@@ -119,20 +175,20 @@ namespace TlvDemo.TlvApi
         /// </summary>
         /// <param name="data">The array to read from.</param>
         /// <param name="start">The first index in the array to read from.</param>
-        public static long ReadLongLE( byte[] data, int start )
+        public static ulong ReadULongLE( byte[] data, int start )
         {
             CheckReadSize( data, start, 8 );
-            long value;
+            ulong value;
 
-            value = (long)data[start + 0];
-            value |= (long)data[start + 1] << 8;
-            value |= (long)data[start + 2] << 16;
-            value |= (long)data[start + 3] << 24;
+            value = (ulong)data[start + 0];
+            value |= (ulong)data[start + 1] << 8;
+            value |= (ulong)data[start + 2] << 16;
+            value |= (ulong)data[start + 3] << 24;
 
-            value |= (long)data[start + 4] << 32;
-            value |= (long)data[start + 5] << 40;
-            value |= (long)data[start + 6] << 48;
-            value |= (long)data[start + 7] << 56;
+            value |= (ulong)data[start + 4] << 32;
+            value |= (ulong)data[start + 5] << 40;
+            value |= (ulong)data[start + 6] << 48;
+            value |= (ulong)data[start + 7] << 56;
 
             return value;
         }
@@ -189,6 +245,13 @@ namespace TlvDemo.TlvApi
             return new decimal( decimalBits );
         }
 
+        /// <summary>
+        /// Writes the 64-bit double floating-point value to the given byte array in little-endian format. 8
+        /// bytes are written to the array.
+        /// </summary>
+        /// <param name="value">The decimal to serialize.</param>
+        /// <param name="data">The byte array to store the decimal's value in.</param>
+        /// <param name="start">The first index in the byte array to write to.</param>
         public static void WriteDoubleLE( double value, byte[] buffer, int start )
         {
             // It's important to state that doing this gives us a double's bytes in the native word order.
@@ -199,6 +262,13 @@ namespace TlvDemo.TlvApi
             WriteLongLE( toy.LongValue, buffer, start );
         }
 
+        /// <summary>
+        /// Reads a 64-bit double floating-point value from a byte array storing the value in little endian
+        /// format. 8 bytes are read from the array.
+        /// </summary>
+        /// <param name="value">The decimal to deserialize.</param>
+        /// <param name="data">The byte array to read the decimal's value from.</param>
+        /// <param name="start">The first index in the byte array to read from.</param>
         public static double ReadDoubleLE( byte[] buffer, int start )
         {
             CheckReadSize( buffer, start, 8 );
