@@ -63,5 +63,8 @@
     <Compile Include="UnknownWireTypeException.cs" />
     <Compile Include="UnresolvedContract.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Readme.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
