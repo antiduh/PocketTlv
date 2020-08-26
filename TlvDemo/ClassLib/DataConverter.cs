@@ -38,21 +38,6 @@ namespace TlvDemo.TlvApi
         }
 
         /// <summary>
-        /// Returns the value of the given 16-bit signed integer as a byte array stored in
-        /// little-endian format. 2 bytes are returned.
-        /// </summary>
-        /// <param name="value">The value to convert to a little-endian bytes.</param>
-        /// <returns></returns>
-        public static byte[] GetShortBytesLE( short value )
-        {
-            byte[] data = new byte[2];
-
-            WriteShortLE( value, data, 0 );
-
-            return data;
-        }
-
-        /// <summary>
         /// Writes a 32-bit signed integer to the given byte array in little-endian format. 4 bytes
         /// are written to the array.
         /// </summary>
@@ -73,21 +58,6 @@ namespace TlvDemo.TlvApi
         public static int ReadIntLE( byte[] data, int start )
         {
             return (int)ReadUintLE( data, start );
-        }
-
-        /// <summary>
-        /// Returns the value of the given 32-bit signed integer as a byte array stored in
-        /// little-endian format. 4 bytes are returned.
-        /// </summary>
-        /// <param name="value">The value to convert to a little-endian bytes.</param>
-        /// <returns></returns>
-        public static byte[] GetIntBytesLE( int value )
-        {
-            byte[] data = new byte[4];
-
-            WriteIntLE( value, data, 0 );
-
-            return data;
         }
 
         /// <summary>
@@ -165,21 +135,6 @@ namespace TlvDemo.TlvApi
             value |= (long)data[start + 7] << 56;
 
             return value;
-        }
-
-        /// <summary>
-        /// Returns the value of the given 64-bit signed integer as a byte array stored in
-        /// little-endian format. 8 bytes are returned.
-        /// </summary>
-        /// <param name="value">The value to convert to a little-endian bytes.</param>
-        /// <returns></returns>
-        public static byte[] GetLongBytesLE( long value )
-        {
-            byte[] data = new byte[8];
-
-            WriteLongLE( value, data, 0 );
-
-            return data;
         }
 
         /// <summary>
