@@ -47,6 +47,11 @@ namespace TlvDemo.TlvApi.Primitives
             }
         }
 
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
+
         public static implicit operator decimal( DecimalTag tag )
         {
             return tag.Value;
