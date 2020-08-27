@@ -27,24 +27,13 @@ namespace PocketTLV.Tests.Primitives
             Assert.IsFalse( tag != false );
         }
 
-        [TestMethod]
-        public void When_EqualAsTrue_SelfEquality_Is_True()
+        [DataRow( true )]
+        [DataRow( false )]
+        [DataTestMethod]
+        public void When_Equal_SelfEquality_Is_True( bool startValue )
         {
-            var trueTag = new BoolTag( true );
-            var trueTag2 = new BoolTag( true );
-
-            Assert.IsTrue( trueTag == trueTag2 );
-            Assert.IsTrue( trueTag2 == trueTag );
-            Assert.IsTrue( trueTag.Equals( trueTag2 ) );
-            Assert.IsTrue( trueTag2.Equals( trueTag ) );
-            Assert.IsTrue( trueTag.GetHashCode() == trueTag2.GetHashCode() );
-        }
-
-        [TestMethod]
-        public void When_EqualAsFalse_SelfEquality_Is_True()
-        {
-            var trueTag = new BoolTag( false );
-            var trueTag2 = new BoolTag( false );
+            var trueTag = new BoolTag( startValue );
+            var trueTag2 = new BoolTag( startValue );
 
             Assert.IsTrue( trueTag == trueTag2 );
             Assert.IsTrue( trueTag2 == trueTag );
@@ -92,19 +81,10 @@ namespace PocketTLV.Tests.Primitives
             Assert.ThrowsException<ArgumentOutOfRangeException>( () => tag.ReadValue( buffer, 0, 2 ) );
         }
 
-        [TestMethod]
-        public void When_SerializingRoundTripAsTrue_TagsAreEqual()
-        {
-            RoundTripTest( true );
-        }
-
-        [TestMethod]
-        public void When_SerializingRoundTripAsFalse_TagsAreEqual()
-        {
-            RoundTripTest( false );
-        }
-
-        private static void RoundTripTest( bool startValue )
+        [DataRow( true )]
+        [DataRow( false )]
+        [DataTestMethod]
+        public void When_SerializingRoundTrip_TagsAreEqual( bool startValue )
         {
             const int tagLength = 1;
             byte[] buffer = new byte[tagLength];
