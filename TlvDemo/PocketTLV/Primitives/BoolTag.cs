@@ -73,6 +73,11 @@ namespace PocketTLV.Primitives
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
+            if( length != 1 )
+            {
+                throw new ArgumentOutOfRangeException( nameof( length ), "Length must always be 1 byte." );
+            }
+
             this.Value = buffer[position] > 0;
         }
 
