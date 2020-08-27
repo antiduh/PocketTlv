@@ -49,6 +49,10 @@ namespace PocketTLV.Primitives
             {
                 return ReferenceEquals( right, null );
             }
+            else if( ReferenceEquals( right, null ) )
+            {
+                return false;
+            }
 
             return left.Value == right.Value;
         }
