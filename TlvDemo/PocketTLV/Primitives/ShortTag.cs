@@ -24,7 +24,7 @@ namespace PocketTLV.Primitives
 
         public override string ToString()
         {
-            return "ShortTag - " + Value;
+            return this.Value.ToString();
         }
 
         public override bool Equals( object other )

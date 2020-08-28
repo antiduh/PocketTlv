@@ -22,6 +22,11 @@ namespace PocketTLV.Primitives
 
         public decimal Value { get; set; }
 
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
+
         public override bool Equals( object other )
         {
             return Equals( other as DecimalTag );

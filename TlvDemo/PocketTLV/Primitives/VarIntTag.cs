@@ -21,6 +21,11 @@ namespace PocketTLV.Primitives
 
         public long Value { get; set; }
 
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
+
         public override bool Equals( object other )
         {
             return Equals( other as VarIntTag );

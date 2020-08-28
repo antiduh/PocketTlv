@@ -22,6 +22,11 @@ namespace PocketTLV.Primitives
 
         public int ContractId { get; set; }
 
+        public override string ToString()
+        {
+            return this.ContractId.ToString();
+        }
+
         public override bool Equals( object other )
         {
             return Equals( other as ContractIdTag );

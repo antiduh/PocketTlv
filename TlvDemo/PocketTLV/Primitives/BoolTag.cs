@@ -45,6 +45,15 @@ namespace PocketTLV.Primitives
         public int FieldId { get; set; }
 
         /// <summary>
+        /// Converts the <see cref="BoolTag>"/>'s value to a string.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
+
+        /// <summary>
         /// Returns whether this <see cref="BoolTag"/> is equal to the provided object.
         /// </summary>
         /// <param name="other">The object to compare to.</param>

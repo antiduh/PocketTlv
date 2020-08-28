@@ -29,7 +29,7 @@ namespace PocketTLV.Primitives
 
         public override string ToString()
         {
-            return "StringTag - " + this.Value;
+            return this.Value;
         }
 
         public override bool Equals( object other )
