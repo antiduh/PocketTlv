@@ -87,9 +87,13 @@ namespace PocketTLV.Primitives
             return this == other;
         }
 
+        /// <summary>
+        /// Returns a hash value for a <see cref="ByteArrayTag"/> instance.
+        /// </summary>
+        /// <returns>An integer hash code.</returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashHelper.GetHashCode( this.data );
         }
 
         public static implicit operator byte[]( ByteArrayTag tag )
