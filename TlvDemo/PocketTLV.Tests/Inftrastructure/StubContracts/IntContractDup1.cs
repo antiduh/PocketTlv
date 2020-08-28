@@ -3,6 +3,9 @@ using PocketTLV.Primitives;
 
 namespace PocketTLV.Tests.Inftrastructure.StubContracts
 {
+    /// <summary>
+    /// A stub contract that has a contract ID that conflicts with <see cref="IntContract1"/>.
+    /// </summary>
     public class IntContractDup1 : ITlvContract
     {
         public const int Id = 1;
