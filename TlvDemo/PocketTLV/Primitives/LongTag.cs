@@ -27,6 +27,7 @@ namespace PocketTLV.Primitives
         /// <summary>
         /// Initializes a new instance of the <see cref="LongTag"/> class.
         /// </summary>
+        /// <param name="fieldId">The TLV field ID that the tag represents.</param>
         /// <param name="value">The long value to store.</param>
         public LongTag( int fieldId, long value )
         {
