@@ -21,11 +21,6 @@ namespace PocketTLV.Primitives
 
         public long Value { get; set; }
 
-        public static implicit operator long( VarIntTag tag )
-        {
-            return tag.Value;
-        }
-
         public override bool Equals( object other )
         {
             return Equals( other as VarIntTag );
@@ -33,23 +28,38 @@ namespace PocketTLV.Primitives
 
         public bool Equals( VarIntTag other )
         {
-            if( ReferenceEquals( other, null ) )
-            {
-                return false;
-            }
-            else if( ReferenceEquals( other, this ) )
-            {
-                return true;
-            }
-            else
-            {
-                return this.Value == other.Value;
-            }
+            return this == other;
         }
 
         public override int GetHashCode()
         {
             return this.Value.GetHashCode();
+        }
+
+        public static implicit operator long( VarIntTag tag )
+        {
+            return tag.Value;
+        }
+
+        public static bool operator ==( VarIntTag left, VarIntTag right )
+        {
+            if( left is null )
+            {
+                return right is null;
+            }
+            else if( right is null )
+            {
+                return false;
+            }
+            else
+            {
+                return left.Value == right.Value;
+            }
+        }
+
+        public static bool operator !=( VarIntTag left, VarIntTag right )
+        {
+            return !( left == right );
         }
 
         // --- ITag implementation ---

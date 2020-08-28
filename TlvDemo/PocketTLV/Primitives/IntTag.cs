@@ -34,18 +34,7 @@ namespace PocketTLV.Primitives
 
         public bool Equals( IntTag other )
         {
-            if( ReferenceEquals( other, null ) )
-            {
-                return false;
-            }
-            else if( ReferenceEquals( other, this ) )
-            {
-                return true;
-            }
-            else
-            {
-                return this.Value == other.Value;
-            }
+            return this == other;
         }
 
         public override int GetHashCode()
@@ -56,6 +45,27 @@ namespace PocketTLV.Primitives
         public static implicit operator int( IntTag tag )
         {
             return tag.Value;
+        }
+
+        public static bool operator ==( IntTag left, IntTag right )
+        {
+            if( left is null )
+            {
+                return right is null;
+            }
+            else if( right is null )
+            {
+                return false;
+            }
+            else
+            {
+                return left.Value == right.Value;
+            }
+        }
+
+        public static bool operator !=( IntTag left, IntTag right )
+        {
+            return !( left == right );
         }
 
         // --- ITag implementation ---

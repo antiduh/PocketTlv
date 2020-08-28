@@ -29,18 +29,7 @@ namespace PocketTLV.Primitives
 
         public bool Equals( ContractIdTag other )
         {
-            if( ReferenceEquals( other, null ) )
-            {
-                return false;
-            }
-            else if( ReferenceEquals( other, this ) )
-            {
-                return true;
-            }
-            else
-            {
-                return this.ContractId == other.ContractId;
-            }
+            return this == other;
         }
 
         public override int GetHashCode()
@@ -51,6 +40,27 @@ namespace PocketTLV.Primitives
         public static implicit operator int( ContractIdTag tag )
         {
             return tag.ContractId;
+        }
+
+        public static bool operator ==( ContractIdTag left, ContractIdTag right )
+        {
+            if( left is null )
+            {
+                return right is null;
+            }
+            else if( right is null )
+            {
+                return false;
+            }
+            else
+            {
+                return left.ContractId == right.ContractId;
+            }
+        }
+
+        public static bool operator !=( ContractIdTag left, ContractIdTag right )
+        {
+            return !( left == right );
         }
 
         // --- ITag implementation ---
