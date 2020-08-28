@@ -13,7 +13,7 @@ namespace PocketTLV.Primitives
 
         public ByteArrayTag()
         {
-            this.Data = System.Array.Empty<byte>();
+            this.data = System.Array.Empty<byte>();
         }
 
         public ByteArrayTag( byte[] array )
