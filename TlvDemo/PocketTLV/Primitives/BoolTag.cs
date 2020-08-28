@@ -57,7 +57,7 @@ namespace PocketTLV.Primitives
         /// Returns whether this <see cref="BoolTag"/> is equal to the provided object.
         /// </summary>
         /// <param name="other">The object to compare to.</param>
-        /// <returns>True if the other object has the same value as this object.</returns>
+        /// <returns>True if the other object has the same value as this object, false otherwise.</returns>
         public override bool Equals( object other )
         {
             return Equals( other as BoolTag );
@@ -67,7 +67,7 @@ namespace PocketTLV.Primitives
         /// Compares two <see cref="BoolTag"/> objects.
         /// </summary>
         /// <param name="other">The tag to compare to.</param>
-        /// <returns>True if the tag object has the same value as this tag.</returns>
+        /// <returns>True if the tag object has the same value as this tag, false otherwise.</returns>
         public bool Equals( BoolTag other )
         {
             return this == other;
