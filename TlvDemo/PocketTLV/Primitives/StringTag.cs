@@ -11,6 +11,11 @@ namespace PocketTLV.Primitives
 
         public StringTag( string value )
         {
+            if( value == null )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
             this.Value = value;
         }
 
