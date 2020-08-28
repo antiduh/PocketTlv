@@ -66,15 +66,15 @@ namespace PocketTLV.Primitives
         /// <summary>
         /// Compares two <see cref="BoolTag"/> objects.
         /// </summary>
-        /// <param name="other">The object to compare to.</param>
-        /// <returns>True if the other object has the same value as this object.</returns>
+        /// <param name="other">The tag to compare to.</param>
+        /// <returns>True if the tag object has the same value as this tag.</returns>
         public bool Equals( BoolTag other )
         {
             return this == other;
         }
 
         /// <summary>
-        /// Returns a hash value for a <see cref="BoolTag"/>.
+        /// Returns a hash value for a <see cref="BoolTag"/> instance.
         /// </summary>
         /// <returns>An integer hash code.</returns>
         public override int GetHashCode()
