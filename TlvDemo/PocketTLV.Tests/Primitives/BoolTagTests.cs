@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PocketTLV.Primitives;
+using PocketTLV.Tests.Inftrastructure;
 
 namespace PocketTLV.Tests.Primitives
 {
@@ -27,8 +28,7 @@ namespace PocketTLV.Tests.Primitives
             Assert.IsFalse( tag != false );
         }
 
-        [DataRow( true )]
-        [DataRow( false )]
+        [DataList( true, false )]
         [DataTestMethod]
         public void When_Equal_SelfEquality_Is_True( bool startValue )
         {
@@ -81,8 +81,7 @@ namespace PocketTLV.Tests.Primitives
             Assert.ThrowsException<ArgumentOutOfRangeException>( () => tag.ReadValue( buffer, 0, 2 ) );
         }
 
-        [DataRow( true )]
-        [DataRow( false )]
+        [DataList( true, false )]
         [DataTestMethod]
         public void When_SerializingRoundTrip_TagsAreEqual( bool startValue )
         {
