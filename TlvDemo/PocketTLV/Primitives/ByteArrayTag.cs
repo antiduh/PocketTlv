@@ -18,7 +18,7 @@ namespace PocketTLV.Primitives
         {
             if( array == null )
             {
-                throw new ArgumentNullException( nameof( array );
+                throw new ArgumentNullException( nameof( array ) );
             }
 
             this.FieldId = fieldId;
