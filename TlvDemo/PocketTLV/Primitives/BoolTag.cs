@@ -17,7 +17,7 @@ namespace PocketTLV.Primitives
         /// <summary>
         /// Initializes a new instance of the <see cref="BoolTag"/> class.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The boolean value to store.</param>
         public BoolTag( bool value )
             : this( 0, value )
         {
@@ -67,7 +67,7 @@ namespace PocketTLV.Primitives
         /// <summary>
         /// Returns a hash value for a <see cref="BoolTag"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An integer hash code.</returns>
         public override int GetHashCode()
         {
             return this.Value.GetHashCode();
@@ -76,7 +76,7 @@ namespace PocketTLV.Primitives
         /// <summary>
         /// Converts a <see cref="BoolTag"/> to a <see cref="bool"/>.
         /// </summary>
-        /// <param name="tag"></param>
+        /// <param name="tag">The tag to convert.</param>
         public static implicit operator bool( BoolTag tag )
         {
             return tag.Value;
@@ -85,9 +85,9 @@ namespace PocketTLV.Primitives
         /// <summary>
         /// Compares two <see cref="BoolTag"/> objects to determine if they contain the same value.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left">The first tag to compare.</param>
+        /// <param name="right">The second tag to compare.</param>
+        /// <returns>True if the two tags contain equal values, false otherwise.</returns>
         public static bool operator==( BoolTag left, BoolTag right )
         {
             if( left is null )
@@ -105,9 +105,9 @@ namespace PocketTLV.Primitives
         /// <summary>
         /// Compares two <see cref="BoolTag"/> objects to determine if they contain different values.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left">The first tag to compare.</param>
+        /// <param name="right">The second tag to compare.</param>
+        /// <returns>True if the two tags do not contain equal values, false otherwise.</returns>
         public static bool operator !=( BoolTag left, BoolTag right )
         {
             return !( left == right );
