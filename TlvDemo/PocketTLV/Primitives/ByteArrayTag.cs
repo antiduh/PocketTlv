@@ -4,11 +4,16 @@ using System.Text;
 
 namespace PocketTLV.Primitives
 {
+    /// <summary>
+    /// Represents an array of bytes as a TLV tag.
+    /// </summary>
     public class ByteArrayTag : ITag
     {
+        private byte[] data;
+
         public ByteArrayTag()
         {
-            this.Array = System.Array.Empty<byte>();
+            this.Data = System.Array.Empty<byte>();
         }
 
         public ByteArrayTag( byte[] array )
@@ -24,14 +29,29 @@ namespace PocketTLV.Primitives
             }
 
             this.FieldId = fieldId;
-            this.Array = array;
+            this.data = array;
         }
 
-        public byte[] Array { get; set; }
+        public byte[] Data
+        {
+            get
+            {
+                return this.data;
+            }
+            set
+            {
+                if( value == null )
+                {
+                    throw new ArgumentNullException( nameof( value ) );
+                }
+
+                this.data = value;
+            }
+        }
 
         public override string ToString()
         {
-            int limit = Math.Min( 10, this.Array.Length );
+            int limit = Math.Min( 10, this.Data.Length );
 
             if( limit == 0 )
             {
@@ -43,10 +63,10 @@ namespace PocketTLV.Primitives
 
                 builder.Append( "{ " );
                 builder.Append(
-                    string.Join( ", ", this.Array.Take( limit ).Select( x => "0x" + x.ToString( "X2" ) ) )
+                    string.Join( ", ", this.Data.Take( limit ).Select( x => "0x" + x.ToString( "X2" ) ) )
                 );
 
-                if( this.Array.Length > limit )
+                if( this.Data.Length > limit )
                 {
                     builder.Append( ", ..." );
                 }
@@ -74,7 +94,7 @@ namespace PocketTLV.Primitives
 
         public static implicit operator byte[]( ByteArrayTag tag )
         {
-            return tag.Array;
+            return tag.Data;
         }
 
         public static bool operator ==( ByteArrayTag left, ByteArrayTag right )
@@ -92,14 +112,14 @@ namespace PocketTLV.Primitives
                 // We can guarantee that the Array properties can't be null here, so we don't need
                 // to check them.
 
-                if( left.Array.Length != right.Array.Length )
+                if( left.Data.Length != right.Data.Length )
                 {
                     return false;
                 }
 
-                for( int i = 0; i < left.Array.Length; i++ )
+                for( int i = 0; i < left.Data.Length; i++ )
                 {
-                    if( left.Array[i] != right.Array[i] )
+                    if( left.Data[i] != right.Data[i] )
                     {
                         return false;
                     }
@@ -122,19 +142,19 @@ namespace PocketTLV.Primitives
 
         int ITag.ComputeLength()
         {
-            return this.Array.Length;
+            return this.Data.Length;
         }
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            this.Array = new byte[length];
+            this.Data = new byte[length];
 
-            Buffer.BlockCopy( buffer, position, this.Array, 0, length );
+            Buffer.BlockCopy( buffer, position, this.Data, 0, length );
         }
 
         void ITag.WriteValue( byte[] buffer, int position )
         {
-            Buffer.BlockCopy( this.Array, 0, buffer, position, this.Array.Length );
+            Buffer.BlockCopy( this.Data, 0, buffer, position, this.Data.Length );
         }
     }
 }
