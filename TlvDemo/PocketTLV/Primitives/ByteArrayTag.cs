@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using PocketTLV.ClassLib;
 
 namespace PocketTLV.Primitives
 {
@@ -11,16 +12,28 @@ namespace PocketTLV.Primitives
     {
         private byte[] data;
 
+        /// <summary>
+        /// Initializes a new <see cref="ByteArrayTag"/> with an empty array.
+        /// </summary>
         public ByteArrayTag()
         {
             this.data = System.Array.Empty<byte>();
         }
 
+        /// <summary>
+        /// Initializes a new <see cref="ByteArrayTag"/>.
+        /// </summary>
+        /// <param name="array">The byte array to store. Must not be null.</param>
         public ByteArrayTag( byte[] array )
             : this( 0, array )
-        { 
+        {
         }
 
+        /// <summary>
+        /// Initializes a new <see cref="ByteArrayTag"/>.
+        /// </summary>
+        /// <param name="fieldId">The TLV field ID to associate to the tag.</param>
+        /// <param name="array">The byte array to store. Must not be null.</param>
         public ByteArrayTag( int fieldId, byte[] array )
         {
             if( array == null )
@@ -32,6 +45,9 @@ namespace PocketTLV.Primitives
             this.data = array;
         }
 
+        /// <summary>
+        /// Gets or sets the byte array stored in the tag. Must not be null.
+        /// </summary>
         public byte[] Data
         {
             get
@@ -49,6 +65,16 @@ namespace PocketTLV.Primitives
             }
         }
 
+        /// <summary>
+        /// Gets or sets the TLV field ID that the tag represents.
+        /// </summary>
+        public int FieldId { get; set; }
+
+        /// <summary>
+        /// Converts the bytes contained in the tag to a string formatted as hex digits, printing a
+        /// maximum of 10 bytes.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             int limit = Math.Min( 10, this.Data.Length );
@@ -77,11 +103,21 @@ namespace PocketTLV.Primitives
             }
         }
 
+        /// <summary>
+        /// Returns whether this <see cref="ByteArrayTag"/> is equal to the provided object.
+        /// </summary>
+        /// <param name="other">The object to compare to.</param>
+        /// <returns>True if the other object has the same value as this object.</returns>
         public override bool Equals( object other )
         {
             return Equals( other as ByteArrayTag );
         }
 
+        /// <summary>
+        /// Compares two <see cref="ByteArrayTag"/> objects.
+        /// </summary>
+        /// <param name="other">The tag to compare to.</param>
+        /// <returns>True if the other tag has the same bytes as this tag.</returns>
         public bool Equals( ByteArrayTag other )
         {
             return this == other;
@@ -96,11 +132,21 @@ namespace PocketTLV.Primitives
             return HashHelper.GetHashCode( this.data );
         }
 
+        /// <summary>
+        /// Converts a <see cref="ByteArrayTag"/> the array contained by it.
+        /// </summary>
+        /// <param name="tag"></param>
         public static implicit operator byte[]( ByteArrayTag tag )
         {
             return tag.Data;
         }
 
+        /// <summary>
+        /// Compares two <see cref="ByteArrayTag"/> objects to determine if they contain the same value.
+        /// </summary>
+        /// <param name="left">The first tag to compare.</param>
+        /// <param name="right">The second tag to compare.</param>
+        /// <returns>True if the two tags contain equal values, false otherwise.</returns>
         public static bool operator ==( ByteArrayTag left, ByteArrayTag right )
         {
             if( ReferenceEquals( left, null ) )
@@ -133,14 +179,18 @@ namespace PocketTLV.Primitives
             }
         }
 
+        /// <summary>
+        /// Compares two <see cref="ByteArrayTag"/> objects to determine if they contain different values.
+        /// </summary>
+        /// <param name="left">The first tag to compare.</param>
+        /// <param name="right">The second tag to compare.</param>
+        /// <returns>True if the two tags do not contain equal values, false otherwise.</returns>
         public static bool operator !=( ByteArrayTag left, ByteArrayTag right )
         {
             return !( left == right );
         }
 
         // --- ITag implementation ---
-
-        public int FieldId { get; set; }
 
         WireType ITag.WireType => WireType.ByteArray;
 
