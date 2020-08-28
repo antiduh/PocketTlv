@@ -84,7 +84,7 @@ namespace PocketTLV.Primitives
         }
 
         /// <summary>
-        /// Converts a <see cref="DecimalTag"/> to a <see cref="bool"/>.
+        /// Converts a <see cref="DecimalTag"/> to a <see cref="decimal"/>.
         /// </summary>
         /// <param name="tag">The tag to convert.</param>
         public static implicit operator decimal( DecimalTag tag )
