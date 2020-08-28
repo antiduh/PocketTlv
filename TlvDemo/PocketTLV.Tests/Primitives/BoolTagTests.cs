@@ -72,6 +72,14 @@ namespace PocketTLV.Tests.Primitives
         }
 
         [TestMethod]
+        public void When_ComparandIsNotBoolTag_Equal_ReturnsFalse()
+        {
+            var tag = new BoolTag();
+
+            Assert.IsFalse( tag.Equals( "dummy" ) );
+        }
+
+        [TestMethod]
         public void When_BufferIncorrectSize_Read_Throws()
         {
             byte[] buffer = new byte[2];
