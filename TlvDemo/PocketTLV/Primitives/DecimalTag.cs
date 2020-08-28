@@ -3,6 +3,9 @@ using PocketTLV.ClassLib;
 
 namespace PocketTLV.Primitives
 {
+    /// <summary>
+    /// Stores a decimal value as a TLV tag.
+    /// </summary>
     public class DecimalTag : ITag
     {
         public DecimalTag()

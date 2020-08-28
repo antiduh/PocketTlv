@@ -3,6 +3,9 @@ using System.Text;
 
 namespace PocketTLV.Primitives
 {
+    /// <summary>
+    /// Stores a string as a TLV tag using UTF-8 encoding.
+    /// </summary>
     public class StringTag : ITag
     {
         public StringTag()

@@ -2,6 +2,9 @@
 
 namespace PocketTLV.Primitives
 {
+    /// <summary>
+    /// Stores an integer as a TLV tag using a variable-length encoding.
+    /// </summary>
     public class VarIntTag : ITag
     {
         public VarIntTag()

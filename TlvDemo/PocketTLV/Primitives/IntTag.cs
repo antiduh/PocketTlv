@@ -3,6 +3,9 @@ using PocketTLV.ClassLib;
 
 namespace PocketTLV.Primitives
 {
+    /// <summary>
+    /// Stores a 32-bit signed integer as a TLV tag.
+    /// </summary>
     public class IntTag : ITag
     {
         public IntTag()

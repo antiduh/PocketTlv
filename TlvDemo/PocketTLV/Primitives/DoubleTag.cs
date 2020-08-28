@@ -3,6 +3,9 @@ using PocketTLV.ClassLib;
 
 namespace PocketTLV.Primitives
 {
+    /// <summary>
+    /// Stores a 64-bit double-precision floating point value as a TLV tag.
+    /// </summary>
     public class DoubleTag : ITag
     {
         public DoubleTag()
