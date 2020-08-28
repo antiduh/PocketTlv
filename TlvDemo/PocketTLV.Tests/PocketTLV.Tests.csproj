@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Inftrastructure\DataListAttribute.cs" />
     <Compile Include="Primitives\BoolTagTests.cs" />
+    <Compile Include="Primitives\ByteArrayTagTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -32,22 +32,29 @@ namespace PocketTLV.Primitives
         public override string ToString()
         {
             int limit = Math.Min( 10, this.Array.Length );
-            var builder = new StringBuilder( limit * 5 );
 
-            builder.Append( "{ " );
-
-            builder.Append( 
-                string.Join( ", ", this.Array.Take( limit ).Select( x => x.ToString( "X2" ) ) )
-            );
-
-            if( this.Array.Length > limit )
+            if( limit == 0 )
             {
-                builder.Append( ", ..." );
+                return "{ }";
             }
+            else
+            {
+                var builder = new StringBuilder( limit * 5 );
 
-            builder.Append( " } " );
+                builder.Append( "{ " );
+                builder.Append(
+                    string.Join( ", ", this.Array.Take( limit ).Select( x => "0x" + x.ToString( "X2" ) ) )
+                );
 
-            return builder.ToString();
+                if( this.Array.Length > limit )
+                {
+                    builder.Append( ", ..." );
+                }
+
+                builder.Append( " }" );
+
+                return builder.ToString();
+            }
         }
 
         public override bool Equals( object other )
