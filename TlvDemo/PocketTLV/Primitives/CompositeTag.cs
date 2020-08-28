@@ -4,19 +4,35 @@ using PocketTLV.ClassLib;
 
 namespace PocketTLV.Primitives
 {
+    /// <summary>
+    /// Represents a TLV tag that can store other tags as children tags.
+    /// </summary>
     public class CompositeTag : ITag
     {
+        /// <summary>
+        /// Initializes an initially-empty instance of <see cref="CompositeTag"/>.
+        /// </summary>
         public CompositeTag()
         {
             this.Children = new List<ITag>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="CompositeTag"/> with the given children nodes.
+        /// </summary>
+        /// <param name="children">An array of tags to store.</param>
         public CompositeTag( params ITag[] children )
             : this()
         {
             this.Children.AddRange( children );
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="CompositeTag"/> with the given field ID and
+        /// children nodes.
+        /// </summary>
+        /// <param name="fieldId">The TLV field ID that identifies the tag.</param>
+        /// <param name="children">An array of tags to store.</param>
         public CompositeTag( int fieldId, params ITag[] children )
             : this()
         {
@@ -24,6 +40,9 @@ namespace PocketTLV.Primitives
             this.Children.AddRange( children );
         }
 
+        /// <summary>
+        /// Gets the list of children tags.
+        /// </summary>
         public List<ITag> Children { get; private set; }
 
         /// <summary>
@@ -31,37 +50,74 @@ namespace PocketTLV.Primitives
         /// </summary>
         public int FieldId { get; set; }
 
+        /// <summary>
+        /// Stores the given tag as a child tag.
+        /// </summary>
+        /// <param name="child">A tag to store.</param>
         public void AddChild( ITag child )
         {
             this.Children.Add( child );
         }
 
+        /// <summary>
+        /// Stores the given tag as a child tag, overwriting the tag's <see cref="ITag.FieldId"/>
+        /// property with the given field ID.
+        /// </summary>
+        /// <param name="fieldId">The child tag's field ID.</param>
+        /// <param name="child">A tag to store.</param>
         public void AddChild( int fieldId, ITag child )
         {
             child.FieldId = fieldId;
             this.Children.Add( child );
         }
 
+        /// <summary>
+        /// Returns a string describing the number of children in the tag.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"CompositeTag - {this.Children.Count} children";
         }
 
+        /// <summary>
+        /// Compares this <see cref="CompositeTag"/> to the given object.
+        /// </summary>
+        /// <param name="other">The object to compare to.</param>
+        /// <returns>
+        /// True if the object is a <see cref="CompositeTag"/> and contains the same children values
+        /// as this object.
+        /// </returns>
         public override bool Equals( object other )
         {
             return Equals( other as CompositeTag );
         }
 
+        /// <summary>
+        /// Compares two <see cref="CompositeTag"/> objects.
+        /// </summary>
+        /// <param name="other">The tag to compare to.</param>
+        /// <returns></returns>
         public bool Equals( CompositeTag other )
         {
             return this == other;
         }
 
+        /// <summary>
+        /// Returns a hash code for a <see cref="CompositeTag"/> instance.
+        /// </summary>
+        /// <returns>An integer hash code.</returns>
         public override int GetHashCode()
         {
             return HashHelper.GetHashCode( this.Children );
         }
 
+        /// <summary>
+        /// Compares two <see cref="CompositeTag"/> objects to determine if they are same.
+        /// </summary>
+        /// <param name="left">The first tag to compare.</param>
+        /// <param name="right">The second tag to compare.</param>
+        /// <returns>True if the two tags are equal.</returns>
         public static bool operator ==( CompositeTag left, CompositeTag right )
         {
             if( left is null )
@@ -91,6 +147,12 @@ namespace PocketTLV.Primitives
             }
         }
 
+        /// <summary>
+        /// Compares two <see cref="CompositeTag"/> objects to determine if they are different.
+        /// </summary>
+        /// <param name="left">The first tag to compare.</param>
+        /// <param name="right">The second tag to compare.</param>
+        /// <returns>True if the two tags are not equal.</returns>
         public static bool operator !=( CompositeTag left, CompositeTag right )
         {
             return !( left == right );
