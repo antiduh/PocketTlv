@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 
 namespace PocketTLV.Primitives
 {
@@ -26,6 +28,27 @@ namespace PocketTLV.Primitives
         }
 
         public byte[] Array { get; set; }
+
+        public override string ToString()
+        {
+            int limit = Math.Min( 10, this.Array.Length );
+            var builder = new StringBuilder( limit * 5 );
+
+            builder.Append( "{ " );
+
+            builder.Append( 
+                string.Join( ", ", this.Array.Take( limit ).Select( x => x.ToString( "X2" ) ) )
+            );
+
+            if( this.Array.Length > limit )
+            {
+                builder.Append( ", ..." );
+            }
+
+            builder.Append( " } " );
+
+            return builder.ToString();
+        }
 
         public override bool Equals( object other )
         {
