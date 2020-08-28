@@ -26,6 +26,11 @@ namespace PocketTLV.Primitives
 
         public List<ITag> Children { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the TLV field ID that the tag represents.
+        /// </summary>
+        public int FieldId { get; set; }
+
         public void AddChild( ITag child )
         {
             this.Children.Add( child );
@@ -92,8 +97,6 @@ namespace PocketTLV.Primitives
         }
 
         // --- ITag implementation ---
-
-        public int FieldId { get; set; }
 
         WireType ITag.WireType => WireType.Composite;
 

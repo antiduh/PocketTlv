@@ -22,6 +22,11 @@ namespace PocketTLV.Primitives
 
         public long Value { get; set; }
 
+        /// <summary>
+        /// Gets or sets the TLV field ID that the tag represents.
+        /// </summary>
+        public int FieldId { get; set; }
+
         public override string ToString()
         {
             return this.Value.ToString();
@@ -69,8 +74,6 @@ namespace PocketTLV.Primitives
         }
 
         // --- ITag implementation ---
-
-        public int FieldId { get; set; }
 
         WireType ITag.WireType => WireType.Long;
 

@@ -26,7 +26,7 @@ namespace PocketTLV.Primitives
         /// <summary>
         /// Initializes a new instance of the <see cref="BoolTag"/> class.
         /// </summary>
-        /// <param name="fieldId">The field ID that the tag represents.</param>
+        /// <param name="fieldId">The TLV field ID to associate to the tag.</param>
         /// <param name="value">The boolean value to store.</param>
         public BoolTag( int fieldId, bool value )
         {
@@ -40,7 +40,7 @@ namespace PocketTLV.Primitives
         public bool Value { get; private set; }
 
         /// <summary>
-        /// Gets or sets the field ID the tag represents.
+        /// Gets or sets the TLV field ID that the tag represents.
         /// </summary>
         public int FieldId { get; set; }
 

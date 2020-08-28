@@ -22,6 +22,11 @@ namespace PocketTLV.Primitives
 
         public int ContractId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the TLV field ID that the tag represents.
+        /// </summary>
+        public int FieldId { get; set; }
+
         public override string ToString()
         {
             return this.ContractId.ToString();
@@ -69,8 +74,6 @@ namespace PocketTLV.Primitives
         }
 
         // --- ITag implementation ---
-
-        public int FieldId { get; set; }
 
         WireType ITag.WireType => WireType.ContractId;
 
