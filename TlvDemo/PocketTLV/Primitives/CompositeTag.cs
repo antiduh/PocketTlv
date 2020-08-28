@@ -49,38 +49,46 @@ namespace PocketTLV.Primitives
 
         public bool Equals( CompositeTag other )
         {
-            if( ReferenceEquals( other, null ) )
-            {
-                return false;
-            }
-            else if( ReferenceEquals( other, this ) )
-            {
-                return true;
-            }
-            else
-            {
-                if( this.Children.Count != other.Children.Count )
-                {
-                    return false;
-                }
-                else
-                {
-                    for( int i = 0; i < this.Children.Count; i++ )
-                    {
-                        if( this.Children[i].Equals( other.Children[i] ) == false )
-                        {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-            }
+            return this == other;
         }
 
         public override int GetHashCode()
         {
             return HashHelper.GetHashCode( this.Children );
+        }
+
+        public static bool operator ==( CompositeTag left, CompositeTag right )
+        {
+            if( left is null )
+            {
+                return right is null;
+            }
+            else if( right is null )
+            {
+                return false;
+            }
+
+            if( left.Children.Count != right.Children.Count )
+            {
+                return false;
+            }
+            else
+            {
+                for( int i = 0; i < left.Children.Count; i++ )
+                {
+                    if( left.Children[i].Equals( right.Children[i] ) == false )
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        public static bool operator !=( CompositeTag left, CompositeTag right )
+        {
+            return !( left == right );
         }
 
         // --- ITag implementation ---
