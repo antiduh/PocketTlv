@@ -6,15 +6,21 @@ namespace PocketTLV.Primitives
     {
         public ByteArrayTag()
         {
+            this.Array = System.Array.Empty<byte>();
         }
 
         public ByteArrayTag( byte[] array )
-        {
-            this.Array = array;
+            : this( 0, array )
+        { 
         }
 
         public ByteArrayTag( int fieldId, byte[] array )
         {
+            if( array == null )
+            {
+                throw new ArgumentNullException( nameof( array );
+            }
+
             this.FieldId = fieldId;
             this.Array = array;
         }
@@ -28,31 +34,7 @@ namespace PocketTLV.Primitives
 
         public bool Equals( ByteArrayTag other )
         {
-            if( ReferenceEquals( other, null ) )
-            {
-                return false;
-            }
-            else if( ReferenceEquals( other, this ) )
-            {
-                return true;
-            }
-            else
-            {
-                if( this.Array.Length != other.Array.Length )
-                {
-                    return false;
-                }
-
-                for( int i = 0; i < this.Array.Length; i++ )
-                {
-                    if( this.Array[i] != other.Array[i] )
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
+            return this == other;
         }
 
         public override int GetHashCode()
@@ -63,6 +45,43 @@ namespace PocketTLV.Primitives
         public static implicit operator byte[]( ByteArrayTag tag )
         {
             return tag.Array;
+        }
+
+        public static bool operator ==( ByteArrayTag left, ByteArrayTag right )
+        {
+            if( ReferenceEquals( left, null ) )
+            {
+                return ReferenceEquals( right, null );
+            }
+            else if( ReferenceEquals( right, null ) )
+            {
+                return false;
+            }
+            else
+            {
+                // We can guarantee that the Array properties can't be null here, so we don't need
+                // to check them.
+
+                if( left.Array.Length != right.Array.Length )
+                {
+                    return false;
+                }
+
+                for( int i = 0; i < left.Array.Length; i++ )
+                {
+                    if( left.Array[i] != right.Array[i] )
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        public static bool operator !=( ByteArrayTag left, ByteArrayTag right )
+        {
+            return !( left == right );
         }
 
         // --- ITag implementation ---
