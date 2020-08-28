@@ -36,7 +36,7 @@ namespace PocketTLV.Primitives
         }
 
         /// <summary>
-        /// Gets the decimal value stored by the tag.
+        /// Gets or sets the decimal value stored by the tag.
         /// </summary>
         public decimal Value { get; set; }
 
