@@ -45,11 +45,11 @@ namespace PocketTLV.Primitives
 
         public static bool operator==( BoolTag left, BoolTag right )
         {
-            if( ReferenceEquals( left, null ) )
+            if( left is null )
             {
-                return ReferenceEquals( right, null );
+                return right is null;
             }
-            else if( ReferenceEquals( right, null ) )
+            else if( right is null )
             {
                 return false;
             }
