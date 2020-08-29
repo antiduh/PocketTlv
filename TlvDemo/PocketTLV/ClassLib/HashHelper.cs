@@ -22,7 +22,7 @@ namespace PocketTLV.ClassLib
 
                 foreach( var element in list )
                 {
-                    hash = hash * PrimeTwo + list.GetHashCode();
+                    hash = hash * PrimeTwo + element.GetHashCode();
                 }
 
                 return hash;
