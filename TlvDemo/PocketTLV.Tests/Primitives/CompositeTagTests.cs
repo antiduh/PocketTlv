@@ -41,7 +41,7 @@ namespace PocketTLV.Tests.Primitives
         }
 
         [TestMethod]
-        public void When_TagsContainChildWithDifferentValues_Equals_ReturnsTrue()
+        public void When_ChildTagsDifferByValue_Equals_ReturnsFalse()
         {
             var tag1 = new CompositeTag( 0, new IntTag( 0, 0 ) );
             var tag2 = new CompositeTag( 0, new IntTag( 0, 1 ) );
