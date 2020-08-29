@@ -33,6 +33,11 @@ namespace PocketTLV
 
         public void Write( ITag tag )
         {
+            if( tag is null )
+            {
+                throw new ArgumentNullException( nameof( tag ) );
+            }
+
             int position = WriteInternal( tag, ref this.buffer, 0 );
 
             this.stream.Write( this.buffer, 0, position );
@@ -40,6 +45,11 @@ namespace PocketTLV
 
         public void Write( ITlvContract contract )
         {
+            if( contract is null )
+            {
+                throw new ArgumentNullException( nameof( contract ) );
+            }
+
             var contractTag = new CompositeTag()
             {
                 FieldId = contract.ContractId
