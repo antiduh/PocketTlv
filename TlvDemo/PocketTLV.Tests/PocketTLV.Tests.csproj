@@ -55,6 +55,7 @@
     <Compile Include="Inftrastructure\StubContracts\IntContract1.cs" />
     <Compile Include="Primitives\BoolTagTests.cs" />
     <Compile Include="Primitives\ByteArrayTagTests.cs" />
+    <Compile Include="Primitives\CompositeTagTests.cs" />
     <Compile Include="Primitives\VarIntTagTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContractRegistryTests.cs" />
