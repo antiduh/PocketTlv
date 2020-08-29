@@ -25,6 +25,7 @@ namespace PocketTLV.Tests.Primitives
             Assert.IsTrue( tag1.Equals( tag2 ) );
             Assert.IsTrue( tag1 == tag2 );
             Assert.IsFalse( tag1 != tag2 );
+            Assert.IsTrue( tag1.GetHashCode() == tag2.GetHashCode() );
         }
 
         [TestMethod]
@@ -36,6 +37,7 @@ namespace PocketTLV.Tests.Primitives
             Assert.IsTrue( tag1.Equals( tag2 ) );
             Assert.IsTrue( tag1 == tag2 );
             Assert.IsFalse( tag1 != tag2 );
+            Assert.AreEqual( tag1.GetHashCode(), tag2.GetHashCode() );
         }
 
         [TestMethod]
