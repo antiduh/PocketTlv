@@ -48,24 +48,6 @@ namespace PocketTLV
             return (T)ReadInternal( out _ );
         }
 
-        public T ReadContract<T>() where T : ITlvContract, new()
-        {
-            T contract = new T();
-
-            CompositeTag contractTag = ReadTag<CompositeTag>();
-
-            if( contract.ContractId != ( (ITag)contractTag ).FieldId )
-            {
-                throw new InvalidOperationException( "Read unexpected tag." );
-            }
-
-            TlvParseContext parseContext = new TlvParseContext( contractTag, false );
-
-            contract.Parse( parseContext );
-
-            return contract;
-        }
-
         public ITlvContract ReadContract()
         {
             var contractTag = ReadTag<CompositeTag>();
@@ -79,6 +61,24 @@ namespace PocketTLV
             }
 
             ITlvContract contract = this.contractReg.Get( contractId );
+
+            TlvParseContext parseContext = new TlvParseContext( contractTag, false );
+
+            contract.Parse( parseContext );
+
+            return contract;
+        }
+
+        public T ReadContract<T>() where T : ITlvContract, new()
+        {
+            T contract = new T();
+
+            CompositeTag contractTag = ReadTag<CompositeTag>();
+
+            if( contract.ContractId != ( (ITag)contractTag ).FieldId )
+            {
+                throw new InvalidOperationException( "Read unexpected tag." );
+            }
 
             TlvParseContext parseContext = new TlvParseContext( contractTag, false );
 
