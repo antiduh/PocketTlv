@@ -56,6 +56,11 @@ namespace PocketTLV.Primitives
         /// <param name="child">A tag to store.</param>
         public void AddChild( ITag child )
         {
+            if( child is null )
+            {
+                throw new ArgumentNullException( nameof( child ) );
+            }
+
             this.Children.Add( child );
         }
 
@@ -70,6 +75,11 @@ namespace PocketTLV.Primitives
             if( child is null )
             {
                 throw new ArgumentNullException( nameof( child ) );
+            }
+
+            if( fieldId < 0 )
+            {
+                throw new ArgumentOutOfRangeException( nameof( fieldId ), "must at least zero." );
             }
 
             child.FieldId = fieldId;
