@@ -67,6 +67,11 @@ namespace PocketTLV.Primitives
         /// <param name="child">A tag to store.</param>
         public void AddChild( int fieldId, ITag child )
         {
+            if( child is null )
+            {
+                throw new ArgumentNullException( nameof( child ) );
+            }
+
             child.FieldId = fieldId;
             this.Children.Add( child );
         }
