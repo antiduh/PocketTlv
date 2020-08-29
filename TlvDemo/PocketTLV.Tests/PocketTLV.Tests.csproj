@@ -59,6 +59,7 @@
     <Compile Include="Primitives\VarIntTagTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContractRegistryTests.cs" />
+    <Compile Include="TlvSaveContextTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
