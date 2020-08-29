@@ -150,9 +150,15 @@ namespace PocketTLV.Primitives
             }
             else
             {
+                ITag leftChild;
+                ITag rightChild;
+
                 for( int i = 0; i < left.Children.Count; i++ )
                 {
-                    if( left.Children[i].Equals( right.Children[i] ) == false )
+                    leftChild = left.Children[i];
+                    rightChild = right.Children[i];
+
+                    if( leftChild.FieldId != rightChild.FieldId || leftChild.Equals( rightChild ) == false )
                     {
                         return false;
                     }
