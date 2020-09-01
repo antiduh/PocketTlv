@@ -51,10 +51,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Todo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="PocketTLV\PocketTLV.csproj">
+    <ProjectReference Include="..\PocketTLV\PocketTLV.csproj">
       <Project>{81b9793c-696f-4de6-a045-86077dacf543}</Project>
       <Name>PocketTLV</Name>
     </ProjectReference>
