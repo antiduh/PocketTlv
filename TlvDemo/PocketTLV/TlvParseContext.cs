@@ -7,11 +7,11 @@ namespace PocketTLV
 {
     public interface ITlvParseContext
     {
-        T ParseTag<T>( int fieldId ) where T : ITag;
+        T Tag<T>( int fieldId ) where T : ITag;
 
-        T ParseSubContract<T>( int fieldId ) where T : ITlvContract, new();
+        T Contract<T>( int fieldId ) where T : ITlvContract, new();
 
-        ITlvContract ParseSubContract( int fieldId );
+        ITlvContract Contract( int fieldId );
     }
 
     public class TlvParseContext : ITlvParseContext
@@ -25,7 +25,7 @@ namespace PocketTLV
             this.hideFirst = hideFirst;
         }
 
-        public T ParseTag<T>( int fieldId ) where T : ITag
+        public T Tag<T>( int fieldId ) where T : ITag
         {
             var children = source.Children;
             int length = children.Count;
@@ -41,7 +41,7 @@ namespace PocketTLV
             throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
         }
 
-        public T ParseSubContract<T>( int fieldId ) where T : ITlvContract, new()
+        public T Contract<T>( int fieldId ) where T : ITlvContract, new()
         {
             CompositeTag contractTag;
             int foundContractId;
@@ -61,7 +61,7 @@ namespace PocketTLV
             return result;
         }
 
-        public ITlvContract ParseSubContract( int fieldId )
+        public ITlvContract Contract( int fieldId )
         {
             CompositeTag contractTag;
             int foundContractId;
@@ -73,7 +73,7 @@ namespace PocketTLV
 
         private void GetContractSubTag( int fieldId, out CompositeTag contractTag, out int foundContractId )
         {
-            contractTag = ParseTag<CompositeTag>( fieldId );
+            contractTag = Tag<CompositeTag>( fieldId );
 
             // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
             // serialized contract.
