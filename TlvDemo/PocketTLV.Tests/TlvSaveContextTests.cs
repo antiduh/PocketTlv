@@ -12,11 +12,11 @@ namespace PocketTLV.Tests
         public void When_SavingTagWithFieldId_TagFieldId_IsOverwritten()
         {
             var destTag = new CompositeTag();
-            var context = new TlvSaveContext( destTag );
+            var save = new TlvSaveContext( destTag );
 
             var dataTag = new IntTag( 0, 0 );
 
-            context.Save( 1, dataTag );
+            save.Save( 1, dataTag );
 
             Assert.AreEqual( 1, dataTag.FieldId );
         }
@@ -25,11 +25,11 @@ namespace PocketTLV.Tests
         public void When_SavingChildTag_DestinationTag_ContainsData()
         {
             var destTag = new CompositeTag();
-            var context = new TlvSaveContext( destTag );
+            var save = new TlvSaveContext( destTag );
 
             var dataTag = new IntTag( 0, 1 );
 
-            context.Save( 1, dataTag );
+            save.Save( 1, dataTag );
 
             Assert.IsInstanceOfType( destTag.Children[0], typeof( IntTag ) );
             Assert.IsTrue( ( (IntTag)destTag.Children[0] ).Value == 1 );
@@ -39,11 +39,11 @@ namespace PocketTLV.Tests
         public void When_SavingChildContract_DestinationTag_ContainsData()
         {
             var destTag = new CompositeTag();
-            var context = new TlvSaveContext( destTag );
+            var save = new TlvSaveContext( destTag );
 
             var dataContract = new IntContract1() { Value = 1 };
 
-            context.Save( 1, dataContract );
+            save.Save( 1, dataContract );
 
             var contractTag = destTag.Children[0] as CompositeTag;
             Assert.IsInstanceOfType( contractTag, typeof( CompositeTag ) );

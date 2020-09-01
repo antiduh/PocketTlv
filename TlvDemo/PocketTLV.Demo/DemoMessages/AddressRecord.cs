@@ -46,16 +46,16 @@ namespace TlvDemo.DemoMessages
 
         int ITlvContract.ContractId => 2;
 
-        void ITlvContract.Parse( ITlvParseContext context )
+        void ITlvContract.Parse( ITlvParseContext parse )
         {
-            this.LotNumber = context.ParseTag<IntTag>( 0 );
-            this.StreetName = context.ParseTag<StringTag>( 1 );
+            this.LotNumber = parse.ParseTag<IntTag>( 0 );
+            this.StreetName = parse.ParseTag<StringTag>( 1 );
         }
 
-        void ITlvContract.Save( ITlvSaveContext context )
+        void ITlvContract.Save( ITlvSaveContext save )
         {
-            context.Save( 0, new IntTag( this.LotNumber ) );
-            context.Save( 1, new StringTag( this.StreetName ) );
+            save.Save( 0, new IntTag( this.LotNumber ) );
+            save.Save( 1, new StringTag( this.StreetName ) );
         }
     }
 }

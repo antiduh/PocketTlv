@@ -48,18 +48,18 @@ namespace TlvDemo.DemoMessages
 
         int ITlvContract.ContractId => ContractId;
 
-        void ITlvContract.Parse( ITlvParseContext context )
+        void ITlvContract.Parse( ITlvParseContext parse )
         {
-            this.Name = context.ParseTag<StringTag>( 1 );
-            this.Age = context.ParseTag<IntTag>( 2 );
-            this.Address = context.ParseSubContract<AddressRecord>( 3 );
+            this.Name = parse.ParseTag<StringTag>( 1 );
+            this.Age = parse.ParseTag<IntTag>( 2 );
+            this.Address = parse.ParseSubContract<AddressRecord>( 3 );
         }
 
-        void ITlvContract.Save( ITlvSaveContext context )
+        void ITlvContract.Save( ITlvSaveContext save )
         {
-            context.Save( 1, new StringTag( this.Name ) );
-            context.Save( 2, new IntTag( this.Age ) );
-            context.Save( 3, this.Address );
+            save.Save( 1, new StringTag( this.Name ) );
+            save.Save( 2, new IntTag( this.Age ) );
+            save.Save( 3, this.Address );
         }
     }
 }

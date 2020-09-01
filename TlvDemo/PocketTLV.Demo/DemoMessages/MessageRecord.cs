@@ -14,16 +14,16 @@ namespace TlvDemo.DemoMessages
 
         int ITlvContract.ContractId => 3;
 
-        void ITlvContract.Parse( ITlvParseContext parseContext )
+        void ITlvContract.Parse( ITlvParseContext parse )
         {
-            this.Name = parseContext.ParseTag<StringTag>( 1 );
-            this.Message = parseContext.ParseSubContract( 2 );
+            this.Name = parse.ParseTag<StringTag>( 1 );
+            this.Message = parse.ParseSubContract( 2 );
         }
 
-        void ITlvContract.Save( ITlvSaveContext saveContract )
+        void ITlvContract.Save( ITlvSaveContext save )
         {
-            saveContract.Save( 1, new StringTag( this.Name ) );
-            saveContract.Save( 2, this.Message );
+            save.Save( 1, new StringTag( this.Name ) );
+            save.Save( 2, this.Message );
         }
     }
 }

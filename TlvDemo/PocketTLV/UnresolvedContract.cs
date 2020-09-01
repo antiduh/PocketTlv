@@ -15,18 +15,18 @@ namespace PocketTLV
 
         public int ContractId { get; private set; }
 
-        void ITlvContract.Parse( ITlvParseContext parseContext )
+        void ITlvContract.Parse( ITlvParseContext parse )
         {
             // Empty on purpose.
         }
 
-        void ITlvContract.Save( ITlvSaveContext saveContext )
+        void ITlvContract.Save( ITlvSaveContext save )
         {
             ITag child;
             for( int i = 1; i < this.Tag.Children.Count; i++ )
             {
                 child = this.Tag.Children[i];
-                saveContext.Save( child.FieldId, child );
+                save.Save( child.FieldId, child );
             }
         }
     }

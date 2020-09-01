@@ -15,14 +15,14 @@ namespace PocketTLV.Tests.Inftrastructure.StubContracts
 
         public int Value { get; set; }
 
-        public void Parse( ITlvParseContext parseContext )
+        public void Parse( ITlvParseContext parse )
         {
-            this.Value = parseContext.ParseTag<IntTag>( 0 );
+            this.Value = parse.ParseTag<IntTag>( 0 );
         }
 
-        public void Save( ITlvSaveContext saveContext )
+        public void Save( ITlvSaveContext save )
         {
-            saveContext.Save( 0, new IntTag( this.Value ) );
+            save.Save( 0, new IntTag( this.Value ) );
         }
     }
 }

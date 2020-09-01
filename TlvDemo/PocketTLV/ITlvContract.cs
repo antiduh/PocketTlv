@@ -17,13 +17,13 @@ namespace PocketTLV
         /// <summary>
         /// Reads the contract's values from TLV tags.
         /// </summary>
-        /// <param name="parseContext"></param>
-        void Parse( ITlvParseContext parseContext );
+        /// <param name="parse"></param>
+        void Parse( ITlvParseContext parse );
 
         /// <summary>
         /// Writes the contract's values as TLV tags.
         /// </summary>
-        /// <param name="saveContext"></param>
-        void Save( ITlvSaveContext saveContext );
+        /// <param name="save"></param>
+        void Save( ITlvSaveContext save );
     }
 }
