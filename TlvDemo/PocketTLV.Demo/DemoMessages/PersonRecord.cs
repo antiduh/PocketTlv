@@ -50,9 +50,9 @@ namespace TlvDemo.DemoMessages
 
         void ITlvContract.Parse( ITlvParseContext parse )
         {
-            this.Name = parse.ParseTag<StringTag>( 1 );
-            this.Age = parse.ParseTag<IntTag>( 2 );
-            this.Address = parse.ParseSubContract<AddressRecord>( 3 );
+            this.Name = parse.Tag<StringTag>( 1 );
+            this.Age = parse.Tag<IntTag>( 2 );
+            this.Address = parse.Contract<AddressRecord>( 3 );
         }
 
         void ITlvContract.Save( ITlvSaveContext save )

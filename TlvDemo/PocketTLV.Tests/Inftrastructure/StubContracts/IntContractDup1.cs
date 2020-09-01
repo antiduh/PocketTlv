@@ -20,7 +20,7 @@ namespace PocketTLV.Tests.Inftrastructure.StubContracts
 
         public void Parse( ITlvParseContext parse )
         {
-            this.Value = parse.ParseTag<IntTag>( 0 );
+            this.Value = parse.Tag<IntTag>( 0 );
         }
 
         public void Save( ITlvSaveContext save )

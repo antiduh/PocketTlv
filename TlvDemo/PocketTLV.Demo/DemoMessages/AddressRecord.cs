@@ -48,8 +48,8 @@ namespace TlvDemo.DemoMessages
 
         void ITlvContract.Parse( ITlvParseContext parse )
         {
-            this.LotNumber = parse.ParseTag<IntTag>( 0 );
-            this.StreetName = parse.ParseTag<StringTag>( 1 );
+            this.LotNumber = parse.Tag<IntTag>( 0 );
+            this.StreetName = parse.Tag<StringTag>( 1 );
         }
 
         void ITlvContract.Save( ITlvSaveContext save )
