@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PocketTLV.Tests.Inftrastructure.StubContracts;
+using PocketTlv.Tests.Inftrastructure.StubContracts;
 
-namespace PocketTLV.Tests
+namespace PocketTlv.Tests
 {
     [TestClass]
     public class ContractRegistryTests

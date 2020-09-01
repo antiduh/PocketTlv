@@ -1,7 +1,6 @@
 ﻿using System;
-using PocketTLV.Primitives;
 
-namespace PocketTLV
+namespace PocketTlv
 {
     public class UnresolvedContract : ITlvContract
     {

@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PocketTLV.Primitives;
-using PocketTLV.Tests.Inftrastructure;
+using PocketTlv.Tests.Inftrastructure;
 
-namespace PocketTLV.Tests.Primitives
+namespace PocketTlv.Tests.Primitives
 {
     [TestClass]
     public class BoolTagTests

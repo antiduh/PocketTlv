@@ -1,7 +1,7 @@
 ﻿using System;
-using PocketTLV.ClassLib;
+using PocketTlv.ClassLib;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Stores a 64-bit double-precision floating point value as a TLV tag.

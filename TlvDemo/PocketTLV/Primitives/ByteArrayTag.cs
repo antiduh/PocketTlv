@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using PocketTLV.ClassLib;
+using PocketTlv.ClassLib;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Represents an array of bytes as a TLV tag.

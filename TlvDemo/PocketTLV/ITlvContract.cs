@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PocketTLV
+namespace PocketTlv
 {
     /// <summary>
     /// Specifies the interface for complete messages composed of various TLV parts.

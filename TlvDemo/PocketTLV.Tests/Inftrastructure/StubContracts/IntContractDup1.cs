@@ -1,7 +1,6 @@
 ﻿using System;
-using PocketTLV.Primitives;
 
-namespace PocketTLV.Tests.Inftrastructure.StubContracts
+namespace PocketTlv.Tests.Inftrastructure.StubContracts
 {
     /// <summary>
     /// A stub contract that has a contract ID that conflicts with <see cref="IntContract1"/>.

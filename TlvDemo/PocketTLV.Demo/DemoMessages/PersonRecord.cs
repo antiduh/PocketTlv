@@ -1,9 +1,8 @@
 ﻿using System;
-using PocketTLV;
-using PocketTLV.ClassLib;
-using PocketTLV.Primitives;
+using PocketTlv;
+using PocketTlv.ClassLib;
 
-namespace TlvDemo.DemoMessages
+namespace PocketTlv.Demo.Messages
 {
     public class PersonRecord : ITlvContract
     {

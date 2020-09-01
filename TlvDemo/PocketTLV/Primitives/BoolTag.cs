@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Stores a boolean value as a TLV tag.

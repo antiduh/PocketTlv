@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PocketTLV
+namespace PocketTlv
 {
     public class ContractRegistry
     {

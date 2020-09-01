@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using PocketTLV.ClassLib;
-using PocketTLV.Primitives;
+using PocketTlv.ClassLib;
 
-namespace PocketTLV
+namespace PocketTlv
 {
     public class TlvStreamReader : ITlvReader
     {

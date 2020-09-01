@@ -1,7 +1,6 @@
 ﻿using System;
-using PocketTLV.Primitives;
 
-namespace PocketTLV.Tests.Inftrastructure.StubContracts
+namespace PocketTlv.Tests.Inftrastructure.StubContracts
 {
     public class IntContract2 : ITlvContract
     {

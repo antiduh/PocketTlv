@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Represents a primitive TLV tag.

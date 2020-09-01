@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace PocketTLV.ClassLib
+namespace PocketTlv.ClassLib
 {
     /// <summary>
     /// Converts common data types from their native type to their big-endian and little-endian

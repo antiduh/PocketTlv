@@ -1,10 +1,11 @@
-﻿using PocketTLV.Primitives;
+﻿using System;
 
-namespace PocketTLV
+namespace PocketTlv
 {
     public interface ITlvWriter
     {
         void Write( ITag tag );
+
         void Write( ITlvContract contract );
     }
 }

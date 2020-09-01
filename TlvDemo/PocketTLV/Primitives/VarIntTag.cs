@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Stores an integer as a TLV tag using a variable-length encoding.

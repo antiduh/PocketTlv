@@ -1,8 +1,7 @@
 ﻿using System;
-using PocketTLV;
-using PocketTLV.Primitives;
+using PocketTlv;
 
-namespace TlvDemo.DemoMessages
+namespace PocketTlv.Demo.Messages
 {
     public class MessageRecord : ITlvContract
     {

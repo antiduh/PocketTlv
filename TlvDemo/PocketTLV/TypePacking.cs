@@ -1,7 +1,6 @@
 ﻿using System;
-using PocketTLV.Primitives;
 
-namespace PocketTLV
+namespace PocketTlv
 {
     /// <summary>
     /// Performs operations on packed and unpacked TLV type fields.

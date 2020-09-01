@@ -7,8 +7,8 @@
     <ProjectGuid>{81B9793C-696F-4DE6-A045-86077DACF543}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PocketTLV</RootNamespace>
-    <AssemblyName>PocketTLV</AssemblyName>
+    <RootNamespace>PocketTlv</RootNamespace>
+    <AssemblyName>PocketTlv</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

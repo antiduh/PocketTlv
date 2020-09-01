@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PocketTLV.Primitives;
-using PocketTLV.Tests.Inftrastructure.StubContracts;
+using PocketTlv.Tests.Inftrastructure.StubContracts;
 
-namespace PocketTLV.Tests
+namespace PocketTlv.Tests
 {
     [TestClass]
     public class TlvSaveContextTests

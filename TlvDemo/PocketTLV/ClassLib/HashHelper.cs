@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PocketTLV.ClassLib
+namespace PocketTlv.ClassLib
 {
     // Thanks StackOverflow!
     // http://stackoverflow.com/a/26493039/344638

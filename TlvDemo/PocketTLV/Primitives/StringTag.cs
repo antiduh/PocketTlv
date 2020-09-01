@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Stores a string as a TLV tag using UTF-8 encoding.

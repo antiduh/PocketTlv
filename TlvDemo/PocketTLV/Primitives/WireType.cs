@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     public enum WireType : int
     {

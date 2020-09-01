@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using PocketTLV.Primitives;
-using TlvDemo.DemoMessages;
+using PocketTlv.Demo.Messages;
 
-namespace PocketTLV.Demo
+namespace PocketTlv.Demo
 {
     internal class Program
     {

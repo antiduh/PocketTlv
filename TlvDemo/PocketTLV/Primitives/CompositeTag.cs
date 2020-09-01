@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using PocketTLV.ClassLib;
+using PocketTlv.ClassLib;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Represents a TLV tag that can store other tags as children tags.

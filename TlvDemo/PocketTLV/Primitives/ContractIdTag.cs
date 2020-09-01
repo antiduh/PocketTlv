@@ -1,7 +1,7 @@
 ﻿using System;
-using PocketTLV.ClassLib;
+using PocketTlv.ClassLib;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Used internally to store TLV contract IDs as a TLV tag.

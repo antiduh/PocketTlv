@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4CE889F7-A7A0-4075-812E-72FD670DCDE0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PocketTLV.Demo</RootNamespace>
-    <AssemblyName>PocketTLV.Demo</AssemblyName>
+    <RootNamespace>PocketTlv.Demo</RootNamespace>
+    <AssemblyName>PocketTlv.Demo</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,9 +51,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PocketTLV\PocketTLV.csproj">
+    <ProjectReference Include="..\PocketTLV\PocketTlv.csproj">
       <Project>{81b9793c-696f-4de6-a045-86077dacf543}</Project>
-      <Name>PocketTLV</Name>
+      <Name>PocketTlv</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

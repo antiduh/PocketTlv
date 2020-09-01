@@ -1,8 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PocketTLV.Primitives;
 
-namespace PocketTLV.Tests.Primitives
+namespace PocketTlv.Tests.Primitives
 {
     [TestClass]
     public class CompositeTagTests

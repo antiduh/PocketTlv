@@ -1,7 +1,7 @@
 ﻿using System;
-using PocketTLV.ClassLib;
+using PocketTlv.ClassLib;
 
-namespace PocketTLV.Primitives
+namespace PocketTlv
 {
     /// <summary>
     /// Stores a decimal value as a TLV tag.
