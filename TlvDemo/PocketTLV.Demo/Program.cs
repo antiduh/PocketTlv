@@ -36,7 +36,7 @@ namespace PocketTLV.Demo
             );
 
             var stream = new MemoryStream();
-            var writer = new TlvWriter( stream );
+            var writer = new TlvStreamWriter( stream );
             writer.Write( top );
 
             var copy = RoundTrip( top );
@@ -165,8 +165,8 @@ namespace PocketTLV.Demo
             };
 
             var stream = new MemoryStream();
-            var writer = new TlvWriter( stream );
-            var reader = new TlvReader( stream );
+            var writer = new TlvStreamWriter( stream );
+            var reader = new TlvStreamReader( stream );
 
             reader.RegisterContract<AddressRecord>();
 
@@ -183,7 +183,7 @@ namespace PocketTLV.Demo
         {
             var stream = new MemoryStream();
 
-            TlvWriter writer = new TlvWriter( stream );
+            TlvStreamWriter writer = new TlvStreamWriter( stream );
             writer.Write( tag );
 
             // This so i can look at the byte stream in the debugger. Demo only.
@@ -191,7 +191,7 @@ namespace PocketTLV.Demo
 
             stream.Position = 0L;
 
-            TlvReader reader = new TlvReader( stream );
+            TlvStreamReader reader = new TlvStreamReader( stream );
             return reader.ReadTag();
         }
 
@@ -199,7 +199,7 @@ namespace PocketTLV.Demo
         {
             var stream = new MemoryStream();
 
-            TlvWriter writer = new TlvWriter( stream );
+            TlvStreamWriter writer = new TlvStreamWriter( stream );
             writer.Write( contract );
 
             // This so i can look at the byte stream in the debugger. Demo only.
@@ -207,7 +207,7 @@ namespace PocketTLV.Demo
 
             stream.Position = 0L;
 
-            TlvReader reader = new TlvReader( stream );
+            TlvStreamReader reader = new TlvStreamReader( stream );
             return reader.ReadContract<T>();
         }
     }
