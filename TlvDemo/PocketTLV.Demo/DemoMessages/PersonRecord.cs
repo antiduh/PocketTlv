@@ -57,9 +57,9 @@ namespace TlvDemo.DemoMessages
 
         void ITlvContract.Save( ITlvSaveContext save )
         {
-            save.Save( 1, new StringTag( this.Name ) );
-            save.Save( 2, new IntTag( this.Age ) );
-            save.Save( 3, this.Address );
+            save.Tag( 1, new StringTag( this.Name ) );
+            save.Tag( 2, new IntTag( this.Age ) );
+            save.Contract( 3, this.Address );
         }
     }
 }

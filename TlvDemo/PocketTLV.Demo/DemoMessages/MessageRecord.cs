@@ -22,8 +22,8 @@ namespace TlvDemo.DemoMessages
 
         void ITlvContract.Save( ITlvSaveContext save )
         {
-            save.Save( 1, new StringTag( this.Name ) );
-            save.Save( 2, this.Message );
+            save.Tag( 1, new StringTag( this.Name ) );
+            save.Contract( 2, this.Message );
         }
     }
 }

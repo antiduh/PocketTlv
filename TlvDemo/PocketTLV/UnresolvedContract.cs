@@ -26,7 +26,7 @@ namespace PocketTLV
             for( int i = 1; i < this.Tag.Children.Count; i++ )
             {
                 child = this.Tag.Children[i];
-                save.Save( child.FieldId, child );
+                save.Tag( child.FieldId, child );
             }
         }
     }

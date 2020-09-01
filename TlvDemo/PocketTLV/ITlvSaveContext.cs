@@ -5,9 +5,9 @@ namespace PocketTLV
 {
     public interface ITlvSaveContext
     {
-        void Save( int fieldId, ITag tag );
+        void Tag( int fieldId, ITag tag );
 
-        void Save( int fieldId, ITlvContract subContract );
+        void Contract( int fieldId, ITlvContract subContract );
     }
 
     public class TlvSaveContext : ITlvSaveContext
@@ -19,12 +19,12 @@ namespace PocketTLV
             this.contractTag = contractTag;
         }
 
-        public void Save( int fieldId, ITag tag )
+        public void Tag( int fieldId, ITag tag )
         {
             this.contractTag.AddChild( fieldId, tag );
         }
 
-        public void Save( int fieldId, ITlvContract subContract )
+        public void Contract( int fieldId, ITlvContract subContract )
         {
             // When saving sub-contracts, we do "value-stuffing":
             // - It's handy to have the contract ID when parsing, for error checking.

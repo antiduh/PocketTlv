@@ -16,7 +16,7 @@ namespace PocketTLV.Tests
 
             var dataTag = new IntTag( 0, 0 );
 
-            save.Save( 1, dataTag );
+            save.Tag( 1, dataTag );
 
             Assert.AreEqual( 1, dataTag.FieldId );
         }
@@ -29,7 +29,7 @@ namespace PocketTLV.Tests
 
             var dataTag = new IntTag( 0, 1 );
 
-            save.Save( 1, dataTag );
+            save.Tag( 1, dataTag );
 
             Assert.IsInstanceOfType( destTag.Children[0], typeof( IntTag ) );
             Assert.IsTrue( ( (IntTag)destTag.Children[0] ).Value == 1 );
@@ -43,7 +43,7 @@ namespace PocketTLV.Tests
 
             var dataContract = new IntContract1() { Value = 1 };
 
-            save.Save( 1, dataContract );
+            save.Contract( 1, dataContract );
 
             var contractTag = destTag.Children[0] as CompositeTag;
             Assert.IsInstanceOfType( contractTag, typeof( CompositeTag ) );

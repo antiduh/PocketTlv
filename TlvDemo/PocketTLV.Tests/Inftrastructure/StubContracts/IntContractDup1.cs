@@ -25,7 +25,7 @@ namespace PocketTLV.Tests.Inftrastructure.StubContracts
 
         public void Save( ITlvSaveContext save )
         {
-            save.Save( 0, new IntTag( this.Value ) );
+            save.Tag( 0, new IntTag( this.Value ) );
         }
     }
 }
