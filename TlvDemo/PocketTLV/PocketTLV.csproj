@@ -40,7 +40,9 @@
     <Compile Include="ClassLib\StreamConverter.cs" />
     <Compile Include="ContractRegistry.cs" />
     <Compile Include="ITlvContract.cs" />
+    <Compile Include="ITlvReader.cs" />
     <Compile Include="ITlvSaveContext.cs" />
+    <Compile Include="ITlvWriter.cs" />
     <Compile Include="Primitives\BoolTag.cs" />
     <Compile Include="Primitives\ByteArrayTag.cs" />
     <Compile Include="Primitives\CompositeTag.cs" />

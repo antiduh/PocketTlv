@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using PocketTLV.ClassLib;
 using PocketTLV.Primitives;
 
 namespace PocketTLV
 {
-    public class TlvStreamReader
+    public class TlvStreamReader : ITlvReader
     {
         private readonly StreamConverter reader;
 
@@ -69,7 +67,6 @@ namespace PocketTLV
             {
                 contract = new UnresolvedContract( contractTag, contractId );
             }
-
 
             TlvParseContext parseContext = new TlvParseContext( contractTag, false );
 
