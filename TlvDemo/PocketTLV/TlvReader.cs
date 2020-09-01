@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using PocketTLV.ClassLib;
 using PocketTLV.Primitives;
 
@@ -54,13 +55,21 @@ namespace PocketTLV
 
             int contractId = contractTag.FieldId;
 
-            if( this.contractReg.Contains( contractId ) == false )
+            ITlvContract contract;
+
+            if( this.contractReg.Contains( contractId ) )
             {
+                /*
                 string msg = $"Cannot deserialize contract with ID {contractId} - no contract has been registered for that ID.";
                 throw new KeyNotFoundException( msg );
+                */
+                contract = this.contractReg.Get( contractId );
+            }
+            else
+            {
+                contract = new UnresolvedContract( contractTag, contractId );
             }
 
-            ITlvContract contract = this.contractReg.Get( contractId );
 
             TlvParseContext parseContext = new TlvParseContext( contractTag, false );
 
