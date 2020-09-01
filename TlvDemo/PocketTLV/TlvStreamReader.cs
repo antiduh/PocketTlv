@@ -7,7 +7,7 @@ using PocketTLV.Primitives;
 
 namespace PocketTLV
 {
-    public class TlvReader
+    public class TlvStreamReader
     {
         private readonly StreamConverter reader;
 
@@ -15,12 +15,12 @@ namespace PocketTLV
 
         private byte[] buffer;
 
-        public TlvReader( Stream stream )
+        public TlvStreamReader( Stream stream )
             : this( stream, 1024 )
         {
         }
 
-        public TlvReader( Stream stream, int bufferSize )
+        public TlvStreamReader( Stream stream, int bufferSize )
         {
             if( stream == null )
             {

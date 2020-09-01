@@ -5,17 +5,17 @@ using PocketTLV.Primitives;
 
 namespace PocketTLV
 {
-    public class TlvWriter
+    public class TlvStreamWriter
     {
         private readonly Stream stream;
         private byte[] buffer;
 
-        public TlvWriter( Stream stream )
+        public TlvStreamWriter( Stream stream )
             : this( stream, 1024 )
         {
         }
 
-        public TlvWriter( Stream stream, int bufferSize )
+        public TlvStreamWriter( Stream stream, int bufferSize )
         {
             if( stream == null )
             {
