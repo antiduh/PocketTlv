@@ -56,27 +56,22 @@ namespace PocketTlv
             return true;
         }
 
-        public T Tag<T>( int fieldId ) where T : ITag
+        public bool TryContract<T>( int fieldId, out T contract ) where T : ITlvContract, new()
         {
-            T result;
+            // Technically this method could be implemented by calling `TryContract( int,
+            // ITlvContract)` and then calling Resolve() on the returned object. Implementing it the
+            // way that we have skips the intermediate allocation+parsing of UnresolvedContract, however.
 
-            if( TryTag<T>( fieldId, out result ) == false )
-            {
-                throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
-            }
-
-            return result;
-        }
-
-        public T Contract<T>( int fieldId ) where T : ITlvContract, new()
-        {
             CompositeTag contractTag;
             int foundContractId;
 
-            GetContractSubTag( fieldId, out contractTag, out foundContractId );
+            if( GetContractSubTag( fieldId, out contractTag, out foundContractId ) == false )
+            {
+                contract = default( T );
+                return false;
+            }
 
             T result = new T();
-
             if( result.ContractId != foundContractId )
             {
                 throw new InvalidOperationException( "Type mismatch found: contract IDs don't match." );
@@ -85,27 +80,69 @@ namespace PocketTlv
             var subContext = new TlvParseContext( contractTag, true );
             result.Parse( subContext );
 
-            return result;
+            contract = result;
+            return true;
         }
 
-        public ITlvContract Contract( int fieldId )
+        public bool TryContract( int fieldId, out ITlvContract contract )
         {
             CompositeTag contractTag;
             int foundContractId;
 
-            GetContractSubTag( fieldId, out contractTag, out foundContractId );
+            if( GetContractSubTag( fieldId, out contractTag, out foundContractId ) )
+            {
+                contract = new UnresolvedContract( contractTag, foundContractId );
+                return true;
+            }
 
-            return new UnresolvedContract( contractTag, foundContractId );
+            contract = null;
+            return false;
         }
 
-        private void GetContractSubTag( int fieldId, out CompositeTag contractTag, out int foundContractId )
+        public T Tag<T>( int fieldId ) where T : ITag
         {
-            contractTag = Tag<CompositeTag>( fieldId );
+            if( TryTag<T>( fieldId, out T tag ) )
+            {
+                return tag;
+            }
 
-            // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
-            // serialized contract.
+            throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
+        }
 
-            foundContractId = (ContractIdTag)contractTag.Children.First();
+        public T Contract<T>( int fieldId ) where T : ITlvContract, new()
+        {
+            if( TryContract<T>( fieldId, out T contract ) )
+            {
+                return contract;
+            }
+
+            throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
+        }
+
+        public ITlvContract Contract( int fieldId )
+        {
+            if( TryContract( fieldId, out ITlvContractcontract ) )
+            {
+                return contract;
+            }
+
+            throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
+        }
+
+        private bool GetContractSubTag( int fieldId, out CompositeTag contractTag, out int foundContractId )
+        {
+            if( TryTag<CompositeTag>( fieldId, out contractTag ) )
+            {
+                // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
+                // serialized contract.
+                foundContractId = (ContractIdTag)contractTag.Children.First();
+                return true;
+            }
+            else
+            {
+                foundContractId = -1;
+                return false;
+            }
         }
     }
 }
