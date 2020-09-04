@@ -27,9 +27,8 @@ namespace PocketTlv
         public T Tag<T>( int fieldId ) where T : ITag
         {
             var children = source.Children;
-            int length = children.Count;
 
-            for( int i = hideFirst ? 1 : 0; i < length; i++ )
+            for( int i = hideFirst ? 1 : 0; i < children.Count; i++ )
             {
                 if( children[i].FieldId == fieldId )
                 {
