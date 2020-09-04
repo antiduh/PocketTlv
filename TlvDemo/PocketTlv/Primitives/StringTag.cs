@@ -90,7 +90,7 @@ namespace PocketTlv
         }
 
         /// <summary>
-        /// Converts a <see cref="StringTag"/> to a <see cref="double"/>.
+        /// Converts a <see cref="StringTag"/> to a <see cref="string"/>.
         /// </summary>
         /// <param name="tag">The tag to convert.</param>
         public static implicit operator string( StringTag tag )
