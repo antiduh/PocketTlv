@@ -42,7 +42,7 @@ namespace PocketTlv
         }
 
         /// <summary>
-        /// Gets or sets the double value stored by the tag.
+        /// Gets or sets the string value stored by the tag.
         /// </summary>
         public string Value { get; set; }
 
