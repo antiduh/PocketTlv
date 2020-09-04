@@ -4,8 +4,19 @@ using System.Linq;
 
 namespace PocketTlv
 {
+    /// <summary>
+    /// Specifies the interface for parsing TLV fields from a contract's TLV stream.
+    /// </summary>
     public interface ITlvParseContext
     {
+        bool HasField( int fieldId );
+
+        bool TryTag<T>( int fieldId, out T tag );
+
+        bool TryContract<T>( int fieldId, out T contract ) where T : ITlvContract, new();
+
+        bool TryContract( int fieldId, out ITlvContract contract );
+
         T Tag<T>( int fieldId ) where T : ITag;
 
         T Contract<T>( int fieldId ) where T : ITlvContract, new();
@@ -121,7 +132,7 @@ namespace PocketTlv
 
         public ITlvContract Contract( int fieldId )
         {
-            if( TryContract( fieldId, out ITlvContractcontract ) )
+            if( TryContract( fieldId, out ITlvContract contract ) )
             {
                 return contract;
             }
