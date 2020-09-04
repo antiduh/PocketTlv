@@ -24,7 +24,7 @@ namespace PocketTlv
             this.hideFirst = hideFirst;
         }
 
-        public T Tag<T>( int fieldId ) where T : ITag
+        public bool HasField( int fieldId )
         {
             var children = source.Children;
 
@@ -32,11 +32,40 @@ namespace PocketTlv
             {
                 if( children[i].FieldId == fieldId )
                 {
-                    return (T)children[i];
+                    return true;
                 }
             }
 
-            throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
+            return false;
+        }
+
+        public bool TryTag<T>( int fieldId, out T tag )
+        {
+            var children = source.Children;
+
+            for( int i = hideFirst ? 1 : 0; i < children.Count; i++ )
+            {
+                if( children[i].FieldId == fieldId )
+                {
+                    tag = (T)children[i];
+                    return true;
+                }
+            }
+
+            tag = default( T );
+            return true;
+        }
+
+        public T Tag<T>( int fieldId ) where T : ITag
+        {
+            T result;
+
+            if( TryTag<T>( fieldId, out result ) == false )
+            {
+                throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
+            }
+
+            return result;
         }
 
         public T Contract<T>( int fieldId ) where T : ITlvContract, new()
