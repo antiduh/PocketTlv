@@ -56,10 +56,6 @@ namespace PocketTlv
 
             if( this.contractReg.Contains( contractId ) )
             {
-                /*
-                string msg = $"Cannot deserialize contract with ID {contractId} - no contract has been registered for that ID.";
-                throw new KeyNotFoundException( msg );
-                */
                 contract = this.contractReg.Get( contractId );
             }
             else
