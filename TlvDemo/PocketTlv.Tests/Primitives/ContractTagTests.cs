@@ -7,7 +7,7 @@ namespace PocketTlv.Tests.Primitives
     public class ContractTagTests
     {
         [TestMethod]
-        public void When_CompositeTagsContainSameData_Equals_ReturnsTrue()
+        public void When_TagsContainSameData_Equals_ReturnsTrue()
         {
             var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
             {
@@ -28,7 +28,7 @@ namespace PocketTlv.Tests.Primitives
         /// Demonstrates that fieldIds are not part of the propery identity or content of a tag.
         /// </summary>
         [TestMethod]
-        public void When_CompositeTagsContainDifferentFieldIds_Equals_ReturnsTrue()
+        public void When_TagsContainDifferentFieldIds_Equals_ReturnsTrue()
         {
             var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
             {
@@ -46,7 +46,7 @@ namespace PocketTlv.Tests.Primitives
         }
 
         [TestMethod]
-        public void When_CompositeTagsContainDifferentContractIds_Equals_ReturnsFalse()
+        public void When_TagsContainDifferentContractIds_Equals_ReturnsFalse()
         {
             var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
             {
@@ -64,7 +64,7 @@ namespace PocketTlv.Tests.Primitives
         }
 
         [TestMethod]
-        public void When_CompositeTagsContainDifferentChildrenCounts_Equals_ReturnsFalse()
+        public void When_TagsContainDifferentChildrenCounts_Equals_ReturnsFalse()
         {
             var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
             {
@@ -82,7 +82,7 @@ namespace PocketTlv.Tests.Primitives
         }
 
         [TestMethod]
-        public void When_CompositeTagsContainDifferentChildrenData_Equals_ReturnsFalse()
+        public void When_TagsContainDifferentChildrenData_Equals_ReturnsFalse()
         {
             var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
             {
