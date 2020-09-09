@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PocketTlv.Tests.Inftrastructure.StubContracts;
 
@@ -27,12 +28,14 @@ namespace PocketTlv.Tests
             var dest = new List<ITag>();
             var save = new TlvSaveContext( dest );
 
-            var dataTag = new IntTag( 0, 1 );
+            save.Tag( 1, new IntTag( 0, 1 ) );
 
-            save.Tag( 1, dataTag );
+            var expected = new List<ITag>()
+            {
+                new IntTag( 1, 1 )
+            };
 
-            Assert.IsInstanceOfType( dest[0], typeof( IntTag ) );
-            Assert.IsTrue( ( (IntTag)dest[0] ).Value == 1 );
+            CollectionAssert.AreEqual( expected, dest );
         }
 
         [TestMethod]
@@ -45,13 +48,12 @@ namespace PocketTlv.Tests
 
             save.Contract( 1, dataContract );
 
-            var contractTag = dest[0] as ContractTag;
-            Assert.IsInstanceOfType( contractTag, typeof( ContractTag ) );
-            Assert.AreEqual( dataContract.ContractId, contractTag.ContractId );
+            var expected = new List<ITag>()
+            {
+                new ContractTag( IntContract1.Id, IntContract1.Id, new IntTag( 0, 1 ) )
+            };
 
-            var intChildTag = contractTag.Children[0] as IntTag;
-            Assert.IsInstanceOfType( intChildTag, typeof( IntTag ) );
-            Assert.AreEqual( dataContract.Value, intChildTag.Value );
+            CollectionAssert.AreEqual( expected, dest );
         }
     }
 }
