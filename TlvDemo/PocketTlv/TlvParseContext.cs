@@ -9,7 +9,7 @@ namespace PocketTlv
     /// </summary>
     public class TlvParseContext : ITlvParseContext
     {
-        private CompositeTag source;
+        private List<ITag> children;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TlvParseContext"/> class.
@@ -21,9 +21,9 @@ namespace PocketTlv
         /// If true, the first TLV tag in the source <see cref="CompositeTag"/> is hidden from view
         /// of callers.
         /// </param>
-        public TlvParseContext( CompositeTag source )
+        public TlvParseContext( List<ITag> children )
         {
-            this.source = source;
+            this.children = children;
         }
 
         /// <summary>
@@ -33,8 +33,6 @@ namespace PocketTlv
         /// <returns></returns>
         public bool HasField( int fieldId )
         {
-            var children = source.Children;
-
             for( int i = 0; i < children.Count; i++ )
             {
                 if( children[i].WireType != WireType.ContractId && children[i].FieldId == fieldId )
@@ -56,8 +54,6 @@ namespace PocketTlv
         /// <returns>True if the field was successfully located, false otherwise.</returns>
         public bool TryTag<T>( int fieldId, out T tag ) where T : ITag 
         {
-            var children = source.Children;
-
             for( int i = 0; i < children.Count; i++ )
             {
                 if( children[i].WireType != WireType.ContractId && children[i].FieldId == fieldId )
@@ -100,7 +96,7 @@ namespace PocketTlv
                 throw new InvalidOperationException( "Type mismatch found: contract IDs don't match." );
             }
 
-            var subContext = new TlvParseContext( contractTag );
+            var subContext = new TlvParseContext( contractTag.Children );
             result.Parse( subContext );
 
             contract = result;
