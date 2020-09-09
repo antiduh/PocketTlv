@@ -22,7 +22,7 @@ namespace PocketTlv
         void ITlvContract.Save( ITlvSaveContext save )
         {
             ITag child;
-            for( int i = 1; i < this.Tag.Children.Count; i++ )
+            for( int i = 0; i < this.Tag.Children.Count; i++ )
             {
                 child = this.Tag.Children[i];
                 save.Tag( child.FieldId, child );
