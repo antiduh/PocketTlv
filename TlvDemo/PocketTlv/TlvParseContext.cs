@@ -115,6 +115,7 @@ namespace PocketTlv
             CompositeTag contractTag;
             int foundContractId;
 
+            // Since the caller gave us no type information, we have to return them an unresolved contract.
             if( GetContractSubTag( fieldId, out contractTag, out foundContractId ) )
             {
                 contract = new UnresolvedContract( contractTag, foundContractId );
