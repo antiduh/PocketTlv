@@ -115,7 +115,7 @@ namespace PocketTlv
                 
             }
 
-            contract = new UnresolvedContract( contractTag, contractTag.ContractId );
+            contract = new UnresolvedContract( contractTag );
             return true;
         }
 

@@ -60,7 +60,7 @@ namespace PocketTlv
             }
             else
             {
-                contract = new UnresolvedContract( contractTag, contractId );
+                contract = new UnresolvedContract( contractTag );
             }
 
             TlvParseContext parseContext = new TlvParseContext( contractTag.Children );
