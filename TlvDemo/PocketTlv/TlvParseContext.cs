@@ -14,13 +14,7 @@ namespace PocketTlv
         /// <summary>
         /// Initializes a new instance of the <see cref="TlvParseContext"/> class.
         /// </summary>
-        /// <param name="source">
-        /// The <see cref="CompositeTag"/> that contains the TLV stream for the contract.
-        /// </param>
-        /// <param name="hideFirst">
-        /// If true, the first TLV tag in the source <see cref="CompositeTag"/> is hidden from view
-        /// of callers.
-        /// </param>
+        /// <param name="children">The list of nodes to parse from.</param>
         public TlvParseContext( List<ITag> children )
         {
             this.children = children;
