@@ -107,9 +107,9 @@ namespace PocketTlv
             amountRead += TlvConsts.TypeSize;
 
             // -- Length --
-            int length;
+            int tagValueLength;
 
-            if( this.reader.ReadIntLE( out length ) == false )
+            if( this.reader.ReadIntLE( out tagValueLength ) == false )
             {
                 return null;
             }
@@ -126,7 +126,7 @@ namespace PocketTlv
 
             if( tag is CompositeTag compositeTag )
             {
-                while( amountRead < length )
+                while( amountRead < tagValueLength )
                 {
                     ITag childTag;
                     int childReadAmount;
@@ -157,7 +157,7 @@ namespace PocketTlv
 
                 amountRead += 4;
 
-                while( amountRead < length )
+                while( amountRead < tagValueLength )
                 {
                     ITag childTag;
                     int childReadAmount;
@@ -179,15 +179,15 @@ namespace PocketTlv
             }
             else
             {
-                EnsureSize( ref this.buffer, length );
-                if( this.reader.ReadHarder( this.buffer, 0, length ) == false )
+                EnsureSize( ref this.buffer, tagValueLength );
+                if( this.reader.ReadHarder( this.buffer, 0, tagValueLength ) == false )
                 {
                     return null;
                 }
 
-                tag.ReadValue( this.buffer, 0, length );
+                tag.ReadValue( this.buffer, 0, tagValueLength );
 
-                amountRead += length;
+                amountRead += tagValueLength;
             }
 
             return tag;
