@@ -4,23 +4,40 @@ using PocketTlv.ClassLib;
 
 namespace PocketTlv
 {
+    /// <summary>
+    /// Represents a TLV contract as a TLV tag.
+    /// </summary>
     public class ContractTag : ITag
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContractTag"/> class.
+        /// </summary>
         public ContractTag()
         {
             this.Children = new List<ITag>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContractTag"/> class.
+        /// </summary>
+        /// <param name="children">A list of tags to store as children.</param>
         public ContractTag( params ITag[] children )
             : this()
         {
             this.Children.AddRange( children );
         }
 
-        public ContractTag( int fieldId, params ITag[] children )
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContractTag"/> class.
+        /// </summary>
+        /// <param name="fieldId">The TLV field ID that the tag represents.</param>
+        /// <param name="contractId">The ID value of the contract.</param>
+        /// <param name="children">A list of tags to store as children.</param>
+        public ContractTag( int fieldId, int contractId, params ITag[] children )
             : this()
         {
             this.FieldId = fieldId;
+            this.ContractId = contractId;
             this.Children.AddRange( children );
         }
 

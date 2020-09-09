@@ -9,15 +9,8 @@ namespace PocketTlv.Tests.Primitives
         [TestMethod]
         public void When_TagsContainSameData_Equals_ReturnsTrue()
         {
-            var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
-            {
-                ContractId = 100,
-            };
-
-            var contractTag2 = new ContractTag( 1, new IntTag( 2, 3 ) )
-            {
-                ContractId = 100
-            };
+            var contractTag1 = new ContractTag( 1, 100, new IntTag( 2, 3 ) );
+            var contractTag2 = new ContractTag( 1, 100, new IntTag( 2, 3 ) );
 
             Assert.IsTrue( contractTag1 == contractTag2 );
             Assert.IsFalse( contractTag1 != contractTag2 );
@@ -30,15 +23,8 @@ namespace PocketTlv.Tests.Primitives
         [TestMethod]
         public void When_TagsContainDifferentFieldIds_Equals_ReturnsTrue()
         {
-            var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
-            {
-                ContractId = 100,
-            };
-
-            var contractTag2 = new ContractTag( 2, new IntTag( 2, 3 ) )
-            {
-                ContractId = 100
-            };
+            var contractTag1 = new ContractTag( 1, 100, new IntTag( 2, 3 ) );
+            var contractTag2 = new ContractTag( 2, 100, new IntTag( 2, 3 ) );
 
             Assert.IsTrue( contractTag1 == contractTag2 );
             Assert.IsFalse( contractTag1 != contractTag2 );
@@ -48,15 +34,8 @@ namespace PocketTlv.Tests.Primitives
         [TestMethod]
         public void When_TagsContainDifferentContractIds_Equals_ReturnsFalse()
         {
-            var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
-            {
-                ContractId = 100,
-            };
-
-            var contractTag2 = new ContractTag( 1, new IntTag( 2, 3 ) )
-            {
-                ContractId = 101
-            };
+            var contractTag1 = new ContractTag( 1, 100, new IntTag( 2, 3 ) );
+            var contractTag2 = new ContractTag( 1, 101, new IntTag( 2, 3 ) );
 
             Assert.IsFalse( contractTag1 == contractTag2 );
             Assert.IsTrue( contractTag1 != contractTag2 );
@@ -66,15 +45,8 @@ namespace PocketTlv.Tests.Primitives
         [TestMethod]
         public void When_TagsContainDifferentChildrenCounts_Equals_ReturnsFalse()
         {
-            var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
-            {
-                ContractId = 100,
-            };
-
-            var contractTag2 = new ContractTag( 1, new IntTag( 2, 3 ), new IntTag( 3, 4 ) )
-            {
-                ContractId = 100
-            };
+            var contractTag1 = new ContractTag( 1, 100, new IntTag( 2, 3 ) );
+            var contractTag2 = new ContractTag( 1, 100, new IntTag( 2, 3 ), new IntTag( 3, 4 ) );
 
             Assert.IsFalse( contractTag1 == contractTag2 );
             Assert.IsTrue( contractTag1 != contractTag2 );
@@ -84,15 +56,8 @@ namespace PocketTlv.Tests.Primitives
         [TestMethod]
         public void When_TagsContainDifferentChildrenData_Equals_ReturnsFalse()
         {
-            var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
-            {
-                ContractId = 100,
-            };
-
-            var contractTag2 = new ContractTag( 1, new IntTag( 2, 4 ) )
-            {
-                ContractId = 100
-            };
+            var contractTag1 = new ContractTag( 1, 100, new IntTag( 2, 3 ) );
+            var contractTag2 = new ContractTag( 1, 100, new IntTag( 2, 4 ) );
 
             Assert.IsFalse( contractTag1 == contractTag2 );
             Assert.IsTrue( contractTag1 != contractTag2 );
@@ -102,10 +67,7 @@ namespace PocketTlv.Tests.Primitives
         [TestMethod]
         public void When_ContractTagSaved_RestoredTag_EqualsReturnsTrue()
         {
-            var orig = new ContractTag( 1, new IntTag( 2, 3 ) )
-            {
-                ContractId = 100,
-            };
+            var orig = new ContractTag( 1, 100, new IntTag( 2, 3 ) );
 
             var copy = RoundTrip( orig );
 
