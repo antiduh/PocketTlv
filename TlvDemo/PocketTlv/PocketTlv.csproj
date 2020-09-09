@@ -41,6 +41,8 @@
     <Compile Include="ContractRegistry.cs" />
     <Compile Include="ITlvContract.cs" />
     <Compile Include="ITlvReader.cs" />
+    <Compile Include="ITlvParseContext.cs" />
+    <Compile Include="TlvSaveContext.cs" />
     <Compile Include="ITlvSaveContext.cs" />
     <Compile Include="ITlvWriter.cs" />
     <Compile Include="Primitives\BoolTag.cs" />
