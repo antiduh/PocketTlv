@@ -74,7 +74,7 @@ namespace PocketTlv
         {
             T contract = new T();
 
-            CompositeTag contractTag = ReadTag<CompositeTag>();
+            var contractTag = ReadTag<CompositeTag>();
 
             if( contract.ContractId != ( (ITag)contractTag ).FieldId )
             {
