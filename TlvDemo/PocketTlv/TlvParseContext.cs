@@ -5,7 +5,7 @@ using System.Linq;
 namespace PocketTlv
 {
     /// <summary>
-    /// Parses TLV fields from a <see cref="CompositeTag"/>.
+    /// Parses TLV fields from a TLV tag stream.
     /// </summary>
     public class TlvParseContext : ITlvParseContext
     {
