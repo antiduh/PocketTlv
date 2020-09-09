@@ -64,6 +64,42 @@ namespace PocketTlv.Tests.Primitives
         }
 
         [TestMethod]
+        public void When_CompositeTagsContainDifferentChildrenCounts_Equals_ReturnsFalse()
+        {
+            var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
+            {
+                ContractId = 100,
+            };
+
+            var contractTag2 = new ContractTag( 1, new IntTag( 2, 3 ), new IntTag( 3, 4 ) )
+            {
+                ContractId = 100
+            };
+
+            Assert.IsFalse( contractTag1 == contractTag2 );
+            Assert.IsTrue( contractTag1 != contractTag2 );
+            Assert.IsFalse( contractTag1.Equals( contractTag2 ) );
+        }
+
+        [TestMethod]
+        public void When_CompositeTagsContainDifferentChildrenData_Equals_ReturnsFalse()
+        {
+            var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
+            {
+                ContractId = 100,
+            };
+
+            var contractTag2 = new ContractTag( 1, new IntTag( 2, 4 ) )
+            {
+                ContractId = 100
+            };
+
+            Assert.IsFalse( contractTag1 == contractTag2 );
+            Assert.IsTrue( contractTag1 != contractTag2 );
+            Assert.IsFalse( contractTag1.Equals( contractTag2 ) );
+        }
+
+        [TestMethod]
         public void When_ContractTagSaved_RestoredTag_EqualsReturnsTrue()
         {
             var orig = new ContractTag( 1, new IntTag( 2, 3 ) )
