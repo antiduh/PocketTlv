@@ -156,6 +156,14 @@ namespace PocketTlv
         void ITag.WriteValue( byte[] buffer, int position )
         {
             // A contract tag's value is handled directly by TlvWriter.
+
+            DataConverter.WriteIntLE( this.ContractId, buffer, position );
+            position += 4;
+
+            foreach( ITag child in this.Children )
+            {
+                position += TagBufferWriter.Write( child, buffer, position );
+            }
         }
     }
 }

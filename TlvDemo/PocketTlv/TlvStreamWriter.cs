@@ -64,55 +64,14 @@ namespace PocketTlv
 
         internal static int WriteInternal( ITag tag, ref byte[] buffer, int position )
         {
-            int written = 0;
-
-            int valueLength = tag.ComputeLength();
+            int tagValueLength = tag.ComputeLength();
 
             //  requiredSize = type size, length field size, value field size
-            int requiredSpace = TlvConsts.HeaderSize + valueLength;
+            int requiredSpace = TlvConsts.HeaderSize + tagValueLength;
 
-            EnsureSize( ref buffer, requiredSpace + position );
+            EnsureSize( ref buffer, requiredSpace );
 
-            // -- Type --
-            ushort type = TypePacking.Pack( tag.WireType, tag.FieldId );
-            DataConverter.WriteUShortLE( type, buffer, position + written );
-            written += TlvConsts.TypeSize;
-
-            // -- Length --
-            DataConverter.WriteIntLE( valueLength, buffer, position + written );
-            written += TlvConsts.LengthSize;
-
-            // -- Value --
-
-            if( tag is CompositeTag compositeTag )
-            {
-                int subPosition = position + written;
-
-                foreach( ITag child in compositeTag.Children )
-                {
-                    subPosition += WriteInternal( child, ref buffer, subPosition );
-                }
-            }
-            else if( tag is ContractTag contractTag )
-            {
-                int subPosition = position + written;
-
-                DataConverter.WriteIntLE( contractTag.ContractId, buffer, subPosition );
-                subPosition += 4;
-
-                foreach( ITag child in contractTag.Children )
-                {
-                    subPosition += WriteInternal( child, ref buffer, subPosition );
-                }
-            }
-            else
-            {
-                tag.WriteValue( buffer, position + written );
-            }
-
-            written += valueLength;
-
-            return written;
+            return TagBufferWriter.Write( tag, tagValueLength, buffer, position );
         }
 
         private static void EnsureSize( ref byte[] buffer, int size )
@@ -121,6 +80,34 @@ namespace PocketTlv
             {
                 Array.Resize( ref buffer, size );
             }
+        }
+    }
+
+    public static class TagBufferWriter
+    {
+        public static int Write( ITag tag, byte[] buffer, int position )
+        {
+            return Write( tag, tag.ComputeLength(), buffer, position );
+        }
+
+        public static int Write( ITag tag, int tagValueLength, byte[] buffer, int position )
+        {
+            int written = 0;
+
+            // -- Type --
+            ushort type = TypePacking.Pack( tag.WireType, tag.FieldId );
+            DataConverter.WriteUShortLE( type, buffer, position + written );
+            written += TlvConsts.TypeSize;
+
+            // -- Length --
+            DataConverter.WriteIntLE( tagValueLength, buffer, position + written );
+            written += TlvConsts.LengthSize;
+
+            // -- Value --
+            tag.WriteValue( buffer, position + written );
+            written += tagValueLength;
+
+            return written;
         }
     }
 }

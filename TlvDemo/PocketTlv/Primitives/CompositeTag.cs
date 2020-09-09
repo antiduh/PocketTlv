@@ -172,7 +172,10 @@ namespace PocketTlv
 
         void ITag.WriteValue( byte[] buffer, int position )
         {
-            // A composite tag's value is handled directly by TlvWriter.
+            foreach( ITag child in this.Children )
+            {
+                position += TagBufferWriter.Write( child, buffer, position );
+            }
         }
     }
 }
