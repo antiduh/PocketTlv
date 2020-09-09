@@ -38,12 +38,12 @@ namespace PocketTlv
 
         public ITag ReadTag()
         {
-            return ReadInternal( out _ );
+            return ReadInternal();
         }
 
         public T ReadTag<T>() where T : ITag
         {
-            return (T)ReadInternal( out _ );
+            return (T)ReadInternal();
         }
 
         public ITlvContract ReadContract()
@@ -93,104 +93,31 @@ namespace PocketTlv
             this.contractReg.Register<T>();
         }
 
-        private ITag ReadInternal( out int amountRead )
+        private ITag ReadInternal()
         {
-            amountRead = 0;
-
-            // -- Type --
-            ushort packedType;
-            if( this.reader.ReadUShortLE( out packedType ) == false )
-            {
-                return null;
-            }
-
-            amountRead += TlvConsts.TypeSize;
-
-            // -- Length --
             int tagValueLength;
 
-            if( this.reader.ReadIntLE( out tagValueLength ) == false )
+            // This reads the type and length fields.
+            if( this.reader.ReadHarder( this.buffer, 0, 6 ) == false )
             {
                 return null;
             }
 
-            amountRead += TlvConsts.LengthSize;
+            // Figure out how long the value field is.
+            tagValueLength = DataConverter.ReadIntLE( this.buffer, 2 );
 
-            int wireType;
-            int fieldId;
+            // Make sure our buffer can fit the whole thing
+            int requiredSize = TlvConsts.HeaderSize + tagValueLength;
+            EnsureSize( ref this.buffer, requiredSize );
 
-            TypePacking.Unpack( packedType, out wireType, out fieldId );
-
-            ITag tag;
-            tag = TagFactory.Construct( wireType, fieldId );
-
-            if( tag is CompositeTag compositeTag )
+            // Read the value portion into the buffer.
+            if( this.reader.ReadHarder( this.buffer, 6, tagValueLength ) == false )
             {
-                while( amountRead < tagValueLength )
-                {
-                    ITag childTag;
-                    int childReadAmount;
-
-                    childTag = ReadInternal( out childReadAmount );
-
-                    if( childTag == null )
-                    {
-                        // End of stream before finishing the tag.
-                        amountRead = -1;
-                        return null;
-                    }
-                    else
-                    {
-                        amountRead += childReadAmount;
-                        compositeTag.Children.Add( childTag );
-                    }
-                }
-            }
-            else if( tag is ContractTag contractTag )
-            {
-                if( this.reader.ReadIntLE( out int contractId ) == false )
-                {
-                    return null;
-                }
-
-                contractTag.ContractId = contractId;
-
-                amountRead += 4;
-
-                while( amountRead < tagValueLength )
-                {
-                    ITag childTag;
-                    int childReadAmount;
-
-                    childTag = ReadInternal( out childReadAmount );
-
-                    if( childTag == null )
-                    {
-                        // End of stream before finishing the tag.
-                        amountRead = -1;
-                        return null;
-                    }
-                    else
-                    {
-                        amountRead += childReadAmount;
-                        contractTag.Children.Add( childTag );
-                    }
-                }
-            }
-            else
-            {
-                EnsureSize( ref this.buffer, tagValueLength );
-                if( this.reader.ReadHarder( this.buffer, 0, tagValueLength ) == false )
-                {
-                    return null;
-                }
-
-                tag.ReadValue( this.buffer, 0, tagValueLength );
-
-                amountRead += tagValueLength;
+                return null;
             }
 
-            return tag;
+            // Turn the buffer into a full tag chain.
+            return TagBufferReader.Read( this.buffer, 0, out _ );
         }
 
         private static void EnsureSize( ref byte[] buffer, int size )
@@ -199,6 +126,38 @@ namespace PocketTlv
             {
                 Array.Resize( ref buffer, size );
             }
+        }
+    }
+
+    public static class TagBufferReader
+    {
+        public static ITag Read( byte[] buffer, int position, out int amountRead )
+        {
+            amountRead = 0;
+
+            // Read the header 
+            ushort packedType = DataConverter.ReadUShortLE( buffer, position );
+            position += 2;
+            amountRead += 2;
+
+            int tagValueLength = DataConverter.ReadIntLE( buffer, position );
+            position += 4;
+            amountRead += 4;
+
+            // Construct the new tag
+            int wireType;
+            int fieldId;
+
+            TypePacking.Unpack( packedType, out wireType, out fieldId );
+
+            ITag tag;
+            tag = TagFactory.Construct( wireType, fieldId );
+
+            tag.ReadValue( buffer, position, tagValueLength );
+
+            amountRead += tagValueLength;
+
+            return tag;
         }
     }
 }

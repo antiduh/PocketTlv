@@ -167,7 +167,18 @@ namespace PocketTlv
 
         void ITag.ReadValue( byte[] buffer, int position, int length )
         {
-            // A composite tag's value is handled directly by TlvReader.
+            int amountRead = 0;
+
+            while( amountRead < length )
+            {
+                int subAmountRead;
+
+                ITag child = TagBufferReader.Read( buffer, position, out subAmountRead );
+                position += subAmountRead;
+                amountRead += subAmountRead;
+
+                this.Children.Add( child );
+            }
         }
 
         void ITag.WriteValue( byte[] buffer, int position )
