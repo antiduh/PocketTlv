@@ -20,9 +20,10 @@ namespace PocketTlv.Tests
             ITlvContract copy = RoundTrip_Anonymous( carrier );
 
             var resolvedCopy = copy.Resolve<CarrierRecord>();
-
+            var resolvedcopyChild = resolvedCopy.Child.Resolve<IntContract1>();
+            
             Assert.AreEqual( carrier.Value, resolvedCopy.Value );
-            Assert.AreEqual( ( (IntContract1)carrier.Child ).Value, ( (IntContract1)resolvedCopy.Child ).Value );
+            Assert.AreEqual( ( (IntContract1)carrier.Child ).Value, resolvedcopyChild.Value );
         }
 
         private static ITlvContract RoundTrip_Anonymous( CarrierRecord carrier )
