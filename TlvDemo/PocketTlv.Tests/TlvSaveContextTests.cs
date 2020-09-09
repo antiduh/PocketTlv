@@ -45,14 +45,11 @@ namespace PocketTlv.Tests
 
             save.Contract( 1, dataContract );
 
-            var contractTag = dest[0] as CompositeTag;
-            Assert.IsInstanceOfType( contractTag, typeof( CompositeTag ) );
+            var contractTag = dest[0] as ContractTag;
+            Assert.IsInstanceOfType( contractTag, typeof( ContractTag ) );
+            Assert.AreEqual( dataContract.ContractId, contractTag.ContractId );
 
-            var contractIdChildTag = contractTag.Children[0] as ContractIdTag;
-            Assert.IsInstanceOfType( contractIdChildTag, typeof( ContractIdTag ) );
-            Assert.AreEqual( dataContract.ContractId, contractIdChildTag.ContractId );
-
-            var intChildTag = contractTag.Children[1] as IntTag;
+            var intChildTag = contractTag.Children[0] as IntTag;
             Assert.IsInstanceOfType( intChildTag, typeof( IntTag ) );
             Assert.AreEqual( dataContract.Value, intChildTag.Value );
         }

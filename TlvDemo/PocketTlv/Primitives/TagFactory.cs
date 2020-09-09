@@ -55,6 +55,10 @@ namespace PocketTlv
                     result = new DecimalTag();
                     break;
 
+                case WireType.Contract:
+                    result = new ContractTag();
+                    break;
+
                 default:
                     throw new UnknownWireTypeException( $"Unknown wire type '{wireTypeId}'.", wireTypeId );
             }

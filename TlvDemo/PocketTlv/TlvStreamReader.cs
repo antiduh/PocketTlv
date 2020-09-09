@@ -48,7 +48,7 @@ namespace PocketTlv
 
         public ITlvContract ReadContract()
         {
-            var contractTag = ReadTag<CompositeTag>();
+            var contractTag = ReadTag<ContractTag>();
 
             int contractId = contractTag.FieldId;
 
@@ -74,9 +74,9 @@ namespace PocketTlv
         {
             T contract = new T();
 
-            var contractTag = ReadTag<CompositeTag>();
+            var contractTag = ReadTag<ContractTag>();
 
-            if( contract.ContractId != ( (ITag)contractTag ).FieldId )
+            if( contract.ContractId != contractTag.ContractId )
             {
                 throw new InvalidOperationException( "Read unexpected tag." );
             }

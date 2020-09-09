@@ -49,9 +49,10 @@ namespace PocketTlv
                 throw new ArgumentNullException( nameof( contract ) );
             }
 
-            var contractTag = new CompositeTag()
+            var contractTag = new ContractTag()
             {
-                FieldId = contract.ContractId
+                FieldId = contract.ContractId,
+                ContractId = contract.ContractId
             };
 
             var saveContext = new TlvSaveContext( contractTag.Children );

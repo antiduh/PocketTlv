@@ -4,13 +4,13 @@ namespace PocketTlv
 {
     public class UnresolvedContract : ITlvContract
     {
-        public UnresolvedContract( CompositeTag tag, int contractId )
+        public UnresolvedContract( ContractTag tag, int contractId )
         {
             this.Tag = tag;
             this.ContractId = contractId;
         }
 
-        public CompositeTag Tag { get; private set; }
+        public ContractTag Tag { get; private set; }
 
         public int ContractId { get; private set; }
 

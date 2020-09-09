@@ -75,17 +75,16 @@ namespace PocketTlv
             // ITlvContract)` and then calling Resolve() on the returned object. Implementing it the
             // way that we have skips the intermediate allocation+parsing of UnresolvedContract, however.
 
-            CompositeTag contractTag;
-            int foundContractId;
+            ContractTag contractTag = GetContractSubTag( fieldId );
 
-            if( GetContractSubTag( fieldId, out contractTag, out foundContractId ) == false )
+            if( contractTag == null )
             {
                 contract = default( T );
                 return false;
             }
 
             T result = new T();
-            if( result.ContractId != foundContractId )
+            if( result.ContractId != contractTag.ContractId )
             {
                 throw new InvalidOperationException( "Type mismatch found: contract IDs don't match." );
             }
@@ -106,18 +105,18 @@ namespace PocketTlv
         /// <returns>True if the field was successfully located, falase otherwise.</returns>
         public bool TryContract( int fieldId, out ITlvContract contract )
         {
-            CompositeTag contractTag;
-            int foundContractId;
+            ContractTag contractTag = GetContractSubTag( fieldId );
 
             // Since the caller gave us no type information, we have to return them an unresolved contract.
-            if( GetContractSubTag( fieldId, out contractTag, out foundContractId ) )
+            if( contractTag == null  )
             {
-                contract = new UnresolvedContract( contractTag, foundContractId );
-                return true;
+                contract = null;
+                return false;
+                
             }
 
-            contract = null;
-            return false;
+            contract = new UnresolvedContract( contractTag, contractTag.ContractId );
+            return true;
         }
 
         /// <summary>
@@ -180,19 +179,17 @@ namespace PocketTlv
             throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
         }
 
-        private bool GetContractSubTag( int fieldId, out CompositeTag subContractTag, out int foundContractId )
+        private ContractTag GetContractSubTag( int fieldId )
         {
-            if( TryTag<CompositeTag>( fieldId, out subContractTag ) )
+            if( TryTag<ContractTag>( fieldId, out ContractTag subContractTag ) )
             {
                 // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
                 // serialized contract.
-                foundContractId = (ContractIdTag)subContractTag.Children.First();
-                return true;
+                return subContractTag;
             }
             else
             {
-                foundContractId = -1;
-                return false;
+                return null;
             }
         }
     }
