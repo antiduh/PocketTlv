@@ -51,42 +51,6 @@ namespace PocketTlv
         public int FieldId { get; set; }
 
         /// <summary>
-        /// Stores the given tag as a child tag.
-        /// </summary>
-        /// <param name="child">A tag to store.</param>
-        public void AddChild( ITag child )
-        {
-            if( child is null )
-            {
-                throw new ArgumentNullException( nameof( child ) );
-            }
-
-            this.Children.Add( child );
-        }
-
-        /// <summary>
-        /// Stores the given tag as a child tag, overwriting the tag's <see cref="ITag.FieldId"/>
-        /// property with the given field ID.
-        /// </summary>
-        /// <param name="fieldId">The child tag's field ID.</param>
-        /// <param name="child">A tag to store.</param>
-        public void AddChild( int fieldId, ITag child )
-        {
-            if( child is null )
-            {
-                throw new ArgumentNullException( nameof( child ) );
-            }
-
-            if( fieldId < 0 )
-            {
-                throw new ArgumentOutOfRangeException( nameof( fieldId ), "must at least zero." );
-            }
-
-            child.FieldId = fieldId;
-            this.Children.Add( child );
-        }
-
-        /// <summary>
         /// Returns a string describing the number of children in the tag.
         /// </summary>
         /// <returns></returns>

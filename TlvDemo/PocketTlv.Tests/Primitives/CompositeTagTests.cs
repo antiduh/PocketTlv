@@ -7,15 +7,6 @@ namespace PocketTlv.Tests.Primitives
     public class CompositeTagTests
     {
         [TestMethod]
-        public void When_AddNullChild_AddChild_Throws()
-        {
-            var tag = new CompositeTag();
-
-            Assert.ThrowsException<ArgumentNullException>( () => tag.AddChild( null ) );
-            Assert.ThrowsException<ArgumentNullException>( () => tag.AddChild( 0, null ) );
-        }
-
-        [TestMethod]
         public void When_BothEmpty_Equals_ReturnsTrue()
         {
             var tag1 = new CompositeTag();
@@ -59,14 +50,6 @@ namespace PocketTlv.Tests.Primitives
             Assert.IsFalse( tag1.Equals( tag2 ) );
             Assert.IsFalse( tag1 == tag2 );
             Assert.IsTrue( tag1 != tag2 );
-        }
-
-        [TestMethod]
-        public void When_FieldIdIsNegative_AddChild_Throws()
-        {
-            var tag = new CompositeTag();
-
-            Assert.ThrowsException<ArgumentOutOfRangeException>( () => tag.AddChild( -1, new IntTag( 0 ) ) );
         }
     }
 }

@@ -142,7 +142,7 @@ namespace PocketTlv
                     else
                     {
                         amountRead += childReadAmount;
-                        compositeTag.AddChild( childTag );
+                        compositeTag.Children.Add( childTag );
                     }
                 }
             }

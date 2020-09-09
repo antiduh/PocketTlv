@@ -1,19 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PocketTlv
 {
     public class TlvSaveContext : ITlvSaveContext
     {
-        private CompositeTag contractTag;
+        private List<ITag> children;
 
-        public TlvSaveContext( CompositeTag contractTag )
+        public TlvSaveContext( List<ITag> children )
         {
-            this.contractTag = contractTag;
+            this.children = children;
         }
 
         public void Tag( int fieldId, ITag tag )
         {
-            this.contractTag.AddChild( fieldId, tag );
+            tag.FieldId = fieldId;
+            this.children.Add( tag );
         }
 
         public void Contract( int fieldId, ITlvContract subContract )
@@ -30,18 +32,19 @@ namespace PocketTlv
             var subcontractTag = new CompositeTag();
 
             // Value-stuff the contract ID.
-            subcontractTag.AddChild( 0xABC, new ContractIdTag( subContract.ContractId ) );
+            subcontractTag.Children.Add( new ContractIdTag( 0xABC, subContract.ContractId ) );
 
             // Tell the contract to serialize itself through us by swapping which CompositeTag we're
             // pointing to (effectively doing recursion via the call stack).
-            CompositeTag backup = this.contractTag;
+            List<ITag> backup = this.children;
 
-            this.contractTag = subcontractTag;
+            this.children = subcontractTag.Children;
             subContract.Save( this );
-            this.contractTag = backup;
+            this.children = backup;
 
             // Save the composite tag representing the subcontract to our parent.
-            this.contractTag.AddChild( fieldId, subcontractTag );
+            subcontractTag.FieldId = fieldId;
+            this.children.Add( subcontractTag );
         }
     }
 }

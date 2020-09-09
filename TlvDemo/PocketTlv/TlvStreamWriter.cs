@@ -54,7 +54,7 @@ namespace PocketTlv
                 FieldId = contract.ContractId
             };
 
-            var saveContext = new TlvSaveContext( contractTag );
+            var saveContext = new TlvSaveContext( contractTag.Children );
 
             contract.Save( saveContext );
 
