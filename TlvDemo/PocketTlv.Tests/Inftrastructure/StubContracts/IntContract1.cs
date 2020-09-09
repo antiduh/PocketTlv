@@ -4,7 +4,7 @@ namespace PocketTlv.Tests.Inftrastructure.StubContracts
 {
     public class IntContract1 : ITlvContract
     {
-        public const int Id = 1;
+        public const int Id = StubTlvs.Int1;
 
         public IntContract1()
         {

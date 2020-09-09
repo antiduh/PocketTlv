@@ -2,26 +2,24 @@
 
 namespace PocketTlv.Tests.Inftrastructure.StubContracts
 {
-    public class IntContract2 : ITlvContract
+    public class CarrierRecord : ITlvContract
     {
-        public const int Id = StubTlvs.Int2;
-
-        public IntContract2()
-        {
-        }
-
-        public int ContractId => Id;
-
         public int Value { get; set; }
+
+        public ITlvContract Child { get; set; }
+
+        public int ContractId => StubTlvs.Carrier;
 
         public void Parse( ITlvParseContext parse )
         {
             this.Value = parse.Tag<IntTag>( 0 );
+            this.Child = parse.Contract( 1 );
         }
 
         public void Save( ITlvSaveContext save )
         {
             save.Tag( 0, new IntTag( this.Value ) );
+            save.Contract( 1, this.Child );
         }
     }
 }
