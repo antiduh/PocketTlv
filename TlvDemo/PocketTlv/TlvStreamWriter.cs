@@ -92,6 +92,18 @@ namespace PocketTlv
                     subPosition += WriteInternal( child, ref buffer, subPosition );
                 }
             }
+            else if( tag is ContractTag contractTag )
+            {
+                int subPosition = position + written;
+
+                DataConverter.WriteIntLE( contractTag.ContractId, buffer, subPosition );
+                subPosition += 4;
+
+                foreach( ITag child in contractTag.Children )
+                {
+                    subPosition += WriteInternal( child, ref buffer, subPosition );
+                }
+            }
             else
             {
                 tag.WriteValue( buffer, position + written );

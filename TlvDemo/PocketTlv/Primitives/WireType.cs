@@ -15,5 +15,6 @@ namespace PocketTlv
         Double = 9,
         ByteArray = 10,
         Decimal = 11,
+        Contract = 12,
     }
 }

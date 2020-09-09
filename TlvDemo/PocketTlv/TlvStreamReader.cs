@@ -146,6 +146,37 @@ namespace PocketTlv
                     }
                 }
             }
+            else if( tag is ContractTag contractTag )
+            {
+                if( this.reader.ReadIntLE( out int contractId ) == false )
+                {
+                    return null;
+                }
+
+                contractTag.ContractId = contractId;
+
+                amountRead += 4;
+
+                while( amountRead < length )
+                {
+                    ITag childTag;
+                    int childReadAmount;
+
+                    childTag = ReadInternal( out childReadAmount );
+
+                    if( childTag == null )
+                    {
+                        // End of stream before finishing the tag.
+                        amountRead = -1;
+                        return null;
+                    }
+                    else
+                    {
+                        amountRead += childReadAmount;
+                        contractTag.Children.Add( childTag );
+                    }
+                }
+            }
             else
             {
                 EnsureSize( ref this.buffer, length );
