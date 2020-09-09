@@ -88,7 +88,7 @@ namespace PocketTlv
                 return false;
             }
 
-            if( left.Children.Count != right.Children.Count )
+            if( left.ContractId != right.ContractId || left.Children.Count != right.Children.Count )
             {
                 return false;
             }
