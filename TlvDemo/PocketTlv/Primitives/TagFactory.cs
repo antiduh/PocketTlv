@@ -15,6 +15,10 @@ namespace PocketTlv
                     result = new CompositeTag();
                     break;
 
+                case WireType.Contract:
+                    result = new ContractTag();
+                    break;
+
                 case WireType.Int:
                     result = new IntTag();
                     break;
@@ -29,10 +33,6 @@ namespace PocketTlv
 
                 case WireType.String:
                     result = new StringTag();
-                    break;
-
-                case WireType.ContractId:
-                    result = new ContractIdTag();
                     break;
 
                 case WireType.Double:
@@ -53,10 +53,6 @@ namespace PocketTlv
 
                 case WireType.Decimal:
                     result = new DecimalTag();
-                    break;
-
-                case WireType.Contract:
-                    result = new ContractTag();
                     break;
 
                 default:

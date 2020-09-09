@@ -29,7 +29,7 @@ namespace PocketTlv
         {
             for( int i = 0; i < children.Count; i++ )
             {
-                if( children[i].WireType != WireType.ContractId && children[i].FieldId == fieldId )
+                if( children[i].FieldId == fieldId )
                 {
                     return true;
                 }
@@ -50,7 +50,7 @@ namespace PocketTlv
         {
             for( int i = 0; i < children.Count; i++ )
             {
-                if( children[i].WireType != WireType.ContractId && children[i].FieldId == fieldId )
+                if( children[i].FieldId == fieldId )
                 {
                     tag = (T)children[i];
                     return true;

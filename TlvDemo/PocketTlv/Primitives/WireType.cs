@@ -5,7 +5,7 @@ namespace PocketTlv
     public enum WireType : int
     {
         Composite = 1,
-        ContractId = 2,
+        Contract = 2,
         Bool = 3,
         String = 4,
         Short = 5,
@@ -15,6 +15,5 @@ namespace PocketTlv
         Double = 9,
         ByteArray = 10,
         Decimal = 11,
-        Contract = 12,
     }
 }

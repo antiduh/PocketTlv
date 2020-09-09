@@ -50,7 +50,6 @@
     <Compile Include="Primitives\BoolTag.cs" />
     <Compile Include="Primitives\ByteArrayTag.cs" />
     <Compile Include="Primitives\CompositeTag.cs" />
-    <Compile Include="Primitives\ContractIdTag.cs" />
     <Compile Include="Primitives\DecimalTag.cs" />
     <Compile Include="Primitives\DoubleTag.cs" />
     <Compile Include="Primitives\IntTag.cs" />
