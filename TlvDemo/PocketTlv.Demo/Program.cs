@@ -34,10 +34,6 @@ namespace PocketTlv.Demo
                 )
             );
 
-            var stream = new MemoryStream();
-            var writer = new TlvStreamWriter( stream );
-            writer.Write( top );
-
             var copy = RoundTrip( top );
             Debug.Assert( copy.Equals( top ) );
         }
