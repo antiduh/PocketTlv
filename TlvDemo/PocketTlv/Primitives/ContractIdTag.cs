@@ -64,7 +64,7 @@ namespace PocketTlv
         /// <returns></returns>
         public override string ToString()
         {
-            return this.ContractId.ToString();
+            return "ContractId " + this.ContractId;
         }
 
         /// <summary>
