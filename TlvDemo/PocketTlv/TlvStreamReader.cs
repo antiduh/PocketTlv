@@ -98,7 +98,7 @@ namespace PocketTlv
             int tagValueLength;
 
             // This reads the type and length fields.
-            if( this.reader.ReadHarder( this.buffer, 0, 6 ) == false )
+            if( this.reader.ReadHarder( this.buffer, 0, TlvConsts.HeaderSize ) == false )
             {
                 return null;
             }
