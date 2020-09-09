@@ -10,7 +10,6 @@ namespace PocketTlv
     public class TlvParseContext : ITlvParseContext
     {
         private CompositeTag source;
-        private readonly bool hideFirst;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TlvParseContext"/> class.
@@ -22,10 +21,9 @@ namespace PocketTlv
         /// If true, the first TLV tag in the source <see cref="CompositeTag"/> is hidden from view
         /// of callers.
         /// </param>
-        public TlvParseContext( CompositeTag source, bool hideFirst )
+        public TlvParseContext( CompositeTag source )
         {
             this.source = source;
-            this.hideFirst = hideFirst;
         }
 
         /// <summary>
@@ -37,9 +35,9 @@ namespace PocketTlv
         {
             var children = source.Children;
 
-            for( int i = hideFirst ? 1 : 0; i < children.Count; i++ )
+            for( int i = 0; i < children.Count; i++ )
             {
-                if( children[i].FieldId == fieldId )
+                if( children[i].WireType != WireType.ContractId && children[i].FieldId == fieldId )
                 {
                     return true;
                 }
@@ -60,9 +58,9 @@ namespace PocketTlv
         {
             var children = source.Children;
 
-            for( int i = hideFirst ? 1 : 0; i < children.Count; i++ )
+            for( int i = 0; i < children.Count; i++ )
             {
-                if( children[i].FieldId == fieldId )
+                if( children[i].WireType != WireType.ContractId && children[i].FieldId == fieldId )
                 {
                     tag = (T)children[i];
                     return true;
@@ -102,7 +100,7 @@ namespace PocketTlv
                 throw new InvalidOperationException( "Type mismatch found: contract IDs don't match." );
             }
 
-            var subContext = new TlvParseContext( contractTag, true );
+            var subContext = new TlvParseContext( contractTag );
             result.Parse( subContext );
 
             contract = result;

@@ -53,7 +53,7 @@ namespace PocketTlv
             }
             else if( unknown is UnresolvedContract internalUnknown )
             {
-                TlvParseContext parser = new TlvParseContext( internalUnknown.Tag, true );
+                TlvParseContext parser = new TlvParseContext( internalUnknown.Tag );
 
                 T bound = new T();
 
