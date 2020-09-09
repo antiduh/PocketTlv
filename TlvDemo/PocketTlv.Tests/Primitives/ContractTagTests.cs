@@ -45,11 +45,8 @@ namespace PocketTlv.Tests.Primitives
             Assert.IsTrue( contractTag1.Equals( contractTag2 ) );
         }
 
-        /// <summary>
-        /// Demonstrates that fieldIds are not part of the propery identity or content of a tag.
-        /// </summary>
         [TestMethod]
-        public void When_CompositeTagsContainDifferentContractIds_Equals_ReturnsFale()
+        public void When_CompositeTagsContainDifferentContractIds_Equals_ReturnsFalse()
         {
             var contractTag1 = new ContractTag( 1, new IntTag( 2, 3 ) )
             {
