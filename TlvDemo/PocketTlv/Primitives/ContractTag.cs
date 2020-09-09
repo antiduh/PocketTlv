@@ -23,13 +23,12 @@ namespace PocketTlv
             this.FieldId = fieldId;
             this.Children.AddRange( children );
         }
-        
+
         public int FieldId { get; set; }
 
         public int ContractId { get; set; }
 
         public List<ITag> Children { get; private set; }
-
 
         /// <summary>
         /// Returns a string describing the number of children in the tag.
@@ -40,13 +39,12 @@ namespace PocketTlv
             return $"ContractTag - {this.Children.Count} children";
         }
 
-
         /// <summary>
-        /// Compares this <see cref="CompositeTag"/> to the given object.
+        /// Compares this <see cref="ContractTag"/> to the given object.
         /// </summary>
         /// <param name="other">The object to compare to.</param>
         /// <returns>
-        /// True if the object is a <see cref="CompositeTag"/> and contains the same children values
+        /// True if the object is a <see cref="ContractTag"/> and contains the same children values
         /// as this object.
         /// </returns>
         public override bool Equals( object other )
@@ -74,7 +72,7 @@ namespace PocketTlv
         }
 
         /// <summary>
-        /// Compares two <see cref="CompositeTag"/> objects to determine if they are same.
+        /// Compares two <see cref="ContractTag"/> objects to determine if they are same.
         /// </summary>
         /// <param name="left">The first tag to compare.</param>
         /// <param name="right">The second tag to compare.</param>
