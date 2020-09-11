@@ -42,11 +42,25 @@ namespace PocketTlv
             return this.registrations.ContainsKey( contractId );
         }
 
-        public ITlvContract Get( int contractId )
+        public bool TryGet( int contractId, out ITlvContract contract )
         {
             if( this.registrations.TryGetValue( contractId, out IRegistration reg ) )
             {
-                return reg.Create();
+                contract = reg.Create();
+                return true;
+            }
+            else
+            {
+                contract = null;
+                return false;
+            }
+        }
+
+        public ITlvContract Get( int contractId )
+        {
+            if( TryGet( contractId, out ITlvContract result ) )
+            {
+                return result;
             }
             else
             {

@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContractTests.cs" />
     <Compile Include="Inftrastructure\DataListAttribute.cs" />
     <Compile Include="Inftrastructure\StubContracts\CarrierRecord.cs" />
     <Compile Include="Inftrastructure\StubContracts\IntContractDup1.cs" />

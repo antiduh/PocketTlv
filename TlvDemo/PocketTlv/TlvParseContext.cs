@@ -9,15 +9,26 @@ namespace PocketTlv
     /// </summary>
     public class TlvParseContext : ITlvParseContext
     {
-        private List<ITag> children;
+        private readonly List<ITag> children;
+        private readonly ContractRegistry contractReg;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TlvParseContext"/> class.
         /// </summary>
         /// <param name="children">The list of nodes to parse from.</param>
         public TlvParseContext( List<ITag> children )
+            : this( children, null )
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TlvParseContext"/> class.
+        /// </summary>
+        /// <param name="children">The list of nodes to parse from.</param>
+        public TlvParseContext( List<ITag> children, ContractRegistry contractReg )
         {
             this.children = children;
+            this.contractReg = contractReg;
         }
 
         /// <summary>
@@ -89,7 +100,7 @@ namespace PocketTlv
                 throw new InvalidOperationException( "Type mismatch found: contract IDs don't match." );
             }
 
-            var subContext = new TlvParseContext( contractTag.Children );
+            var subContext = new TlvParseContext( contractTag.Children, this.contractReg );
             result.Parse( subContext );
 
             contract = result;
@@ -107,16 +118,24 @@ namespace PocketTlv
         {
             ContractTag contractTag = GetContractSubTag( fieldId );
 
-            // Since the caller gave us no type information, we have to return them an unresolved contract.
-            if( contractTag == null  )
+            if( contractTag == null )
             {
                 contract = null;
                 return false;
-                
             }
 
-            contract = new UnresolvedContract( contractTag );
-            return true;
+            if( this.contractReg != null && this.contractReg.TryGet( contractTag.ContractId, out contract ) )
+            {
+                var subContext = new TlvParseContext( contractTag.Children, this.contractReg );
+                contract.Parse( subContext );
+
+                return true;
+            }
+            else
+            {
+                contract = new UnresolvedContract( contractTag );
+                return true;
+            }
         }
 
         /// <summary>

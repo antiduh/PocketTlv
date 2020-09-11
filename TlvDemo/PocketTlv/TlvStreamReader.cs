@@ -63,7 +63,7 @@ namespace PocketTlv
                 contract = new UnresolvedContract( contractTag );
             }
 
-            var parseContext = new TlvParseContext( contractTag.Children );
+            var parseContext = new TlvParseContext( contractTag.Children, this.contractReg );
 
             contract.Parse( parseContext );
 
@@ -81,7 +81,7 @@ namespace PocketTlv
                 throw new InvalidOperationException( "Read unexpected tag." );
             }
 
-            var parseContext = new TlvParseContext( contractTag.Children );
+            var parseContext = new TlvParseContext( contractTag.Children, this.contractReg );
 
             contract.Parse( parseContext );
 
