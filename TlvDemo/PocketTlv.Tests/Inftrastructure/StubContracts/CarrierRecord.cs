@@ -4,6 +4,14 @@ namespace PocketTlv.Tests.Inftrastructure.StubContracts
 {
     public class CarrierRecord : ITlvContract
     {
+        public CarrierRecord() { }
+
+        public CarrierRecord( int value, ITlvContract child )
+        {
+            this.Value = value;
+            this.Child = child;
+        }
+
         public int Value { get; set; }
 
         public ITlvContract Child { get; set; }
