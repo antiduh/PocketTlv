@@ -6,8 +6,11 @@ namespace PocketTlv.Tests.Inftrastructure.StubContracts
     {
         public const int Id = StubTlvs.Int2;
 
-        public IntContract2()
+        public IntContract2() { }
+
+        public IntContract2( int value )
         {
+            this.Value = value;
         }
 
         public int Value { get; set; }
