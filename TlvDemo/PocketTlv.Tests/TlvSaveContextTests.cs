@@ -39,7 +39,7 @@ namespace PocketTlv.Tests
         }
 
         [TestMethod]
-        public void When_SavingChildContract_DestinationTag_ContainsData()
+        public void When_SavingContract_DestinationTag_ContainsData()
         {
             var dest = new List<ITag>();
             var save = new TlvSaveContext( dest );
