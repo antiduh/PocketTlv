@@ -23,7 +23,7 @@ namespace PocketTlv.Tests
         }
 
         [TestMethod]
-        public void EmbeddedContract_Anonymous()
+        public void EmbeddedContract_AnonymousUnregistered()
         {
             var contract = new CarrierRecord( 1, new IntContract1( 1 ) );
 
@@ -38,19 +38,24 @@ namespace PocketTlv.Tests
             Assert.AreEqual( contract.Child, resolvedCopyChild );
         }
 
-        // Future cases:
-        // - We register the child contract so that it can be automatically resolved during the
-        //   parsing stage.
-        // - We use a carrier that saves and parses a specific child contract, and so, doesn't need pre-registration.
-
         [TestMethod]
-        public void EmbeddedContract_Registered()
+        public void EmbeddedContract_AnonymousRegistered()
         {
             var contract = new CarrierRecord( 1, new IntContract1( 1 ) );
 
             var copy = RoundTrip<CarrierRecord, IntContract1>( contract );
 
             Assert.AreEqual( contract, copy );
+        }
+
+        [TestMethod]
+        public void EmbeddedContract_SelfResolved()
+        {
+            var parent = new ParentContract( new IntContract1( 1 ) );
+
+            var copy = RoundTrip( parent );
+
+            Assert.AreEqual( parent, copy );
         }
 
         private static T RoundTrip<T>( T contract ) where T : ITlvContract, new()
