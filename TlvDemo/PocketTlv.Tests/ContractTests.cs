@@ -43,6 +43,17 @@ namespace PocketTlv.Tests
         //   parsing stage.
         // - We use a carrier that saves and parses a specific child contract, and so, doesn't need pre-registration.
 
+
+        [TestMethod]
+        public void EmbeddedContract_Registered()
+        {
+            var contract = new CarrierRecord( 0, new IntContract1( 0 ) );
+
+            var copy = RoundTrip<CarrierRecord, IntContract1>( contract );
+
+            Assert.AreEqual( contract, copy );
+        }
+
         private static T RoundTrip<T>( T contract ) where T : ITlvContract, new()
         {
             var stream = new MemoryStream();
@@ -56,5 +67,20 @@ namespace PocketTlv.Tests
             return reader.ReadContract<T>();
         }
 
+        private static TParent RoundTrip<TParent, TChild>( TParent contract )
+            where TParent : ITlvContract, new()
+            where TChild : ITlvContract, new()
+        {
+            var stream = new MemoryStream();
+
+            TlvStreamWriter writer = new TlvStreamWriter( stream );
+            writer.Write( contract );
+
+            stream.Position = 0L;
+
+            TlvStreamReader reader = new TlvStreamReader( stream );
+            reader.RegisterContract<TChild>();
+            return reader.ReadContract<TParent>();
+        }
     }
 }
