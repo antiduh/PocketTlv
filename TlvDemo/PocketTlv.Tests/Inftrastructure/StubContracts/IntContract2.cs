@@ -34,7 +34,7 @@ namespace PocketTlv.Tests.Inftrastructure.StubContracts
         {
             return this.Value.GetHashCode();
         }
-        
+
         // ----- ITlvContract implementation ------
 
         void ITlvContract.Parse( ITlvParseContext parse )

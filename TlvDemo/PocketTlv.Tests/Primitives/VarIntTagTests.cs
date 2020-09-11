@@ -23,7 +23,7 @@ namespace PocketTlv.Tests.Primitives
             destTag.ReadValue( buffer, 0, length );
 
             Assert.AreEqual( sourceTag, destTag );
-            Assert.AreEqual( value, ((VarIntTag)destTag).Value );
+            Assert.AreEqual( value, ( (VarIntTag)destTag ).Value );
         }
     }
 }

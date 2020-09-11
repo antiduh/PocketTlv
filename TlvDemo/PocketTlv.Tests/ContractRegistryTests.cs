@@ -38,7 +38,7 @@ namespace PocketTlv.Tests
         public void When_ContainsContract_Can_RetreiveContract()
         {
             var reg = new ContractRegistry();
-            
+
             reg.Register<IntContract1>();
 
             Assert.IsTrue( reg.Contains( IntContract1.Id ) );
@@ -49,7 +49,7 @@ namespace PocketTlv.Tests
         public void When_AlreadyRegistered_Register_AcceptsDuplicates()
         {
             var reg = new ContractRegistry();
-            
+
             reg.Register<IntContract1>();
             reg.Register<IntContract1>();
 
@@ -60,11 +60,10 @@ namespace PocketTlv.Tests
         public void When_AlreadyRegistered_Register_RefusesConflicts()
         {
             var reg = new ContractRegistry();
-            
+
             reg.Register<IntContract1>();
 
             Assert.ThrowsException<InvalidOperationException>( () => reg.Register<IntContractDup1>() );
         }
-
     }
 }

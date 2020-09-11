@@ -21,7 +21,7 @@ namespace PocketTlv.Tests
 
             var resolvedCopy = copy.Resolve<CarrierRecord>();
             var resolvedcopyChild = resolvedCopy.Child.Resolve<IntContract1>();
-            
+
             Assert.AreEqual( carrier.Value, resolvedCopy.Value );
             Assert.AreEqual( ( (IntContract1)carrier.Child ).Value, resolvedcopyChild.Value );
         }
@@ -34,7 +34,7 @@ namespace PocketTlv.Tests
 
             writer.Write( carrier );
             stream.Position = 0L;
-            return  reader.ReadContract();
+            return reader.ReadContract();
         }
     }
 }

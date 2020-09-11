@@ -53,7 +53,7 @@ namespace PocketTlv.Tests.Primitives
             Assert.IsFalse( trueTag.Equals( falseTag ) );
 
             // Note that the following assert is invalid; it's not actually guaranteed (only guaranteed
-            // when the objects are equal): 
+            // when the objects are equal):
             // Assert.IsFalse( falseTag.GetHashCode() == trueTag.GetHashCode() );
         }
 

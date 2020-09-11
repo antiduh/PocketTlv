@@ -1,5 +1,4 @@
 ﻿using System;
-using PocketTlv.ClassLib;
 
 namespace PocketTlv.Tests.Inftrastructure.StubContracts
 {
@@ -7,13 +6,13 @@ namespace PocketTlv.Tests.Inftrastructure.StubContracts
     {
         public const int Id = StubTlvs.Int1;
 
-        public IntContract1() { } 
+        public IntContract1() { }
 
         public IntContract1( int value )
         {
             this.Value = value;
         }
-        
+
         public int Value { get; set; }
 
         public bool Equals( IntContract1 other )
