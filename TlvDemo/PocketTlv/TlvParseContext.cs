@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PocketTlv
 {
@@ -57,7 +56,7 @@ namespace PocketTlv
         /// <param name="fieldId">The ID of the field to parse.</param>
         /// <param name="tag">If successful, returns the parsed tag.</param>
         /// <returns>True if the field was successfully located, false otherwise.</returns>
-        public bool TryTag<T>( int fieldId, out T tag ) where T : ITag 
+        public bool TryTag<T>( int fieldId, out T tag ) where T : ITag
         {
             for( int i = 0; i < children.Count; i++ )
             {
