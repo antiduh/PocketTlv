@@ -8,7 +8,7 @@ namespace PocketTlv
     /// </summary>
     public class TlvParseContext : ITlvParseContext
     {
-        private readonly List<ITag> children;
+        private List<ITag> children;
         private readonly ContractRegistry contractReg;
 
         /// <summary>
@@ -99,8 +99,13 @@ namespace PocketTlv
                 throw new InvalidOperationException( "Type mismatch found: contract IDs don't match." );
             }
 
-            var subContext = new TlvParseContext( contractTag.Children, this.contractReg );
-            result.Parse( subContext );
+            // Instead of creating a new instance of TlvParseContext, just reuse ourself by backing
+            // up our state on the stack.
+            var childrenBackup = this.children;
+
+            this.children = contractTag.Children;
+            result.Parse( this );
+            this.children = childrenBackup;
 
             contract = result;
             return true;
@@ -125,8 +130,13 @@ namespace PocketTlv
 
             if( this.contractReg != null && this.contractReg.TryGet( contractTag.ContractId, out contract ) )
             {
-                var subContext = new TlvParseContext( contractTag.Children, this.contractReg );
-                contract.Parse( subContext );
+                // Instead of creating a new instance of TlvParseContext, just reuse ourself by backing
+                // up our state on the stack.
+                var childrenBackup = this.children;
+
+                this.children = contractTag.Children;
+                contract.Parse( this );
+                this.children = childrenBackup;
 
                 return true;
             }
