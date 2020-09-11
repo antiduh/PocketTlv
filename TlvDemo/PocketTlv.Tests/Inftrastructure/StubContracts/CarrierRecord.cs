@@ -1,4 +1,5 @@
 ﻿using System;
+using PocketTlv.ClassLib;
 
 namespace PocketTlv.Tests.Inftrastructure.StubContracts
 {
@@ -16,15 +17,37 @@ namespace PocketTlv.Tests.Inftrastructure.StubContracts
 
         public ITlvContract Child { get; set; }
 
-        public int ContractId => StubTlvs.Carrier;
+        public bool Equals( CarrierRecord other )
+        {
+            if( other is null )
+            {
+                return false;
+            }
 
-        public void Parse( ITlvParseContext parse )
+            return other.Value == this.Value && other.Child.Equals( this.Child );
+        }
+
+        public override bool Equals( object obj )
+        {
+            return Equals( obj as CarrierRecord );
+        }
+
+        public override int GetHashCode()
+        {
+            return HashHelper.GetHashCode( this.Value, this.Child );
+        }
+
+        // ----- ITlvContract implementation ------
+
+        int ITlvContract.ContractId => StubTlvs.Carrier;
+
+        void ITlvContract.Parse( ITlvParseContext parse )
         {
             this.Value = parse.Tag<IntTag>( 0 );
             this.Child = parse.Contract( 1 );
         }
 
-        public void Save( ITlvSaveContext save )
+        void ITlvContract.Save( ITlvSaveContext save )
         {
             save.Tag( 0, new IntTag( this.Value ) );
             save.Contract( 1, this.Child );
