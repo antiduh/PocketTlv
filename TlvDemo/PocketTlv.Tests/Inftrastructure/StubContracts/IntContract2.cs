@@ -10,18 +10,40 @@ namespace PocketTlv.Tests.Inftrastructure.StubContracts
         {
         }
 
-        public int ContractId => Id;
-
         public int Value { get; set; }
 
-        public void Parse( ITlvParseContext parse )
+        public bool Equals( IntContract2 other )
+        {
+            if( other == null )
+            {
+                return false;
+            }
+
+            return other.Value == this.Value;
+        }
+
+        public override bool Equals( object obj )
+        {
+            return Equals( obj as IntContract2 );
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
+        
+        // ----- ITlvContract implementation ------
+
+        void ITlvContract.Parse( ITlvParseContext parse )
         {
             this.Value = parse.Tag<IntTag>( 0 );
         }
 
-        public void Save( ITlvSaveContext save )
+        void ITlvContract.Save( ITlvSaveContext save )
         {
             save.Tag( 0, new IntTag( this.Value ) );
         }
+
+        int ITlvContract.ContractId => Id;
     }
 }
