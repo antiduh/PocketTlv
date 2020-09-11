@@ -15,7 +15,7 @@ namespace PocketTlv.Tests
         [TestMethod]
         public void SimpleContract()
         {
-            var contract = new IntContract1( 0 );
+            var contract = new IntContract1( 1 );
 
             var copy = RoundTrip( contract );
 
@@ -25,7 +25,7 @@ namespace PocketTlv.Tests
         [TestMethod]
         public void EmbeddedContract_Anonymous()
         {
-            var contract = new CarrierRecord( 0, new IntContract1( 0 ) );
+            var contract = new CarrierRecord( 1, new IntContract1( 1 ) );
 
             var copy = RoundTrip( contract );
 
@@ -43,11 +43,10 @@ namespace PocketTlv.Tests
         //   parsing stage.
         // - We use a carrier that saves and parses a specific child contract, and so, doesn't need pre-registration.
 
-
         [TestMethod]
         public void EmbeddedContract_Registered()
         {
-            var contract = new CarrierRecord( 0, new IntContract1( 0 ) );
+            var contract = new CarrierRecord( 1, new IntContract1( 1 ) );
 
             var copy = RoundTrip<CarrierRecord, IntContract1>( contract );
 
