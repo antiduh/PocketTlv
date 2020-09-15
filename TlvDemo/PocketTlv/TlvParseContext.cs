@@ -211,8 +211,6 @@ namespace PocketTlv
         {
             if( TryTag<ContractTag>( fieldId, out ContractTag subContractTag ) )
             {
-                // See TlvSaveContext.Save. We use value-stuffing to save the contract ID of the
-                // serialized contract.
                 return subContractTag;
             }
             else
