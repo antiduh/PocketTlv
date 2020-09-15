@@ -85,7 +85,7 @@ namespace PocketTlv
             // ITlvContract)` and then calling Resolve() on the returned object. Implementing it the
             // way that we have skips the intermediate allocation+parsing of UnresolvedContract, however.
 
-            ContractTag contractTag = GetContractSubTag( fieldId );
+            ContractTag contractTag = TryGetSubContractTag( fieldId );
 
             if( contractTag == null )
             {
@@ -120,7 +120,7 @@ namespace PocketTlv
         /// <returns>True if the field was successfully located, falase otherwise.</returns>
         public bool TryContract( int fieldId, out ITlvContract contract )
         {
-            ContractTag contractTag = GetContractSubTag( fieldId );
+            ContractTag contractTag = TryGetSubContractTag( fieldId );
 
             if( contractTag == null )
             {
@@ -207,7 +207,12 @@ namespace PocketTlv
             throw new KeyNotFoundException( $"No TLV value was found with fieldId = {fieldId}." );
         }
 
-        private ContractTag GetContractSubTag( int fieldId )
+        /// <summary>
+        /// Attempts to fetch the <see cref="ContractTag"/> that represents a contract stored as a field.
+        /// </summary>
+        /// <param name="fieldId">The fieldId of the contract to fetch.</param>
+        /// <returns>The tag representing the contract, if found, otherwise null.</returns>
+        private ContractTag TryGetSubContractTag( int fieldId )
         {
             if( TryTag<ContractTag>( fieldId, out ContractTag subContractTag ) )
             {
