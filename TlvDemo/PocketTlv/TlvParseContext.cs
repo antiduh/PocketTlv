@@ -67,7 +67,7 @@ namespace PocketTlv
                 }
             }
 
-            tag = default( T );
+            tag = default;
             return true;
         }
 
@@ -89,7 +89,7 @@ namespace PocketTlv
 
             if( contractTag == null )
             {
-                contract = default( T );
+                contract = default;
                 return false;
             }
 
