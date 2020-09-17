@@ -7,7 +7,7 @@ namespace PocketTlv.ClassLib
     {
         private readonly Stream stream;
 
-        private byte[] buffer;
+        private readonly byte[] buffer;
 
         public StreamConverter( Stream stream )
         {
