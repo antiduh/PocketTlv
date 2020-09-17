@@ -29,8 +29,7 @@ namespace PocketTlv
             // - The actual value of the fieldId we pass down doesn't matter. It never gets used.
 
             // A tag to represent the subcontract.
-            var subcontractTag = new ContractTag();
-            subcontractTag.ContractId = subContract.ContractId;
+            var subcontractTag = new ContractTag( fieldId, subContract.ContractId );
 
             // Tell the contract to serialize itself through us by swapping which CompositeTag we're
             // pointing to (effectively doing recursion via the call stack).
@@ -41,7 +40,6 @@ namespace PocketTlv
             this.children = backup;
 
             // Save the composite tag representing the subcontract to our parent.
-            subcontractTag.FieldId = fieldId;
             this.children.Add( subcontractTag );
         }
     }
