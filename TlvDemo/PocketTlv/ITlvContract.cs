@@ -3,7 +3,7 @@
 namespace PocketTlv
 {
     /// <summary>
-    /// Specifies the interface for complete messages composed of various TLV parts.
+    /// Specifies the interface for complete messages composed of TLV tags.
     /// </summary>
     public interface ITlvContract
     {
