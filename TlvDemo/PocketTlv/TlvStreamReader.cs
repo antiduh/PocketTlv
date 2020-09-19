@@ -78,7 +78,7 @@ namespace PocketTlv
 
             if( contract.ContractId != contractTag.ContractId )
             {
-                throw new InvalidOperationException( "Read unexpected tag." );
+                throw new ContractTypeMismatchException( contract.ContractId, contractTag.ContractId );
             }
 
             var parseContext = new TlvParseContext( contractTag.Children, this.contractReg );
