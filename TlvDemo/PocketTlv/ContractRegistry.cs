@@ -112,7 +112,7 @@ namespace PocketTlv
             Type TypeInfo();
         }
 
-        public class Registration<T> : IRegistration where T : ITlvContract, new()
+        private class Registration<T> : IRegistration where T : ITlvContract, new()
         {
             public ITlvContract Create()
             {
