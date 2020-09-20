@@ -4,6 +4,9 @@ using PocketTlv.ClassLib;
 
 namespace PocketTlv
 {
+    /// <summary>
+    /// Reads TLV tags from a <see cref="Stream"/> object.
+    /// </summary>
     public class TlvStreamReader : ITlvReader
     {
         private readonly StreamConverter reader;
@@ -12,11 +15,21 @@ namespace PocketTlv
 
         private byte[] buffer;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TlvStreamReader"/> class with a default
+        /// initial buffer size.
+        /// </summary>
+        /// <param name="stream">The stream to read tags from.</param>
         public TlvStreamReader( Stream stream )
             : this( stream, 1024 )
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TlvStreamReader"/> class, providing the initial buffer size.
+        /// </summary>
+        /// <param name="stream">The stream to read tags from.</param>
+        /// <param name="bufferSize">The initial size of deserialization buffer.</param>
         public TlvStreamReader( Stream stream, int bufferSize )
         {
             if( stream == null )
@@ -36,16 +49,50 @@ namespace PocketTlv
             this.reader = new StreamConverter( stream );
         }
 
+        /// <summary>
+        /// Reads an <see cref="ITag"/> from the stream.
+        /// </summary>
+        /// <returns>An initialized <see cref="ITag"/> instance.</returns>
         public ITag ReadTag()
         {
             return ReadInternal();
         }
 
+        /// <summary>
+        /// Reads an <see cref="ITag"/> of type <typeparamref name="T"/> from the stream.
+        /// </summary>
+        /// <typeparam name="T">The type of the tag to read from the stream.</typeparam>
+        /// <returns>An initialized <see cref="ITag"/> instance of type <typeparamref name="T"/>.</returns>
         public T ReadTag<T>() where T : ITag
         {
             return (T)ReadInternal();
         }
 
+        /// <summary>
+        /// Reads a <see cref="ITlvContract"/> from the stream.
+        /// </summary>
+        /// <remarks>
+        /// When <see cref="ReadContract"/> determines the type to instantiate to use as the return
+        /// value, it examines the contract ID read from the data source and compares it against all
+        /// contracts previously registered through the <see cref="RegisterContract{T}"/> method.
+        ///
+        /// If no registration can be found, <see cref="ReadContract"/> returns an instance of the
+        /// <see cref="UnresolvedContract"/> class to represent the read contract. This allows
+        /// contracts to be read, stored, and forwarded in cases where the concrete contract type is
+        /// not known. This is useful for cases where contract objects are simply being relayed
+        /// across multiple systems, where some parts of the relay do not have access to the the
+        /// concrete types.
+        ///
+        /// <see cref="UnresolvedContract"/> instances can be resolved into the concrete type object
+        /// after the fact by calling the <see cref="UnknownExtensions.Resolve{T}(ITlvContract)"/>
+        /// extension method on the <see cref="UnresolvedContract"/> instance.
+        ///
+        /// If the contract identified by the data stream has been previously registered by calling
+        /// <see cref="RegisterContract{T}"/>, then no intermediate <see cref="UnresolvedContract"/>
+        /// is created, and instead the registered type is directly instantiated. This modality
+        /// should be preferred when possible, since it is more efficient.
+        /// </remarks>
+        /// <returns></returns>
         public ITlvContract ReadContract()
         {
             var contractTag = ReadTag<ContractTag>();
@@ -70,6 +117,20 @@ namespace PocketTlv
             return contract;
         }
 
+        /// <summary>
+        /// Reads a contract of type <typeparamref name="T"/> from the stream. No prior
+        /// registration of the contract type through <see cref="RegisterContract{T}"/> is needed.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of the <see cref="ITlvContract"/> to expect to read from the data source.
+        /// </typeparam>
+        /// <returns>
+        /// An instance of <typeparamref name="T"/> representing the data read from the data source.
+        /// </returns>
+        /// <exception cref="ContractTypeMismatchException">
+        /// Occurs if the contract ID read from the data source does not match the contract defined
+        /// by <typeparamref name="T"/>.
+        /// </exception>
         public T ReadContract<T>() where T : ITlvContract, new()
         {
             T contract = new T();
@@ -88,6 +149,20 @@ namespace PocketTlv
             return contract;
         }
 
+        /// <summary>
+        /// Reads a contract of type <typeparamref name="T"/> from the data source. No prior
+        /// registration of the contract type through <see cref="RegisterContract{T}"/> is needed.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of the <see cref="ITlvContract"/> to expect to read from the data source.
+        /// </typeparam>
+        /// <returns>
+        /// An instance of <typeparamref name="T"/> representing the data read from the data source.
+        /// </returns>
+        /// <exception cref="ContractTypeMismatchException">
+        /// Occurs if the contract ID read from the data source does not match the contract defined
+        /// by <typeparamref name="T"/>.
+        /// </exception>
         public void RegisterContract<T>() where T : ITlvContract, new()
         {
             this.contractReg.Register<T>();
