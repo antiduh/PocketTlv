@@ -3,21 +3,39 @@ using System.Collections.Generic;
 
 namespace PocketTlv
 {
+    /// <summary>
+    /// Saves TLV tags to a tag stream.
+    /// </summary>
     public class TlvSaveContext : ITlvSaveContext
     {
         private List<ITag> children;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TlvSaveContext"/> type.
+        /// </summary>
+        /// <param name="children">The list to write saved tags to.</param>
         public TlvSaveContext( List<ITag> children )
         {
             this.children = children;
         }
 
+        /// <summary>
+        /// Writes a tag to the tag stream.
+        /// </summary>
+        /// <param name="fieldId">The field ID to assign to the tag.</param>
+        /// <param name="tag">The tag to save.</param>
         public void Tag( int fieldId, ITag tag )
         {
             tag.FieldId = fieldId;
             this.children.Add( tag );
         }
 
+        /// <summary>
+        /// Writes a contract to the tag stream. Contracts are represented as <see
+        /// cref="ContractTag"/> objects in the tag stream.
+        /// </summary>
+        /// <param name="fieldId">The field ID to assign to the contract.</param>
+        /// <param name="subContract">The contract to save.</param>
         public void Contract( int fieldId, ITlvContract subContract )
         {
             // When saving sub-contracts, we do "value-stuffing":
