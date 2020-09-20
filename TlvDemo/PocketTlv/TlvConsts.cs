@@ -2,6 +2,9 @@
 
 namespace PocketTlv
 {
+    /// <summary>
+    /// Specifies length constants for the TLV wire format.
+    /// </summary>
     public static class TlvConsts
     {
         /// <summary>
