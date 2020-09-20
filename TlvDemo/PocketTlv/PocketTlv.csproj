@@ -45,6 +45,7 @@
     <Compile Include="ITlvParseContext.cs" />
     <Compile Include="Primitives\ContractTag.cs" />
     <Compile Include="Primitives\TagFactory.cs" />
+    <Compile Include="TagBufferReader.cs" />
     <Compile Include="TlvSaveContext.cs" />
     <Compile Include="ITlvSaveContext.cs" />
     <Compile Include="ITlvWriter.cs" />
