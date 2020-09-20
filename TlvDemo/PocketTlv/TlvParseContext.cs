@@ -24,6 +24,9 @@ namespace PocketTlv
         /// Initializes a new instance of the <see cref="TlvParseContext"/> class.
         /// </summary>
         /// <param name="children">The list of nodes to parse from.</param>
+        /// <param name="contractReg">
+        /// Provides a contract registry to use to instantiate contract types.
+        /// </param>
         public TlvParseContext( List<ITag> children, ContractRegistry contractReg )
         {
             this.children = children;
