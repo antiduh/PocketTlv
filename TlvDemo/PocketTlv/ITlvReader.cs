@@ -23,7 +23,7 @@ namespace PocketTlv
         /// concrete types.
         ///
         /// <see cref="UnresolvedContract"/> instances can be resolved into the concrete type object
-        /// after the fact by calling the <see cref="UnknownExtensions.Resolve{T}(ITlvContract)"/>
+        /// after the fact by calling the <see cref="UnresolvedExtensions.Resolve{T}(ITlvContract)"/>
         /// extension method on the <see cref="UnresolvedContract"/> instance.
         ///
         /// If the contract identified by the data stream has been previously registered by calling

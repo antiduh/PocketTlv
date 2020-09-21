@@ -12,7 +12,7 @@ namespace PocketTlv
     /// define the contracts.
     ///
     /// <see cref="UnresolvedContract"/> can later be resolved to concrete types by calling the <see
-    /// cref="UnknownExtensions.Resolve{T}(ITlvContract)"/> methods.
+    /// cref="UnresolvedExtensions.Resolve{T}(ITlvContract)"/> methods.
     /// </summary>
     public class UnresolvedContract : ITlvContract
     {
@@ -54,7 +54,7 @@ namespace PocketTlv
     /// <summary>
     /// Provides extension methods for resolving <see cref="UnresolvedContract"/> objects to concrete contract types.
     /// </summary>
-    public static class UnknownExtensions
+    public static class UnresolvedExtensions
     {
         /// <summary>
         /// Resolves the <see cref="UnresolvedContract"/> instance to an instance of type
