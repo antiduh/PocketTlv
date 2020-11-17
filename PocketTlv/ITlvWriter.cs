@@ -3,7 +3,7 @@
 namespace PocketTlv
 {
     /// <summary>
-    /// Specifies the interface to writes TLV tags to a data source, such as a stream.
+    /// Specifies the interface to write TLV tags to a data source, such as a stream.
     /// </summary>
     public interface ITlvWriter
     {
