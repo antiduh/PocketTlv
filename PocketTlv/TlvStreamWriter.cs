@@ -6,8 +6,25 @@ namespace PocketTlv
 {
     public class TlvStreamWriter : ITlvWriter
     {
-        private readonly Stream stream;
+        public const int DefaultBufferSize = 1024;
+
+        private Stream stream;
         private byte[] buffer;
+
+        public TlvStreamWriter()
+            : this( DefaultBufferSize )
+        {
+        }
+
+        public TlvStreamWriter( int bufferSize )
+        {
+            if( bufferSize <= 0 )
+            {
+                throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
+            }
+
+            this.buffer = new byte[bufferSize];
+        }
 
         public TlvStreamWriter( Stream stream )
             : this( stream, 1024 )
@@ -15,23 +32,35 @@ namespace PocketTlv
         }
 
         public TlvStreamWriter( Stream stream, int bufferSize )
+            : this( bufferSize ) 
         {
             if( stream == null )
             {
                 throw new ArgumentNullException( nameof( stream ) );
             }
 
-            if( bufferSize <= 0 )
+            Connect( stream );
+        }
+
+        public void Connect( Stream stream )
+        {
+            if( this.stream != null )
             {
-                throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
+                throw new InvalidOperationException( "Cannot connect while already connected." );
             }
 
             this.stream = stream;
-            this.buffer = new byte[bufferSize];
+        }
+
+        public void Disconnect()
+        {
+            this.stream = null;
         }
 
         public void Write( ITag tag )
         {
+            RequireConnected();
+
             if( tag is null )
             {
                 throw new ArgumentNullException( nameof( tag ) );
@@ -44,6 +73,8 @@ namespace PocketTlv
 
         public void Write( ITlvContract contract )
         {
+            RequireConnected();
+            
             if( contract is null )
             {
                 throw new ArgumentNullException( nameof( contract ) );
@@ -81,6 +112,15 @@ namespace PocketTlv
                 Array.Resize( ref buffer, size );
             }
         }
+
+        private void RequireConnected()
+        {
+            if( this.stream == null )
+            {
+                throw new InvalidOperationException( "Cannot write while not connected to a stream." );
+            }
+        }
+
     }
 
     public static class TagBufferWriter
