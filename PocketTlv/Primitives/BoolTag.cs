@@ -97,7 +97,7 @@ namespace PocketTlv
         /// <param name="left">The first tag to compare.</param>
         /// <param name="right">The second tag to compare.</param>
         /// <returns>True if the two tags contain equal values, false otherwise.</returns>
-        public static bool operator==( BoolTag left, BoolTag right )
+        public static bool operator ==( BoolTag left, BoolTag right )
         {
             if( left is null )
             {

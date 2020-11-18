@@ -13,12 +13,12 @@ namespace PocketTlv
         {
         }
 
-        public ContractTypeMismatchException( string message ) 
+        public ContractTypeMismatchException( string message )
             : base( message )
         {
         }
 
-        public ContractTypeMismatchException( string message, Exception innerException ) 
+        public ContractTypeMismatchException( string message, Exception innerException )
             : base( message, innerException )
         {
         }
@@ -26,7 +26,6 @@ namespace PocketTlv
         public ContractTypeMismatchException( int expectedContractId, int foundContractId )
             : this( MakeMessage( expectedContractId, foundContractId ), expectedContractId, foundContractId )
         {
-            
         }
 
         public ContractTypeMismatchException( string message, int expectedContractId, int foundContractId )
@@ -36,7 +35,7 @@ namespace PocketTlv
             this.FoundContractId = foundContractId;
         }
 
-        protected ContractTypeMismatchException( SerializationInfo info, StreamingContext context ) 
+        protected ContractTypeMismatchException( SerializationInfo info, StreamingContext context )
             : base( info, context )
         {
             this.ExpectedContractId = info.GetInt32( "ExpectedContractId" );
@@ -44,7 +43,7 @@ namespace PocketTlv
         }
 
         public int ExpectedContractId { get; private set; }
-        
+
         public int FoundContractId { get; private set; }
 
         public override void GetObjectData( SerializationInfo info, StreamingContext context )
@@ -57,10 +56,9 @@ namespace PocketTlv
 
         private static string MakeMessage( int expectedContractId, int foundContractId )
         {
-            return 
+            return
                 "The contract ID read from the data source does not match the expected contract ID. " +
                 $"Expected: {expectedContractId}, read: {foundContractId}";
         }
-
     }
 }

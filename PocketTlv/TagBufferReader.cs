@@ -8,7 +8,7 @@ namespace PocketTlv
         {
             amountRead = 0;
 
-            // Read the header 
+            // Read the header
             ushort packedType = DataConverter.ReadUShortLE( buffer, position );
             position += 2;
             amountRead += 2;
