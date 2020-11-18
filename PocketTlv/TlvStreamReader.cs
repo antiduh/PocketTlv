@@ -9,9 +9,11 @@ namespace PocketTlv
     /// </summary>
     public class TlvStreamReader : ITlvReader
     {
-        private readonly StreamConverter reader;
+        public const int DefaultBufferSize = 1024;
 
         private readonly ContractRegistry contractReg;
+        
+        private StreamConverter reader;
 
         private byte[] buffer;
 
@@ -19,24 +21,17 @@ namespace PocketTlv
         /// Initializes a new instance of the <see cref="TlvStreamReader"/> class with a default
         /// initial buffer size.
         /// </summary>
-        /// <param name="stream">The stream to read tags from.</param>
-        public TlvStreamReader( Stream stream )
-            : this( stream, 1024 )
+        public TlvStreamReader()
+            : this( DefaultBufferSize )
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TlvStreamReader"/> class, providing the initial buffer size.
         /// </summary>
-        /// <param name="stream">The stream to read tags from.</param>
         /// <param name="bufferSize">The initial size of deserialization buffer.</param>
-        public TlvStreamReader( Stream stream, int bufferSize )
+        public TlvStreamReader( int bufferSize )
         {
-            if( stream == null )
-            {
-                throw new ArgumentNullException( nameof( stream ) );
-            }
-
             if( bufferSize <= 0 )
             {
                 throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
@@ -45,8 +40,64 @@ namespace PocketTlv
             this.contractReg = new ContractRegistry();
 
             this.buffer = new byte[bufferSize];
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TlvStreamReader"/> class with a default
+        /// initial buffer size.
+        /// </summary>
+        public TlvStreamReader( Stream stream )
+            : this( stream, DefaultBufferSize )
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TlvStreamReader"/> class, providing the initial buffer size.
+        /// </summary>
+        /// <param name="bufferSize">The initial size of deserialization buffer.</param>
+        public TlvStreamReader( Stream stream, int bufferSize )
+            : this( bufferSize )
+        {
+            if( stream == null )
+            {
+                throw new ArgumentNullException( nameof( stream ) );
+            }
+
+            Connect( stream );
+        }
+
+        public void Connect( Stream stream )
+        {
+            if( this.reader != null )
+            {
+                throw new InvalidOperationException( "Cannot connect while already connected." );
+            }
 
             this.reader = new StreamConverter( stream );
+        }
+
+        public void Disconnect()
+        {
+            this.reader = null;
+        }
+
+        /// <summary>
+        /// Reads a contract of type <typeparamref name="T"/> from the data source. No prior
+        /// registration of the contract type through <see cref="RegisterContract{T}"/> is needed.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of the <see cref="ITlvContract"/> to expect to read from the data source.
+        /// </typeparam>
+        /// <returns>
+        /// An instance of <typeparamref name="T"/> representing the data read from the data source.
+        /// </returns>
+        /// <exception cref="ContractTypeMismatchException">
+        /// Occurs if the contract ID read from the data source does not match the contract defined
+        /// by <typeparamref name="T"/>.
+        /// </exception>
+        public void RegisterContract<T>() where T : ITlvContract, new()
+        {
+            this.contractReg.Register<T>();
         }
 
         /// <summary>
@@ -95,6 +146,8 @@ namespace PocketTlv
         /// <returns></returns>
         public ITlvContract ReadContract()
         {
+            RequireConnected(); 
+            
             var contractTag = ReadTag<ContractTag>();
 
             int contractId = contractTag.FieldId;
@@ -129,6 +182,8 @@ namespace PocketTlv
         /// </exception>
         public T ReadContract<T>() where T : ITlvContract, new()
         {
+            RequireConnected();
+
             T contract = new T();
 
             var contractTag = ReadTag<ContractTag>();
@@ -145,27 +200,11 @@ namespace PocketTlv
             return contract;
         }
 
-        /// <summary>
-        /// Reads a contract of type <typeparamref name="T"/> from the data source. No prior
-        /// registration of the contract type through <see cref="RegisterContract{T}"/> is needed.
-        /// </summary>
-        /// <typeparam name="T">
-        /// The type of the <see cref="ITlvContract"/> to expect to read from the data source.
-        /// </typeparam>
-        /// <returns>
-        /// An instance of <typeparamref name="T"/> representing the data read from the data source.
-        /// </returns>
-        /// <exception cref="ContractTypeMismatchException">
-        /// Occurs if the contract ID read from the data source does not match the contract defined
-        /// by <typeparamref name="T"/>.
-        /// </exception>
-        public void RegisterContract<T>() where T : ITlvContract, new()
-        {
-            this.contractReg.Register<T>();
-        }
 
         private ITag ReadInternal()
         {
+            RequireConnected(); 
+
             int tagValueLength;
 
             // This reads the type and length fields.
@@ -196,6 +235,14 @@ namespace PocketTlv
             if( buffer.Length < size )
             {
                 Array.Resize( ref buffer, size );
+            }
+        }
+
+        private void RequireConnected()
+        {
+            if( this.reader == null )
+            {
+                throw new InvalidOperationException( "Cannot read while not connected to a stream." );
             }
         }
     }
