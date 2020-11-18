@@ -101,11 +101,7 @@ namespace PocketTlv
 
             ITlvContract contract;
 
-            if( this.contractReg.Contains( contractId ) )
-            {
-                contract = this.contractReg.Get( contractId );
-            }
-            else
+            if( this.contractReg.TryGet( contractId, out contract ) == false )
             {
                 contract = new UnresolvedContract( contractTag );
             }
