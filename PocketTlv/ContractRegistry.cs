@@ -7,7 +7,7 @@ namespace PocketTlv
     /// Registers types that implement the <see cref="ITlvContract"/> interface by their contract
     /// ID, to allow later instantiation by contract ID.
     /// </summary>
-    public class ContractRegistry
+    public class ContractRegistry : IContractLookup
     {
         private readonly Dictionary<int, IRegistration> registrations;
 

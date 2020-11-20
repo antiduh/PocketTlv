@@ -39,6 +39,7 @@
     <Compile Include="ClassLib\HashHelper.cs" />
     <Compile Include="ClassLib\StreamConverter.cs" />
     <Compile Include="ContractRegistry.cs" />
+    <Compile Include="IContractLookup.cs" />
     <Compile Include="ContractTypeMismatchException.cs" />
     <Compile Include="ITlvContract.cs" />
     <Compile Include="ITlvReader.cs" />
