@@ -26,22 +26,6 @@ namespace PocketTlv
             this.buffer = new byte[bufferSize];
         }
 
-        public TlvStreamWriter( Stream stream )
-            : this( stream, 1024 )
-        {
-        }
-
-        public TlvStreamWriter( Stream stream, int bufferSize )
-            : this( bufferSize ) 
-        {
-            if( stream == null )
-            {
-                throw new ArgumentNullException( nameof( stream ) );
-            }
-
-            Connect( stream );
-        }
-
         public void Connect( Stream stream )
         {
             if( this.stream != null )

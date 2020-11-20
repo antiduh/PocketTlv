@@ -42,30 +42,6 @@ namespace PocketTlv
             this.buffer = new byte[bufferSize];
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TlvStreamReader"/> class with a default
-        /// initial buffer size.
-        /// </summary>
-        public TlvStreamReader( Stream stream )
-            : this( stream, DefaultBufferSize )
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TlvStreamReader"/> class, providing the initial buffer size.
-        /// </summary>
-        /// <param name="bufferSize">The initial size of deserialization buffer.</param>
-        public TlvStreamReader( Stream stream, int bufferSize )
-            : this( bufferSize )
-        {
-            if( stream == null )
-            {
-                throw new ArgumentNullException( nameof( stream ) );
-            }
-
-            Connect( stream );
-        }
-
         public void Connect( Stream stream )
         {
             if( this.reader != null )
