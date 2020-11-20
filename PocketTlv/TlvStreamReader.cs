@@ -21,8 +21,8 @@ namespace PocketTlv
         /// Initializes a new instance of the <see cref="TlvStreamReader"/> class with a default
         /// initial buffer size.
         /// </summary>
-        public TlvStreamReader()
-            : this( DefaultBufferSize )
+        public TlvStreamReader( ContractRegistry contractReg )
+            : this( contractReg, DefaultBufferSize )
         {
         }
 
@@ -30,14 +30,19 @@ namespace PocketTlv
         /// Initializes a new instance of the <see cref="TlvStreamReader"/> class, providing the initial buffer size.
         /// </summary>
         /// <param name="bufferSize">The initial size of deserialization buffer.</param>
-        public TlvStreamReader( int bufferSize )
+        public TlvStreamReader( ContractRegistry contractReg, int bufferSize )
         {
+            if( contractReg == null )
+            {
+                throw new ArgumentNullException( nameof( contractReg ) );
+            }
+            
             if( bufferSize <= 0 )
             {
                 throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
             }
 
-            this.contractReg = new ContractRegistry();
+            this.contractReg = contractReg;
 
             this.buffer = new byte[bufferSize];
         }
@@ -55,25 +60,6 @@ namespace PocketTlv
         public void Disconnect()
         {
             this.reader = null;
-        }
-
-        /// <summary>
-        /// Reads a contract of type <typeparamref name="T"/> from the data source. No prior
-        /// registration of the contract type through <see cref="RegisterContract{T}"/> is needed.
-        /// </summary>
-        /// <typeparam name="T">
-        /// The type of the <see cref="ITlvContract"/> to expect to read from the data source.
-        /// </typeparam>
-        /// <returns>
-        /// An instance of <typeparamref name="T"/> representing the data read from the data source.
-        /// </returns>
-        /// <exception cref="ContractTypeMismatchException">
-        /// Occurs if the contract ID read from the data source does not match the contract defined
-        /// by <typeparamref name="T"/>.
-        /// </exception>
-        public void RegisterContract<T>() where T : ITlvContract, new()
-        {
-            this.contractReg.Register<T>();
         }
 
         /// <summary>

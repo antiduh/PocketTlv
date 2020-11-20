@@ -62,11 +62,5 @@ namespace PocketTlv
         /// <typeparam name="T">The type of the <see cref="ITag"/> to read from the stream.</typeparam>
         /// <returns>An instance of <see cref="ITag"/> representing the data read from the data source.</returns>
         T ReadTag<T>() where T : ITag;
-
-        /// <summary>
-        /// Registers the type <typeparamref name="T"/> as an implementation of <see cref="ITlvContract"/> t
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        void RegisterContract<T>() where T : ITlvContract, new();
     }
 }
