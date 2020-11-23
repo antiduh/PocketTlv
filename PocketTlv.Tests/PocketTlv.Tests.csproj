@@ -66,6 +66,7 @@
     <Compile Include="ContractRegistryTests.cs" />
     <Compile Include="ResolutionTests.cs" />
     <Compile Include="TlvSaveContextTests.cs" />
+    <Compile Include="TlvStreamReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
