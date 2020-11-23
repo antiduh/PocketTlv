@@ -154,6 +154,11 @@ namespace PocketTlv
             T contract = new T();
 
             var contractTag = ReadTag<ContractTag>();
+            
+            if( contractTag == null )
+            {
+                return default(T);
+            }
 
             if( contract.ContractId != contractTag.ContractId )
             {
@@ -177,6 +182,7 @@ namespace PocketTlv
             // This reads the type and length fields.
             if( this.reader.ReadHarder( this.buffer, 0, TlvConsts.HeaderSize ) == false )
             {
+                // We hit the end of the stream.
                 return null;
             }
 
@@ -190,6 +196,7 @@ namespace PocketTlv
             // Read the value portion into the buffer.
             if( this.reader.ReadHarder( this.buffer, 6, tagValueLength ) == false )
             {
+                // We hit the end of the stream.
                 return null;
             }
 
