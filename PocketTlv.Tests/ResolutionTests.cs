@@ -30,7 +30,7 @@ namespace PocketTlv.Tests
         {
             MemoryStream stream = new MemoryStream();
             TlvStreamWriter writer = new TlvStreamWriter( stream );
-            TlvStreamReader reader = new TlvStreamReader( stream );
+            TlvStreamReader reader = new TlvStreamReader( stream, new ContractRegistry() );
 
             writer.Write( carrier );
             stream.Position = 0L;

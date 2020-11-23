@@ -63,7 +63,9 @@ namespace PocketTlv.Tests
 
             stream.Position = 0L;
 
-            TlvStreamReader reader = new TlvStreamReader( stream );
+            var contractReg = new ContractRegistry();
+            var reader = new TlvStreamReader( stream, contractReg );
+
             return reader.ReadContract<T>();
         }
 
@@ -78,8 +80,11 @@ namespace PocketTlv.Tests
 
             stream.Position = 0L;
 
-            TlvStreamReader reader = new TlvStreamReader( stream );
-            reader.RegisterContract<TChild>();
+            var contractReg = new ContractRegistry();
+            contractReg.Register<TChild>();
+
+            var reader = new TlvStreamReader( stream, contractReg );
+            
             return reader.ReadContract<TParent>();
         }
     }

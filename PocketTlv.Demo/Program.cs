@@ -160,10 +160,12 @@ namespace PocketTlv.Demo
             };
 
             var stream = new MemoryStream();
-            var writer = new TlvStreamWriter( stream );
-            var reader = new TlvStreamReader( stream );
 
-            reader.RegisterContract<AddressRecord>();
+            var contractReg = new ContractRegistry();
+            contractReg.Register<AddressRecord>();
+
+            var writer = new TlvStreamWriter( stream );
+            var reader = new TlvStreamReader( stream, contractReg );
 
             writer.Write( record );
 
@@ -186,7 +188,9 @@ namespace PocketTlv.Demo
 
             stream.Position = 0L;
 
-            TlvStreamReader reader = new TlvStreamReader( stream );
+            var contractReg = new ContractRegistry();
+            var reader = new TlvStreamReader( stream, contractReg );
+
             return reader.ReadTag();
         }
 
@@ -202,7 +206,7 @@ namespace PocketTlv.Demo
 
             stream.Position = 0L;
 
-            TlvStreamReader reader = new TlvStreamReader( stream );
+            TlvStreamReader reader = new TlvStreamReader( stream, new ContractRegistry() );
             return reader.ReadContract<T>();
         }
     }
