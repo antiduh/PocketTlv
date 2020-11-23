@@ -100,8 +100,6 @@ namespace PocketTlv
         /// <returns></returns>
         public ITlvContract ReadContract()
         {
-            RequireConnected(); 
-            
             var contractTag = ReadTag<ContractTag>();
 
             if( contractTag == null )
@@ -141,8 +139,6 @@ namespace PocketTlv
         /// </exception>
         public T ReadContract<T>() where T : ITlvContract, new()
         {
-            RequireConnected();
-
             T contract = new T();
 
             var contractTag = ReadTag<ContractTag>();
@@ -167,8 +163,6 @@ namespace PocketTlv
 
         private ITag ReadInternal()
         {
-            RequireConnected(); 
-
             int tagValueLength;
 
             // This reads the type and length fields.
@@ -201,14 +195,6 @@ namespace PocketTlv
             if( buffer.Length < size )
             {
                 Array.Resize( ref buffer, size );
-            }
-        }
-
-        private void RequireConnected()
-        {
-            if( this.reader == null )
-            {
-                throw new InvalidOperationException( "Cannot read while not connected to a stream." );
             }
         }
     }
