@@ -112,6 +112,11 @@ namespace PocketTlv
             
             var contractTag = ReadTag<ContractTag>();
 
+            if( contractTag == null )
+            {
+                return null;
+            }
+
             int contractId = contractTag.FieldId;
 
             ITlvContract contract;
