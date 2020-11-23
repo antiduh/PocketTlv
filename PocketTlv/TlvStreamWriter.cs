@@ -11,35 +11,27 @@ namespace PocketTlv
         private Stream stream;
         private byte[] buffer;
 
-        public TlvStreamWriter()
-            : this( DefaultBufferSize )
+        public TlvStreamWriter( Stream stream )
+            : this( stream, DefaultBufferSize )
         {
         }
 
-        public TlvStreamWriter( int bufferSize )
+        public TlvStreamWriter( Stream stream, int bufferSize )
         {
+            if( stream == null )
+            {
+                throw new ArgumentNullException( nameof( stream ) );
+            }
+
             if( bufferSize <= 0 )
             {
                 throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
             }
 
+            this.stream = stream;
             this.buffer = new byte[bufferSize];
         }
 
-        public void Connect( Stream stream )
-        {
-            if( this.stream != null )
-            {
-                throw new InvalidOperationException( "Cannot connect while already connected." );
-            }
-
-            this.stream = stream;
-        }
-
-        public void Disconnect()
-        {
-            this.stream = null;
-        }
 
         public void Write( ITag tag )
         {

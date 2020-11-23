@@ -21,8 +21,8 @@ namespace PocketTlv
         /// Initializes a new instance of the <see cref="TlvStreamReader"/> class with a default
         /// initial buffer size.
         /// </summary>
-        public TlvStreamReader( ContractRegistry contractReg )
-            : this( contractReg, DefaultBufferSize )
+        public TlvStreamReader( Stream stream, ContractRegistry contractReg )
+            : this( stream, contractReg, DefaultBufferSize )
         {
         }
 
@@ -30,8 +30,13 @@ namespace PocketTlv
         /// Initializes a new instance of the <see cref="TlvStreamReader"/> class, providing the initial buffer size.
         /// </summary>
         /// <param name="bufferSize">The initial size of deserialization buffer.</param>
-        public TlvStreamReader( ContractRegistry contractReg, int bufferSize )
+        public TlvStreamReader( Stream stream, ContractRegistry contractReg, int bufferSize )
         {
+            if( stream == null )
+            {
+                throw new ArgumentNullException( nameof( stream ) );
+            }
+
             if( contractReg == null )
             {
                 throw new ArgumentNullException( nameof( contractReg ) );
@@ -42,24 +47,11 @@ namespace PocketTlv
                 throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
             }
 
+            this.reader = new StreamConverter( stream );
+
             this.contractReg = contractReg;
 
             this.buffer = new byte[bufferSize];
-        }
-
-        public void Connect( Stream stream )
-        {
-            if( this.reader != null )
-            {
-                throw new InvalidOperationException( "Cannot connect while already connected." );
-            }
-
-            this.reader = new StreamConverter( stream );
-        }
-
-        public void Disconnect()
-        {
-            this.reader = null;
         }
 
         /// <summary>
