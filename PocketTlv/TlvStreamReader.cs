@@ -12,7 +12,7 @@ namespace PocketTlv
         public const int DefaultBufferSize = 1024;
 
         private readonly ContractRegistry contractReg;
-        
+
         private StreamConverter reader;
 
         private byte[] buffer;
@@ -41,7 +41,7 @@ namespace PocketTlv
             {
                 throw new ArgumentNullException( nameof( contractReg ) );
             }
-            
+
             if( bufferSize <= 0 )
             {
                 throw new ArgumentOutOfRangeException( nameof( bufferSize ), "must be a positive integer." );
@@ -142,10 +142,10 @@ namespace PocketTlv
             T contract = new T();
 
             var contractTag = ReadTag<ContractTag>();
-            
+
             if( contractTag == null )
             {
-                return default(T);
+                return default( T );
             }
 
             if( contract.ContractId != contractTag.ContractId )
@@ -159,7 +159,6 @@ namespace PocketTlv
 
             return contract;
         }
-
 
         private ITag ReadInternal()
         {

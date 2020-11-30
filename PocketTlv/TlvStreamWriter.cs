@@ -32,7 +32,6 @@ namespace PocketTlv
             this.buffer = new byte[bufferSize];
         }
 
-
         public void Write( ITag tag )
         {
             RequireConnected();
@@ -50,7 +49,7 @@ namespace PocketTlv
         public void Write( ITlvContract contract )
         {
             RequireConnected();
-            
+
             if( contract is null )
             {
                 throw new ArgumentNullException( nameof( contract ) );
@@ -96,7 +95,6 @@ namespace PocketTlv
                 throw new InvalidOperationException( "Cannot write while not connected to a stream." );
             }
         }
-
     }
 
     public static class TagBufferWriter
