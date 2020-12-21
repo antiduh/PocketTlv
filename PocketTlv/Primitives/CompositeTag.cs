@@ -114,13 +114,10 @@ namespace PocketTlv
             }
             else
             {
-                ITag leftChild;
-                ITag rightChild;
-
                 for( int i = 0; i < left.Children.Count; i++ )
                 {
-                    leftChild = left.Children[i];
-                    rightChild = right.Children[i];
+                    ITag leftChild = left.Children[i];
+                    ITag rightChild = right.Children[i];
 
                     if( leftChild.FieldId != rightChild.FieldId || leftChild.Equals( rightChild ) == false )
                     {
